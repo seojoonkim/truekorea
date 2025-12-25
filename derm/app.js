@@ -4,6 +4,22 @@ let currentCategory = 'all';
 let currentConcern = null;
 let currentBudget = 'all';
 let treatments = [];
+let tableSort = { column: 'name', direction: 'asc' };
+let selectedTableCategories = [];
+
+// ===== Concern Map =====
+const concernMap = {
+    '처진피부': ['리프팅', '타이트닝', 'HIFU', 'RF', '실리프팅'],
+    '주름': ['주름', '보톡스', '필러', '리프팅'],
+    '탄력': ['탄력', 'RF', '콜라겐', '스킨부스터', '리프팅'],
+    '모공': ['모공', 'MRF', '피지', '필링', '레이저'],
+    '기미': ['기미', '색소', '미백', '토닝', '피코'],
+    '여드름': ['여드름', '트러블', '피지', 'PDT'],
+    '볼륨': ['볼륨', '필러', '스컬트라', '엘란쎄'],
+    '흉터': ['흉터', '프랙셔널', '재생', 'MRF'],
+    '제모': ['제모'],
+    '바디': ['바디', '지방', '셀룰라이트', '엠스컬프']
+};
 
 // ===== Initialize =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,6 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Update DB count
     document.getElementById('dbCount').textContent = `${treatments.length}개 시술`;
+    
+    // Update all tab counts
+    updateTabCounts();
+    updateConcernCounts();
     
     // Setup views
     setupViewTabs();
@@ -21,6 +41,29 @@ document.addEventListener('DOMContentLoaded', () => {
     setupTableView();
     setupModal();
 });
+
+// ===== Update Tab Counts =====
+function updateTabCounts() {
+    const total = treatments.length;
+    document.getElementById('concernTabCount').textContent = total;
+    document.getElementById('filterTabCount').textContent = total;
+    document.getElementById('cardsTabCount').textContent = total;
+    document.getElementById('tableTabCount').textContent = total;
+}
+
+// ===== Update Concern Counts =====
+function updateConcernCounts() {
+    Object.keys(concernMap).forEach(concern => {
+        const keywords = concernMap[concern];
+        const count = treatments.filter(t => {
+            const searchText = `${t.category} ${t.subcategory} ${t.tags.join(' ')} ${t.effects.primary.join(' ')} ${t.mechanism.keywords.join(' ')}`.toLowerCase();
+            return keywords.some(k => searchText.includes(k.toLowerCase()));
+        }).length;
+        
+        const countEl = document.querySelector(`[data-concern-count="${concern}"]`);
+        if (countEl) countEl.textContent = `${count}개`;
+    });
+}
 
 // ===== View Tabs =====
 function setupViewTabs() {
@@ -51,7 +94,6 @@ function setupSearch() {
         const query = e.target.value.toLowerCase().trim();
         
         if (query.length < 2) {
-            // Reset to current view
             if (currentView === 'cards') renderCardsView(currentCategory);
             if (currentView === 'table') renderTableView();
             if (currentView === 'filter') applyFilters();
@@ -91,16 +133,13 @@ function setupConcernView() {
             currentConcern = concern;
             currentBudget = 'all';
             
-            // Update UI
             concernGrid.classList.add('hidden');
             concernResult.classList.remove('hidden');
             document.getElementById('concernTitle').textContent = card.querySelector('.concern-title').textContent + ' 고민 해결';
             
-            // Reset budget buttons
             budgetBtns.forEach(b => b.classList.remove('active'));
             budgetBtns[0].classList.add('active');
             
-            // Render treatments
             renderConcernTreatments();
         });
     });
@@ -122,19 +161,6 @@ function setupConcernView() {
 }
 
 function renderConcernTreatments() {
-    const concernMap = {
-        '처진피부': ['리프팅', '타이트닝', 'HIFU', 'RF', '실리프팅'],
-        '주름': ['주름', '보톡스', '필러', '리프팅'],
-        '탄력': ['탄력', 'RF', '콜라겐', '스킨부스터', '리프팅'],
-        '모공': ['모공', 'MRF', '피지', '필링', '레이저'],
-        '기미': ['기미', '색소', '미백', '토닝', '피코'],
-        '여드름': ['여드름', '트러블', '피지', 'PDT'],
-        '볼륨': ['볼륨', '필러', '스컬트라', '엘란쎄'],
-        '흉터': ['흉터', '프랙셔널', '재생', 'MRF'],
-        '제모': ['제모'],
-        '바디': ['바디', '지방', '셀룰라이트', '엠스컬프']
-    };
-    
     const keywords = concernMap[currentConcern] || [];
     
     let filtered = treatments.filter(t => {
@@ -142,7 +168,6 @@ function renderConcernTreatments() {
         return keywords.some(k => searchText.includes(k.toLowerCase()));
     });
     
-    // Budget filter
     if (currentBudget !== 'all') {
         filtered = filtered.filter(t => {
             const price = extractPrice(t.pricing.average);
@@ -160,17 +185,21 @@ function renderConcernTreatments() {
 function setupFilterView() {
     const budgetRange = document.getElementById('budgetRange');
     const painRange = document.getElementById('painRange');
-    const categorySelect = document.getElementById('categorySelect');
-    const checkboxes = document.querySelectorAll('.checkbox-group input');
+    const checkboxList = document.getElementById('categoryCheckboxList');
+    const downtimeChecks = document.querySelectorAll('input[name="downtime"]');
     const resetBtn = document.getElementById('resetFilters');
     
-    // Populate categories
+    // Populate category checkboxes
     const categories = [...new Set(treatments.map(t => t.category))];
     categories.forEach(cat => {
-        const option = document.createElement('option');
-        option.value = cat;
-        option.textContent = cat;
-        categorySelect.appendChild(option);
+        const count = treatments.filter(t => t.category === cat).length;
+        const item = document.createElement('label');
+        item.className = 'category-checkbox-item';
+        item.innerHTML = `
+            <span><input type="checkbox" name="filterCategory" value="${cat}" checked> ${cat}</span>
+            <span class="cat-count">${count}</span>
+        `;
+        checkboxList.appendChild(item);
     });
     
     // Event listeners
@@ -185,28 +214,27 @@ function setupFilterView() {
         applyFilters();
     });
     
-    categorySelect.addEventListener('change', applyFilters);
-    checkboxes.forEach(cb => cb.addEventListener('change', applyFilters));
+    checkboxList.addEventListener('change', applyFilters);
+    downtimeChecks.forEach(cb => cb.addEventListener('change', applyFilters));
     
     resetBtn.addEventListener('click', () => {
         budgetRange.value = 200;
         painRange.value = 5;
-        categorySelect.value = 'all';
-        checkboxes.forEach(cb => cb.checked = true);
         document.getElementById('budgetValue').textContent = '0 ~ 200+';
         document.getElementById('painValue').textContent = '5';
+        downtimeChecks.forEach(cb => cb.checked = true);
+        document.querySelectorAll('input[name="filterCategory"]').forEach(cb => cb.checked = true);
         applyFilters();
     });
     
-    // Initial render
     applyFilters();
 }
 
 function applyFilters() {
     const budget = parseInt(document.getElementById('budgetRange').value);
     const pain = parseFloat(document.getElementById('painRange').value);
-    const category = document.getElementById('categorySelect').value;
-    const downtimeChecks = [...document.querySelectorAll('.checkbox-group input:checked')].map(cb => cb.value);
+    const selectedCategories = [...document.querySelectorAll('input[name="filterCategory"]:checked')].map(cb => cb.value);
+    const downtimeChecks = [...document.querySelectorAll('input[name="downtime"]:checked')].map(cb => cb.value);
     
     let filtered = treatments.filter(t => {
         // Budget
@@ -217,7 +245,7 @@ function applyFilters() {
         if (t.recovery.painLevel > pain) return false;
         
         // Category
-        if (category !== 'all' && t.category !== category) return false;
+        if (!selectedCategories.includes(t.category)) return false;
         
         // Downtime
         const downtime = t.recovery.downtime.toLowerCase();
@@ -226,29 +254,45 @@ function applyFilters() {
         if (downtimeChecks.includes('1~3일') && (downtime.includes('1') || downtime.includes('2') || downtime.includes('3'))) downtimeMatch = true;
         if (downtimeChecks.includes('1주일') && (downtime.includes('7') || downtime.includes('주') || downtime.includes('14'))) downtimeMatch = true;
         if (downtimeChecks.length === 3) downtimeMatch = true;
+        if (downtimeChecks.length === 0) downtimeMatch = false;
         if (!downtimeMatch) return false;
         
         return true;
     });
     
     document.getElementById('filterCount').textContent = `${filtered.length}개 시술`;
+    document.getElementById('filterTabCount').textContent = filtered.length;
     renderTreatmentCards(filtered, 'filterResults');
 }
 
 // ===== View 3: 카드 뷰 =====
 function setupCardsView() {
     const tabsContainer = document.getElementById('categoryTabs');
-    const categories = ['전체', ...new Set(treatments.map(t => t.category))];
+    const categories = [...new Set(treatments.map(t => t.category))];
     
-    categories.forEach((cat, i) => {
+    // 전체 탭
+    const allBtn = document.createElement('button');
+    allBtn.className = 'category-tab active';
+    allBtn.innerHTML = `전체 <span class="cat-tab-count">${treatments.length}</span>`;
+    allBtn.addEventListener('click', () => {
+        document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+        allBtn.classList.add('active');
+        currentCategory = 'all';
+        renderCardsView('all');
+    });
+    tabsContainer.appendChild(allBtn);
+    
+    // 카테고리별 탭
+    categories.forEach(cat => {
+        const count = treatments.filter(t => t.category === cat).length;
         const btn = document.createElement('button');
-        btn.className = `category-tab ${i === 0 ? 'active' : ''}`;
-        btn.textContent = cat;
+        btn.className = 'category-tab';
+        btn.innerHTML = `${cat} <span class="cat-tab-count">${count}</span>`;
         btn.addEventListener('click', () => {
             document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
             btn.classList.add('active');
-            currentCategory = cat === '전체' ? 'all' : cat;
-            renderCardsView(currentCategory);
+            currentCategory = cat;
+            renderCardsView(cat);
         });
         tabsContainer.appendChild(btn);
     });
@@ -261,45 +305,111 @@ function renderCardsView(category) {
         ? treatments 
         : treatments.filter(t => t.category === category);
     
+    document.getElementById('cardsTabCount').textContent = filtered.length;
     renderTreatmentCards(filtered, 'cardsGrid');
 }
 
 // ===== View 4: 테이블 뷰 =====
 function setupTableView() {
-    const categorySelect = document.getElementById('tableCategorySelect');
-    const sortSelect = document.getElementById('tableSortSelect');
-    
-    // Populate categories
+    const categoryList = document.getElementById('tableCategoryList');
     const categories = [...new Set(treatments.map(t => t.category))];
+    
+    // Initialize selected categories
+    selectedTableCategories = [...categories];
+    
+    // Create category checkboxes
     categories.forEach(cat => {
-        const option = document.createElement('option');
-        option.value = cat;
-        option.textContent = cat;
-        categorySelect.appendChild(option);
+        const count = treatments.filter(t => t.category === cat).length;
+        const item = document.createElement('label');
+        item.className = 'table-category-item';
+        item.innerHTML = `
+            <span><input type="checkbox" name="tableCategory" value="${cat}" checked> ${cat}</span>
+            <span class="cat-count">${count}</span>
+        `;
+        categoryList.appendChild(item);
     });
     
-    categorySelect.addEventListener('change', renderTableView);
-    sortSelect.addEventListener('change', renderTableView);
+    // Category change listener
+    categoryList.addEventListener('change', () => {
+        selectedTableCategories = [...document.querySelectorAll('input[name="tableCategory"]:checked')].map(cb => cb.value);
+        renderTableView();
+    });
+    
+    // Column sort listeners
+    document.querySelectorAll('.data-table th.sortable').forEach(th => {
+        th.addEventListener('click', () => {
+            const column = th.dataset.sort;
+            
+            // Toggle direction
+            if (tableSort.column === column) {
+                tableSort.direction = tableSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                tableSort.column = column;
+                tableSort.direction = 'asc';
+            }
+            
+            // Update header styles
+            document.querySelectorAll('.data-table th.sortable').forEach(h => {
+                h.classList.remove('asc', 'desc');
+            });
+            th.classList.add(tableSort.direction);
+            
+            renderTableView();
+        });
+    });
     
     renderTableView();
 }
 
 function renderTableView() {
-    const category = document.getElementById('tableCategorySelect').value;
-    const sort = document.getElementById('tableSortSelect').value;
-    
-    let filtered = category === 'all' 
-        ? [...treatments] 
-        : treatments.filter(t => t.category === category);
+    let filtered = treatments.filter(t => selectedTableCategories.includes(t.category));
     
     // Sort
     filtered.sort((a, b) => {
-        if (sort === 'name') return a.name.localeCompare(b.name);
-        if (sort === 'price') return extractPrice(a.pricing.average) - extractPrice(b.pricing.average);
-        if (sort === 'pain') return a.recovery.painLevel - b.recovery.painLevel;
-        if (sort === 'duration') return a.effects.duration?.localeCompare(b.effects.duration) || 0;
+        let aVal, bVal;
+        
+        switch (tableSort.column) {
+            case 'name':
+                aVal = a.name;
+                bVal = b.name;
+                break;
+            case 'brand':
+                aVal = a.brand;
+                bVal = b.brand;
+                break;
+            case 'category':
+                aVal = a.category;
+                bVal = b.category;
+                break;
+            case 'duration':
+                aVal = a.effects.duration || '';
+                bVal = b.effects.duration || '';
+                break;
+            case 'pain':
+                aVal = a.recovery.painLevel;
+                bVal = b.recovery.painLevel;
+                return tableSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
+            case 'downtime':
+                aVal = a.recovery.downtime || '';
+                bVal = b.recovery.downtime || '';
+                break;
+            case 'price':
+                aVal = extractPrice(a.pricing.average);
+                bVal = extractPrice(b.pricing.average);
+                return tableSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
+            default:
+                aVal = a.name;
+                bVal = b.name;
+        }
+        
+        if (typeof aVal === 'string') {
+            const compare = aVal.localeCompare(bVal);
+            return tableSort.direction === 'asc' ? compare : -compare;
+        }
         return 0;
     });
+    
+    document.getElementById('tableTabCount').textContent = filtered.length;
     
     const tbody = document.getElementById('tableBody');
     tbody.innerHTML = filtered.map(t => `

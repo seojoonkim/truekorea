@@ -29,18 +29,22 @@
             <button class="view-tab active" data-view="concern">
                 <span class="tab-icon">🎯</span>
                 <span class="tab-label">고민별 찾기</span>
+                <span class="tab-count" id="concernTabCount">0</span>
             </button>
             <button class="view-tab" data-view="filter">
                 <span class="tab-icon">⚡</span>
                 <span class="tab-label">맞춤 필터</span>
+                <span class="tab-count" id="filterTabCount">0</span>
             </button>
             <button class="view-tab" data-view="cards">
                 <span class="tab-icon">📋</span>
                 <span class="tab-label">카드 뷰</span>
+                <span class="tab-count" id="cardsTabCount">0</span>
             </button>
             <button class="view-tab" data-view="table">
                 <span class="tab-icon">📊</span>
                 <span class="tab-label">테이블 뷰</span>
+                <span class="tab-count" id="tableTabCount">0</span>
             </button>
         </nav>
 
@@ -54,51 +58,61 @@
                         <span class="concern-emoji">😟</span>
                         <span class="concern-title">처진 피부</span>
                         <span class="concern-desc">리프팅이 필요해요</span>
+                        <span class="concern-count" data-concern-count="처진피부">0개</span>
                     </button>
                     <button class="concern-card" data-concern="주름">
                         <span class="concern-emoji">👵</span>
                         <span class="concern-title">주름</span>
                         <span class="concern-desc">잔주름, 깊은주름</span>
+                        <span class="concern-count" data-concern-count="주름">0개</span>
                     </button>
                     <button class="concern-card" data-concern="탄력">
                         <span class="concern-emoji">✨</span>
                         <span class="concern-title">탄력 저하</span>
                         <span class="concern-desc">탱탱함이 사라졌어요</span>
+                        <span class="concern-count" data-concern-count="탄력">0개</span>
                     </button>
                     <button class="concern-card" data-concern="모공">
                         <span class="concern-emoji">🔵</span>
                         <span class="concern-title">모공</span>
                         <span class="concern-desc">넓은 모공, 피지</span>
+                        <span class="concern-count" data-concern-count="모공">0개</span>
                     </button>
                     <button class="concern-card" data-concern="기미">
                         <span class="concern-emoji">🎨</span>
                         <span class="concern-title">기미 / 잡티</span>
                         <span class="concern-desc">색소, 피부톤</span>
+                        <span class="concern-count" data-concern-count="기미">0개</span>
                     </button>
                     <button class="concern-card" data-concern="여드름">
                         <span class="concern-emoji">😣</span>
                         <span class="concern-title">여드름</span>
                         <span class="concern-desc">트러블, 피지</span>
+                        <span class="concern-count" data-concern-count="여드름">0개</span>
                     </button>
                     <button class="concern-card" data-concern="볼륨">
                         <span class="concern-emoji">💧</span>
                         <span class="concern-title">볼륨 손실</span>
                         <span class="concern-desc">꺼진 볼, 팔자</span>
+                        <span class="concern-count" data-concern-count="볼륨">0개</span>
                     </button>
                     <button class="concern-card" data-concern="흉터">
                         <span class="concern-emoji">🩹</span>
                         <span class="concern-title">흉터</span>
                         <span class="concern-desc">여드름흉터, 패인흉터</span>
+                        <span class="concern-count" data-concern-count="흉터">0개</span>
                     </button>
                     <button class="concern-card" data-concern="제모">
                         <span class="concern-emoji">🪒</span>
                         <span class="concern-title">제모</span>
                         <span class="concern-desc">털 고민</span>
+                        <span class="concern-count" data-concern-count="제모">0개</span>
                     </button>
                     <button class="concern-card" data-concern="바디">
                         <span class="concern-emoji">💪</span>
                         <span class="concern-title">바디</span>
                         <span class="concern-desc">지방, 셀룰라이트</span>
+                        <span class="concern-count" data-concern-count="바디">0개</span>
                     </button>
                 </div>
 
@@ -145,15 +159,15 @@
 
                         <div class="filter-group">
                             <label class="filter-label">⏰ 다운타임</label>
-                            <div class="checkbox-group">
+                            <div class="checkbox-group horizontal">
                                 <label class="checkbox-item">
-                                    <input type="checkbox" value="없음" checked> 없음
+                                    <input type="checkbox" name="downtime" value="없음" checked> 없음
                                 </label>
                                 <label class="checkbox-item">
-                                    <input type="checkbox" value="1~3일" checked> 1~3일
+                                    <input type="checkbox" name="downtime" value="1~3일" checked> 1~3일
                                 </label>
                                 <label class="checkbox-item">
-                                    <input type="checkbox" value="1주일" checked> 1주일+
+                                    <input type="checkbox" name="downtime" value="1주일" checked> 1주일+
                                 </label>
                             </div>
                         </div>
@@ -172,9 +186,9 @@
 
                         <div class="filter-group">
                             <label class="filter-label">📂 카테고리</label>
-                            <select id="categorySelect" class="select-box">
-                                <option value="all">전체</option>
-                            </select>
+                            <div class="category-checkbox-list" id="categoryCheckboxList">
+                                <!-- 동적으로 생성됨 -->
+                            </div>
                         </div>
 
                         <button class="reset-btn" id="resetFilters">필터 초기화</button>
@@ -197,36 +211,32 @@
 
             <!-- View 4: 테이블 뷰 -->
             <section class="view-panel" id="view-table">
-                <div class="table-controls">
-                    <select id="tableCategorySelect" class="select-box">
-                        <option value="all">전체 카테고리</option>
-                    </select>
-                    <div class="table-sort">
-                        <span>정렬:</span>
-                        <select id="tableSortSelect" class="select-box">
-                            <option value="name">이름순</option>
-                            <option value="price">가격순</option>
-                            <option value="pain">통증순</option>
-                            <option value="duration">지속기간순</option>
-                        </select>
+                <div class="table-layout">
+                    <div class="table-sidebar">
+                        <h4 class="sidebar-title">카테고리</h4>
+                        <div class="table-category-list" id="tableCategoryList">
+                            <!-- 동적으로 생성됨 -->
+                        </div>
                     </div>
-                </div>
-                <div class="table-wrapper">
-                    <table class="data-table" id="dataTable">
-                        <thead>
-                            <tr>
-                                <th>시술명</th>
-                                <th>브랜드</th>
-                                <th>카테고리</th>
-                                <th>효과</th>
-                                <th>지속</th>
-                                <th>통증</th>
-                                <th>다운타임</th>
-                                <th>가격</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody"></tbody>
-                    </table>
+                    <div class="table-main">
+                        <div class="table-wrapper">
+                            <table class="data-table" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th data-sort="name" class="sortable">시술명 <span class="sort-icon">↕</span></th>
+                                        <th data-sort="brand" class="sortable">브랜드 <span class="sort-icon">↕</span></th>
+                                        <th data-sort="category" class="sortable">카테고리 <span class="sort-icon">↕</span></th>
+                                        <th>효과</th>
+                                        <th data-sort="duration" class="sortable">지속 <span class="sort-icon">↕</span></th>
+                                        <th data-sort="pain" class="sortable">통증 <span class="sort-icon">↕</span></th>
+                                        <th data-sort="downtime" class="sortable">다운타임 <span class="sort-icon">↕</span></th>
+                                        <th data-sort="price" class="sortable">가격 <span class="sort-icon">↕</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
