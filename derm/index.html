@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>피부과 시술 가이드 | TrueKorea</title>
+    <link href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 class="logo">피부과 시술 가이드</h1>
+                <span class="db-count" id="dbCount">0개 시술</span>
+            </div>
+            <div class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" id="searchInput" placeholder="시술명, 고민, 효과로 검색...">
+            </div>
+        </header>
+
+        <!-- View Tabs -->
+        <nav class="view-tabs">
+            <button class="view-tab active" data-view="concern">
+                <span class="tab-icon">🎯</span>
+                <span class="tab-label">고민별 찾기</span>
+            </button>
+            <button class="view-tab" data-view="filter">
+                <span class="tab-icon">⚡</span>
+                <span class="tab-label">맞춤 필터</span>
+            </button>
+            <button class="view-tab" data-view="cards">
+                <span class="tab-icon">📋</span>
+                <span class="tab-label">카드 뷰</span>
+            </button>
+            <button class="view-tab" data-view="table">
+                <span class="tab-icon">📊</span>
+                <span class="tab-label">테이블 뷰</span>
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- View 1: 고민별 찾기 -->
+            <section class="view-panel active" id="view-concern">
+                <div class="concern-grid">
+                    <button class="concern-card" data-concern="처진피부">
+                        <span class="concern-emoji">😟</span>
+                        <span class="concern-title">처진 피부</span>
+                        <span class="concern-desc">리프팅이 필요해요</span>
+                    </button>
+                    <button class="concern-card" data-concern="주름">
+                        <span class="concern-emoji">👵</span>
+                        <span class="concern-title">주름</span>
+                        <span class="concern-desc">잔주름, 깊은주름</span>
+                    </button>
+                    <button class="concern-card" data-concern="탄력">
+                        <span class="concern-emoji">✨</span>
+                        <span class="concern-title">탄력 저하</span>
+                        <span class="concern-desc">탱탱함이 사라졌어요</span>
+                    </button>
+                    <button class="concern-card" data-concern="모공">
+                        <span class="concern-emoji">🔵</span>
+                        <span class="concern-title">모공</span>
+                        <span class="concern-desc">넓은 모공, 피지</span>
+                    </button>
+                    <button class="concern-card" data-concern="기미">
+                        <span class="concern-emoji">🎨</span>
+                        <span class="concern-title">기미 / 잡티</span>
+                        <span class="concern-desc">색소, 피부톤</span>
+                    </button>
+                    <button class="concern-card" data-concern="여드름">
+                        <span class="concern-emoji">😣</span>
+                        <span class="concern-title">여드름</span>
+                        <span class="concern-desc">트러블, 피지</span>
+                    </button>
+                    <button class="concern-card" data-concern="볼륨">
+                        <span class="concern-emoji">💧</span>
+                        <span class="concern-title">볼륨 손실</span>
+                        <span class="concern-desc">꺼진 볼, 팔자</span>
+                    </button>
+                    <button class="concern-card" data-concern="흉터">
+                        <span class="concern-emoji">🩹</span>
+                        <span class="concern-title">흉터</span>
+                        <span class="concern-desc">여드름흉터, 패인흉터</span>
+                    </button>
+                    <button class="concern-card" data-concern="제모">
+                        <span class="concern-emoji">🪒</span>
+                        <span class="concern-title">제모</span>
+                        <span class="concern-desc">털 고민</span>
+                    </button>
+                    <button class="concern-card" data-concern="바디">
+                        <span class="concern-emoji">💪</span>
+                        <span class="concern-title">바디</span>
+                        <span class="concern-desc">지방, 셀룰라이트</span>
+                    </button>
+                </div>
+
+                <!-- Concern Result Panel -->
+                <div class="concern-result hidden" id="concernResult">
+                    <div class="concern-result-header">
+                        <button class="back-btn" id="backBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 12H5M12 19l-7-7 7-7"/>
+                            </svg>
+                            돌아가기
+                        </button>
+                        <h2 class="concern-result-title" id="concernTitle">처진 피부</h2>
+                    </div>
+                    
+                    <!-- Budget Filter -->
+                    <div class="budget-filter">
+                        <span class="filter-label">💰 예산</span>
+                        <div class="budget-options">
+                            <button class="budget-btn active" data-budget="all">전체</button>
+                            <button class="budget-btn" data-budget="low">~30만원</button>
+                            <button class="budget-btn" data-budget="mid">30~100만원</button>
+                            <button class="budget-btn" data-budget="high">100만원+</button>
+                        </div>
+                    </div>
+
+                    <div class="concern-treatments" id="concernTreatments"></div>
+                </div>
+            </section>
+
+            <!-- View 2: 맞춤 필터 -->
+            <section class="view-panel" id="view-filter">
+                <div class="filter-container">
+                    <div class="filter-sidebar">
+                        <h3 class="filter-title">필터 설정</h3>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">💰 예산 (만원)</label>
+                            <div class="range-display">
+                                <span id="budgetValue">0 ~ 200+</span>
+                            </div>
+                            <input type="range" id="budgetRange" min="0" max="200" value="200" class="range-slider">
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">⏰ 다운타임</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" value="없음" checked> 없음
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" value="1~3일" checked> 1~3일
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" value="1주일" checked> 1주일+
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">😣 통증 허용</label>
+                            <div class="pain-slider">
+                                <input type="range" id="painRange" min="0" max="5" value="5" step="0.5" class="range-slider">
+                                <div class="pain-labels">
+                                    <span>무통</span>
+                                    <span id="painValue">5</span>
+                                    <span>아픔</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">📂 카테고리</label>
+                            <select id="categorySelect" class="select-box">
+                                <option value="all">전체</option>
+                            </select>
+                        </div>
+
+                        <button class="reset-btn" id="resetFilters">필터 초기화</button>
+                    </div>
+
+                    <div class="filter-results">
+                        <div class="results-header">
+                            <span class="results-count" id="filterCount">0개 시술</span>
+                        </div>
+                        <div class="results-grid" id="filterResults"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View 3: 카드 뷰 -->
+            <section class="view-panel" id="view-cards">
+                <div class="category-tabs" id="categoryTabs"></div>
+                <div class="cards-grid" id="cardsGrid"></div>
+            </section>
+
+            <!-- View 4: 테이블 뷰 -->
+            <section class="view-panel" id="view-table">
+                <div class="table-controls">
+                    <select id="tableCategorySelect" class="select-box">
+                        <option value="all">전체 카테고리</option>
+                    </select>
+                    <div class="table-sort">
+                        <span>정렬:</span>
+                        <select id="tableSortSelect" class="select-box">
+                            <option value="name">이름순</option>
+                            <option value="price">가격순</option>
+                            <option value="pain">통증순</option>
+                            <option value="duration">지속기간순</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>시술명</th>
+                                <th>브랜드</th>
+                                <th>카테고리</th>
+                                <th>효과</th>
+                                <th>지속</th>
+                                <th>통증</th>
+                                <th>다운타임</th>
+                                <th>가격</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- Detail Modal -->
+        <div class="modal-overlay hidden" id="modalOverlay">
+            <div class="modal" id="detailModal">
+                <button class="modal-close" id="modalClose">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+                <div class="modal-content" id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="db_extended.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
