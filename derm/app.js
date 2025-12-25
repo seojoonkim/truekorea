@@ -37,18 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSearch();
     setupConcernView();
     setupFilterView();
-    setupCardsView();
     setupTableView();
     setupModal();
 });
 
 // ===== Update Tab Counts =====
 function updateTabCounts() {
-    const total = treatments.length;
-    document.getElementById('concernTabCount').textContent = total;
-    document.getElementById('filterTabCount').textContent = total;
-    document.getElementById('cardsTabCount').textContent = total;
-    document.getElementById('tableTabCount').textContent = total;
+    // 상단 탭에서는 숫자 표시 안함
 }
 
 // ===== Update Concern Counts =====
@@ -125,20 +120,23 @@ function setupConcernView() {
     const concernResult = document.getElementById('concernResult');
     const concernGrid = document.querySelector('.concern-grid');
     const backBtn = document.getElementById('backBtn');
-    const budgetBtns = document.querySelectorAll('.budget-btn');
+    const concernBudgetMin = document.getElementById('concernBudgetMin');
+    const concernBudgetMax = document.getElementById('concernBudgetMax');
     
     concernCards.forEach(card => {
         card.addEventListener('click', () => {
             const concern = card.dataset.concern;
             currentConcern = concern;
-            currentBudget = 'all';
             
             concernGrid.classList.add('hidden');
             concernResult.classList.remove('hidden');
             document.getElementById('concernTitle').textContent = card.querySelector('.concern-title').textContent + ' 고민 해결';
             
-            budgetBtns.forEach(b => b.classList.remove('active'));
-            budgetBtns[0].classList.add('active');
+            // Reset budget sliders
+            concernBudgetMin.value = 0;
+            concernBudgetMax.value = 200;
+            document.getElementById('concernBudgetMinValue').textContent = '0';
+            document.getElementById('concernBudgetMaxValue').textContent = '200+';
             
             renderConcernTreatments();
         });
@@ -150,40 +148,51 @@ function setupConcernView() {
         currentConcern = null;
     });
     
-    budgetBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            budgetBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentBudget = btn.dataset.budget;
-            renderConcernTreatments();
-        });
-    });
+    // Budget dual range for concern view
+    function updateConcernBudget() {
+        let minVal = parseInt(concernBudgetMin.value);
+        let maxVal = parseInt(concernBudgetMax.value);
+        
+        if (minVal > maxVal) {
+            [minVal, maxVal] = [maxVal, minVal];
+            concernBudgetMin.value = minVal;
+            concernBudgetMax.value = maxVal;
+        }
+        
+        document.getElementById('concernBudgetMinValue').textContent = minVal;
+        document.getElementById('concernBudgetMaxValue').textContent = maxVal >= 200 ? '200+' : maxVal;
+        renderConcernTreatments();
+    }
+    
+    concernBudgetMin.addEventListener('input', updateConcernBudget);
+    concernBudgetMax.addEventListener('input', updateConcernBudget);
 }
 
 function renderConcernTreatments() {
     const keywords = concernMap[currentConcern] || [];
+    const budgetMin = parseInt(document.getElementById('concernBudgetMin').value);
+    const budgetMax = parseInt(document.getElementById('concernBudgetMax').value);
     
     let filtered = treatments.filter(t => {
         const searchText = `${t.category} ${t.subcategory} ${t.tags.join(' ')} ${t.effects.primary.join(' ')} ${t.mechanism.keywords.join(' ')}`.toLowerCase();
         return keywords.some(k => searchText.includes(k.toLowerCase()));
     });
     
-    if (currentBudget !== 'all') {
-        filtered = filtered.filter(t => {
-            const price = extractPrice(t.pricing.average);
-            if (currentBudget === 'low') return price <= 30;
-            if (currentBudget === 'mid') return price > 30 && price <= 100;
-            if (currentBudget === 'high') return price > 100;
-            return true;
-        });
-    }
+    // Budget filter
+    filtered = filtered.filter(t => {
+        const price = extractPrice(t.pricing.average);
+        if (price < budgetMin) return false;
+        if (budgetMax < 200 && price > budgetMax) return false;
+        return true;
+    });
     
     renderTreatmentCards(filtered, 'concernTreatments');
 }
 
 // ===== View 2: 맞춤 필터 =====
 function setupFilterView() {
-    const budgetRange = document.getElementById('budgetRange');
+    const budgetMin = document.getElementById('budgetMin');
+    const budgetMax = document.getElementById('budgetMax');
     const painRange = document.getElementById('painRange');
     const checkboxList = document.getElementById('categoryCheckboxList');
     const downtimeChecks = document.querySelectorAll('input[name="downtime"]');
@@ -202,12 +211,33 @@ function setupFilterView() {
         checkboxList.appendChild(item);
     });
     
-    // Event listeners
-    budgetRange.addEventListener('input', () => {
-        const val = budgetRange.value;
-        document.getElementById('budgetValue').textContent = val >= 200 ? '0 ~ 200+' : `0 ~ ${val}만원`;
+    // Budget dual range
+    function updateBudgetDisplay() {
+        let minVal = parseInt(budgetMin.value);
+        let maxVal = parseInt(budgetMax.value);
+        
+        // Prevent overlap
+        if (minVal > maxVal) {
+            [minVal, maxVal] = [maxVal, minVal];
+            budgetMin.value = minVal;
+            budgetMax.value = maxVal;
+        }
+        
+        const display = document.getElementById('budgetDisplay');
+        if (minVal === 0 && maxVal >= 200) {
+            display.textContent = '전체';
+        } else if (minVal === 0) {
+            display.textContent = `~${maxVal}만`;
+        } else if (maxVal >= 200) {
+            display.textContent = `${minVal}만~`;
+        } else {
+            display.textContent = `${minVal}~${maxVal}만`;
+        }
         applyFilters();
-    });
+    }
+    
+    budgetMin.addEventListener('input', updateBudgetDisplay);
+    budgetMax.addEventListener('input', updateBudgetDisplay);
     
     painRange.addEventListener('input', () => {
         document.getElementById('painValue').textContent = painRange.value;
@@ -217,10 +247,22 @@ function setupFilterView() {
     checkboxList.addEventListener('change', applyFilters);
     downtimeChecks.forEach(cb => cb.addEventListener('change', applyFilters));
     
+    // Select All / Deselect All buttons
+    document.getElementById('filterSelectAll').addEventListener('click', () => {
+        document.querySelectorAll('input[name="filterCategory"]').forEach(cb => cb.checked = true);
+        applyFilters();
+    });
+    
+    document.getElementById('filterDeselectAll').addEventListener('click', () => {
+        document.querySelectorAll('input[name="filterCategory"]').forEach(cb => cb.checked = false);
+        applyFilters();
+    });
+    
     resetBtn.addEventListener('click', () => {
-        budgetRange.value = 200;
+        budgetMin.value = 0;
+        budgetMax.value = 200;
         painRange.value = 5;
-        document.getElementById('budgetValue').textContent = '0 ~ 200+';
+        document.getElementById('budgetDisplay').textContent = '전체';
         document.getElementById('painValue').textContent = '5';
         downtimeChecks.forEach(cb => cb.checked = true);
         document.querySelectorAll('input[name="filterCategory"]').forEach(cb => cb.checked = true);
@@ -231,15 +273,17 @@ function setupFilterView() {
 }
 
 function applyFilters() {
-    const budget = parseInt(document.getElementById('budgetRange').value);
+    const budgetMin = parseInt(document.getElementById('budgetMin').value);
+    const budgetMax = parseInt(document.getElementById('budgetMax').value);
     const pain = parseFloat(document.getElementById('painRange').value);
     const selectedCategories = [...document.querySelectorAll('input[name="filterCategory"]:checked')].map(cb => cb.value);
     const downtimeChecks = [...document.querySelectorAll('input[name="downtime"]:checked')].map(cb => cb.value);
     
     let filtered = treatments.filter(t => {
-        // Budget
+        // Budget (min ~ max)
         const price = extractPrice(t.pricing.average);
-        if (budget < 200 && price > budget) return false;
+        if (price < budgetMin) return false;
+        if (budgetMax < 200 && price > budgetMax) return false;
         
         // Pain
         if (t.recovery.painLevel > pain) return false;
@@ -260,59 +304,17 @@ function applyFilters() {
         return true;
     });
     
-    document.getElementById('filterCount').textContent = `${filtered.length}개 시술`;
-    document.getElementById('filterTabCount').textContent = filtered.length;
     renderTreatmentCards(filtered, 'filterResults');
 }
 
-// ===== View 3: 카드 뷰 =====
-function setupCardsView() {
-    const tabsContainer = document.getElementById('categoryTabs');
-    const categories = [...new Set(treatments.map(t => t.category))];
-    
-    // 전체 탭
-    const allBtn = document.createElement('button');
-    allBtn.className = 'category-tab active';
-    allBtn.innerHTML = `전체 <span class="cat-tab-count">${treatments.length}</span>`;
-    allBtn.addEventListener('click', () => {
-        document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
-        allBtn.classList.add('active');
-        currentCategory = 'all';
-        renderCardsView('all');
-    });
-    tabsContainer.appendChild(allBtn);
-    
-    // 카테고리별 탭
-    categories.forEach(cat => {
-        const count = treatments.filter(t => t.category === cat).length;
-        const btn = document.createElement('button');
-        btn.className = 'category-tab';
-        btn.innerHTML = `${cat} <span class="cat-tab-count">${count}</span>`;
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
-            currentCategory = cat;
-            renderCardsView(cat);
-        });
-        tabsContainer.appendChild(btn);
-    });
-    
-    renderCardsView('all');
-}
-
-function renderCardsView(category) {
-    const filtered = category === 'all' 
-        ? treatments 
-        : treatments.filter(t => t.category === category);
-    
-    document.getElementById('cardsTabCount').textContent = filtered.length;
-    renderTreatmentCards(filtered, 'cardsGrid');
-}
-
-// ===== View 4: 테이블 뷰 =====
+// ===== View 3: 테이블 뷰 =====
 function setupTableView() {
     const categoryList = document.getElementById('tableCategoryList');
     const categories = [...new Set(treatments.map(t => t.category))];
+    const tableBudgetMin = document.getElementById('tableBudgetMin');
+    const tableBudgetMax = document.getElementById('tableBudgetMax');
+    const tablePainRange = document.getElementById('tablePainRange');
+    const tableDowntimeChecks = document.querySelectorAll('input[name="tableDowntime"]');
     
     // Initialize selected categories
     selectedTableCategories = [...categories];
@@ -321,7 +323,7 @@ function setupTableView() {
     categories.forEach(cat => {
         const count = treatments.filter(t => t.category === cat).length;
         const item = document.createElement('label');
-        item.className = 'table-category-item';
+        item.className = 'category-checkbox-item';
         item.innerHTML = `
             <span><input type="checkbox" name="tableCategory" value="${cat}" checked> ${cat}</span>
             <span class="cat-count">${count}</span>
@@ -332,6 +334,68 @@ function setupTableView() {
     // Category change listener
     categoryList.addEventListener('change', () => {
         selectedTableCategories = [...document.querySelectorAll('input[name="tableCategory"]:checked')].map(cb => cb.value);
+        renderTableView();
+    });
+    
+    // Budget dual range
+    function updateTableBudget() {
+        let minVal = parseInt(tableBudgetMin.value);
+        let maxVal = parseInt(tableBudgetMax.value);
+        
+        if (minVal > maxVal) {
+            [minVal, maxVal] = [maxVal, minVal];
+            tableBudgetMin.value = minVal;
+            tableBudgetMax.value = maxVal;
+        }
+        
+        const display = document.getElementById('tableBudgetDisplay');
+        if (minVal === 0 && maxVal >= 200) {
+            display.textContent = '전체';
+        } else if (minVal === 0) {
+            display.textContent = `~${maxVal}만`;
+        } else if (maxVal >= 200) {
+            display.textContent = `${minVal}만~`;
+        } else {
+            display.textContent = `${minVal}~${maxVal}만`;
+        }
+        renderTableView();
+    }
+    
+    tableBudgetMin.addEventListener('input', updateTableBudget);
+    tableBudgetMax.addEventListener('input', updateTableBudget);
+    
+    // Pain range
+    tablePainRange.addEventListener('input', () => {
+        document.getElementById('tablePainValue').textContent = tablePainRange.value;
+        renderTableView();
+    });
+    
+    // Downtime checkboxes
+    tableDowntimeChecks.forEach(cb => cb.addEventListener('change', renderTableView));
+    
+    // Select All / Deselect All buttons
+    document.getElementById('tableSelectAll').addEventListener('click', () => {
+        document.querySelectorAll('input[name="tableCategory"]').forEach(cb => cb.checked = true);
+        selectedTableCategories = [...categories];
+        renderTableView();
+    });
+    
+    document.getElementById('tableDeselectAll').addEventListener('click', () => {
+        document.querySelectorAll('input[name="tableCategory"]').forEach(cb => cb.checked = false);
+        selectedTableCategories = [];
+        renderTableView();
+    });
+    
+    // Reset button
+    document.getElementById('resetTableFilters').addEventListener('click', () => {
+        tableBudgetMin.value = 0;
+        tableBudgetMax.value = 200;
+        tablePainRange.value = 5;
+        document.getElementById('tableBudgetDisplay').textContent = '전체';
+        document.getElementById('tablePainValue').textContent = '5';
+        tableDowntimeChecks.forEach(cb => cb.checked = true);
+        document.querySelectorAll('input[name="tableCategory"]').forEach(cb => cb.checked = true);
+        selectedTableCategories = [...categories];
         renderTableView();
     });
     
@@ -362,7 +426,35 @@ function setupTableView() {
 }
 
 function renderTableView() {
-    let filtered = treatments.filter(t => selectedTableCategories.includes(t.category));
+    const budgetMin = parseInt(document.getElementById('tableBudgetMin').value);
+    const budgetMax = parseInt(document.getElementById('tableBudgetMax').value);
+    const pain = parseFloat(document.getElementById('tablePainRange').value);
+    const downtimeChecks = [...document.querySelectorAll('input[name="tableDowntime"]:checked')].map(cb => cb.value);
+    
+    let filtered = treatments.filter(t => {
+        // Category
+        if (!selectedTableCategories.includes(t.category)) return false;
+        
+        // Budget
+        const price = extractPrice(t.pricing.average);
+        if (price < budgetMin) return false;
+        if (budgetMax < 200 && price > budgetMax) return false;
+        
+        // Pain
+        if (t.recovery.painLevel > pain) return false;
+        
+        // Downtime
+        const downtime = t.recovery.downtime.toLowerCase();
+        let downtimeMatch = false;
+        if (downtimeChecks.includes('없음') && (downtime.includes('없음') || downtime === '')) downtimeMatch = true;
+        if (downtimeChecks.includes('1~3일') && (downtime.includes('1') || downtime.includes('2') || downtime.includes('3'))) downtimeMatch = true;
+        if (downtimeChecks.includes('1주일') && (downtime.includes('7') || downtime.includes('주') || downtime.includes('14'))) downtimeMatch = true;
+        if (downtimeChecks.length === 3) downtimeMatch = true;
+        if (downtimeChecks.length === 0) downtimeMatch = false;
+        if (!downtimeMatch) return false;
+        
+        return true;
+    });
     
     // Sort
     filtered.sort((a, b) => {
@@ -408,8 +500,6 @@ function renderTableView() {
         }
         return 0;
     });
-    
-    document.getElementById('tableTabCount').textContent = filtered.length;
     
     const tbody = document.getElementById('tableBody');
     tbody.innerHTML = filtered.map(t => `
