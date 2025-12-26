@@ -1,5 +1,5 @@
 // ===== App State =====
-let currentView = 'concern';
+let currentView = 'consult';
 let currentCategory = 'all';
 let currentConcern = null;
 let currentBudget = 'all';
@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupFilterView();
     setupTableView();
     setupModal();
+    setupConsultation();
 });
 
 // ===== Update Tab Counts =====
@@ -841,4 +842,587 @@ function extractPrice(priceStr) {
     if (!priceStr) return 0;
     const match = priceStr.match(/(\d+)/);
     return match ? parseInt(match[1]) : 0;
+}
+
+
+// ===== AI Consultation =====
+let consultState = {
+    currentStep: 1,
+    totalSteps: 6,
+    data: {
+        age: null,
+        experience: null,
+        concerns: [],
+        concernsExtra: '',
+        areas: [],
+        budget: null,
+        downtime: null,
+        pain: null,
+        event: '',
+        extra: ''
+    }
+};
+
+function setupConsultation() {
+    // Option buttons (single select)
+    document.querySelectorAll('.option-btn[data-field]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const field = btn.dataset.field;
+            const value = btn.dataset.value;
+            
+            btn.closest('.option-grid').querySelectorAll('.option-btn').forEach(b => {
+                b.classList.remove('selected');
+            });
+            btn.classList.add('selected');
+            consultState.data[field] = value;
+        });
+    });
+    
+    // Multi-select option buttons
+    document.querySelectorAll('.option-grid.multi-select').forEach(grid => {
+        const field = grid.dataset.field;
+        grid.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('selected');
+                const selectedValues = [];
+                grid.querySelectorAll('.option-btn.selected').forEach(b => {
+                    selectedValues.push(b.dataset.value);
+                });
+                consultState.data[field] = selectedValues;
+            });
+        });
+    });
+    
+    // Budget presets
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            document.getElementById('budgetInput').value = btn.dataset.amount;
+            consultState.data.budget = parseInt(btn.dataset.amount);
+        });
+    });
+    
+    // Budget input
+    document.getElementById('budgetInput')?.addEventListener('input', (e) => {
+        consultState.data.budget = parseInt(e.target.value) || null;
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('selected'));
+    });
+    
+    // Navigation
+    document.getElementById('prevBtn').addEventListener('click', () => {
+        if (consultState.currentStep > 1) {
+            goToStep(consultState.currentStep - 1);
+        }
+    });
+    
+    document.getElementById('nextBtn').addEventListener('click', () => {
+        if (consultState.currentStep < consultState.totalSteps) {
+            goToStep(consultState.currentStep + 1);
+        }
+    });
+    
+    document.getElementById('submitBtn').addEventListener('click', submitConsultation);
+    document.getElementById('backToConsult').addEventListener('click', resetConsultation);
+    
+    // Admin
+    setupAdmin();
+}
+
+function setupAdmin() {
+    const adminLink = document.getElementById('adminLink');
+    const adminModal = document.getElementById('adminModal');
+    const adminSave = document.getElementById('adminSave');
+    const adminCancel = document.getElementById('adminCancel');
+    const apiKeyInput = document.getElementById('apiKeyInput');
+    const adminStatus = document.getElementById('adminStatus');
+    
+    // Check existing key
+    const existingKey = localStorage.getItem('claude_api_key');
+    if (existingKey) {
+        apiKeyInput.value = existingKey;
+    }
+    
+    adminLink.addEventListener('click', () => {
+        adminModal.classList.remove('hidden');
+        updateAdminStatus();
+    });
+    
+    adminCancel.addEventListener('click', () => {
+        adminModal.classList.add('hidden');
+    });
+    
+    adminModal.addEventListener('click', (e) => {
+        if (e.target === adminModal) {
+            adminModal.classList.add('hidden');
+        }
+    });
+    
+    adminSave.addEventListener('click', () => {
+        const key = apiKeyInput.value.trim();
+        if (key) {
+            localStorage.setItem('claude_api_key', key);
+            updateAdminStatus();
+            setTimeout(() => {
+                adminModal.classList.add('hidden');
+            }, 1000);
+        }
+    });
+    
+    function updateAdminStatus() {
+        const key = localStorage.getItem('claude_api_key');
+        adminStatus.classList.remove('hidden', 'success', 'empty');
+        if (key) {
+            adminStatus.classList.add('success');
+            adminStatus.textContent = '✓ API 키가 설정되어 있습니다.';
+        } else {
+            adminStatus.classList.add('empty');
+            adminStatus.textContent = '⚠ API 키가 설정되지 않았습니다.';
+        }
+    }
+}
+
+function goToStep(step) {
+    // 다음으로 넘어갈 때만 검증 (이전 버튼은 검증 안함)
+    if (step > consultState.currentStep) {
+        const isValid = validateCurrentStep();
+        if (!isValid) {
+            return;
+        }
+    }
+    
+    // Save inputs
+    if (consultState.currentStep === 2) {
+        consultState.data.concernsExtra = document.getElementById('concernsExtra')?.value || '';
+    }
+    if (consultState.currentStep === 4) {
+        consultState.data.budget = parseInt(document.getElementById('budgetInput')?.value) || null;
+    }
+    if (consultState.currentStep === 6) {
+        consultState.data.event = document.getElementById('eventInput')?.value || '';
+        consultState.data.extra = document.getElementById('extraInput')?.value || '';
+    }
+    
+    consultState.currentStep = step;
+    
+    // 모든 스텝 숨기기 (잔상 방지)
+    document.querySelectorAll('.consult-step').forEach(s => {
+        s.classList.remove('active');
+        s.style.display = 'none';
+    });
+    
+    // 현재 스텝만 보이기
+    const currentStepEl = document.querySelector(`.consult-step[data-step="${step}"]`);
+    currentStepEl.style.display = 'block';
+    // 약간의 딜레이 후 active 추가 (애니메이션용)
+    setTimeout(() => {
+        currentStepEl.classList.add('active');
+    }, 10);
+    
+    document.getElementById('progressFill').style.width = `${(step / consultState.totalSteps) * 100}%`;
+    document.getElementById('progressText').textContent = `${step} / ${consultState.totalSteps}`;
+    
+    document.getElementById('prevBtn').disabled = step === 1;
+    
+    if (step === consultState.totalSteps) {
+        document.getElementById('nextBtn').classList.add('hidden');
+        document.getElementById('submitBtn').classList.remove('hidden');
+    } else {
+        document.getElementById('nextBtn').classList.remove('hidden');
+        document.getElementById('submitBtn').classList.add('hidden');
+    }
+}
+
+function validateCurrentStep() {
+    const step = consultState.currentStep;
+    let isValid = true;
+    let message = '';
+    
+    switch(step) {
+        case 1:
+            if (!consultState.data.age) {
+                message = '연령대를 선택해주세요.';
+                isValid = false;
+            } else if (!consultState.data.experience) {
+                message = '시술 경험을 선택해주세요.';
+                isValid = false;
+            }
+            break;
+        case 2:
+            if (!consultState.data.concerns || consultState.data.concerns.length === 0) {
+                message = '고민을 최소 1개 이상 선택해주세요.';
+                isValid = false;
+            }
+            break;
+        case 3:
+            if (!consultState.data.areas || consultState.data.areas.length === 0) {
+                message = '관심 부위를 최소 1개 이상 선택해주세요.';
+                isValid = false;
+            }
+            break;
+        case 4:
+            const budget = parseInt(document.getElementById('budgetInput')?.value);
+            if (!budget || budget < 10) {
+                message = '예산을 입력해주세요. (최소 10만원)';
+                isValid = false;
+            }
+            break;
+        case 5:
+            if (!consultState.data.downtime) {
+                message = '다운타임 허용 범위를 선택해주세요.';
+                isValid = false;
+            } else if (!consultState.data.pain) {
+                message = '통증 민감도를 선택해주세요.';
+                isValid = false;
+            }
+            break;
+    }
+    
+    if (!isValid) {
+        showValidationMessage(message);
+    }
+    
+    return isValid;
+}
+
+function showValidationMessage(message) {
+    // 기존 메시지 제거
+    const existingMsg = document.querySelector('.validation-message');
+    if (existingMsg) existingMsg.remove();
+    
+    // 새 메시지 생성
+    const msgEl = document.createElement('div');
+    msgEl.className = 'validation-message';
+    msgEl.textContent = message;
+    
+    // 현재 스텝에 추가
+    const currentStep = document.querySelector(`.consult-step[data-step="${consultState.currentStep}"]`);
+    currentStep.appendChild(msgEl);
+    
+    // 3초 후 제거
+    setTimeout(() => {
+        msgEl.remove();
+    }, 3000);
+}
+
+async function submitConsultation() {
+    consultState.data.event = document.getElementById('eventInput')?.value || '';
+    consultState.data.extra = document.getElementById('extraInput')?.value || '';
+    consultState.data.budget = parseInt(document.getElementById('budgetInput')?.value) || null;
+    
+    document.getElementById('consultWizard').classList.add('hidden');
+    document.getElementById('consultLoading').classList.remove('hidden');
+    
+    try {
+        const response = await callClaudeAPI(consultState.data);
+        displayResult(response);
+    } catch (error) {
+        console.error('API Error:', error);
+        displayResult(getFallbackResponse(consultState.data));
+    }
+}
+
+async function callClaudeAPI(userData) {
+    const SUPABASE_URL = 'https://iausfassbdmpieinhaba.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlhdXNmYXNzYmRtcGllaW5oYWJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3NTg1ODQsImV4cCI6MjA4MjMzNDU4NH0.E6zhK_NvH8MMjAbGU9yJruJPytwtL8TeJm-pqWhIduc';
+    
+    const treatmentSummary = treatments.map(t => ({
+        name: t.name,
+        brand: t.brand || '',
+        category: t.category,
+        effects: t.effects?.primary?.join(', ') || '',
+        priceMin: extractMinPrice(t.pricing?.range),
+        priceRange: t.pricing?.range || '',
+        downtime: t.recovery?.downtime || '없음',
+        pain: t.recovery?.painLevel || 0,
+        sessions: t.procedure?.sessions || ''
+    }));
+    
+    const systemPrompt = `당신은 10년 경력의 피부과 전문 상담사입니다. 고객님께 친근하고 전문적인 톤으로 상담해주세요.
+
+핵심 규칙:
+1. 고객의 총 예산(${userData.budget}만원)을 최대한 활용하세요. 예산의 80% 이상을 사용하는 조합을 제안하세요.
+2. 3가지 조합을 제안하되, 각 조합은 예산 범위 내에서 최대한 많은 시술을 포함하세요.
+3. 조합별로 다른 컨셉으로 구성하세요:
+   - 조합1: 예산의 90-100% 활용, 프리미엄 시술 중심
+   - 조합2: 예산의 80-90% 활용, 균형잡힌 조합
+   - 조합3: 예산의 70-80% 활용, 가성비 중심 다양한 시술
+4. 각 조합에 최소 3-5개의 시술을 포함하세요. 시술 개수를 아끼지 마세요!
+5. 가격은 병원마다 다르므로 최소 가격 기준으로 계산하세요.
+6. 시술 순서와 간격도 상세히 안내하세요.
+
+응답 형식 (반드시 이 JSON 형식으로):
+{
+    "greeting": "고객 맞춤 인사말 (2문장)",
+    "analysis": "피부 상태 분석 (2문장)",
+    "combinations": [
+        {
+            "name": "조합 이름",
+            "concept": "컨셉 설명 (1문장)",
+            "totalPrice": "총 예상 비용",
+            "treatments": [
+                {
+                    "name": "시술명",
+                    "reason": "선택 이유 (10자 이내)",
+                    "price": "가격",
+                    "sessions": "횟수"
+                }
+            ],
+            "order": "시술 순서 (간단히)"
+        }
+    ],
+    "recommendation": "추천 조합과 이유 (1-2문장)",
+    "tips": ["팁1", "팁2", "팁3"],
+    "closing": "마무리 (1문장)"
+}
+
+시술 데이터:
+${JSON.stringify(treatmentSummary, null, 2)}`;
+
+    const userMessage = `고객 정보:
+- 연령대: ${userData.age || '미입력'}
+- 시술 경험: ${userData.experience || '미입력'}  
+- 주요 고민: ${userData.concerns?.join(', ') || '미입력'}
+- 추가 고민: ${userData.concernsExtra || '없음'}
+- 관심 부위: ${userData.areas?.join(', ') || '미입력'}
+- 총 예산: ${userData.budget || '미입력'}만원
+- 다운타임 허용: ${userData.downtime || '미입력'}
+- 통증 민감도: ${userData.pain || '미입력'}
+- 중요 일정: ${userData.event || '없음'}
+- 추가 요청: ${userData.extra || '없음'}
+
+위 정보를 바탕으로 예산 내에서 3가지 시술 조합을 추천해주세요. 최대한 자세하고 친절하게 설명해주세요.`;
+
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/claude-proxy`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+            messages: [
+                { role: 'user', content: systemPrompt + '\n\n' + userMessage }
+            ]
+        })
+    });
+    
+    if (!response.ok) {
+        throw new Error('API request failed');
+    }
+    
+    const data = await response.json();
+    const content = data.content[0].text;
+    
+    const jsonMatch = content.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+        return JSON.parse(jsonMatch[0]);
+    }
+    
+    throw new Error('Invalid response format');
+}
+
+function extractMinPrice(priceRange) {
+    if (!priceRange) return 0;
+    const match = priceRange.match(/(\d+)/);
+    return match ? parseInt(match[1]) : 0;
+}
+
+function getFallbackResponse(userData) {
+    const concerns = userData.concerns || [];
+    const budget = userData.budget || 100;
+    
+    return {
+        greeting: `${userData.age || ''} 고객님, 안녕하세요! ${concerns.join(', ')} 고민으로 상담 주셨군요. 많은 분들이 비슷한 고민을 갖고 계세요. 제가 ${budget}만원 예산 내에서 최적의 시술 조합을 찾아드릴게요.`,
+        analysis: `말씀하신 고민들을 종합해보면, 피부 탄력과 결 개선이 함께 필요한 상태로 보여요. 한 가지 시술보다는 여러 시술을 조합하면 시너지 효과를 얻을 수 있습니다.`,
+        combinations: [
+            {
+                name: "기본 탄력 케어",
+                concept: "부담 없이 시작할 수 있는 기본 조합이에요. 스킨부스터로 피부 기초 체력을 키우는 것부터 시작합니다.",
+                totalPrice: `약 ${Math.min(budget, 50)}만원`,
+                treatments: [
+                    { name: "리쥬란 힐러", reason: "피부 재생과 탄력 개선의 기본", price: "20~30만원", sessions: "3회 권장" },
+                    { name: "보톡스", reason: "표정 주름 예방 및 개선", price: "10~20만원", sessions: "3-6개월마다" }
+                ],
+                order: "리쥬란 3회 완료 후 보톡스 시술 권장"
+            },
+            {
+                name: "집중 개선 코스",
+                concept: "좀 더 확실한 효과를 원하시는 분께 추천드려요. 레이저와 부스터를 함께 진행합니다.",
+                totalPrice: `약 ${Math.min(budget, 80)}만원`,
+                treatments: [
+                    { name: "포텐자", reason: "모공과 탄력을 동시에", price: "30~50만원", sessions: "3회 권장" },
+                    { name: "쥬베룩", reason: "콜라겐 재생 촉진", price: "25~35만원", sessions: "3회 권장" }
+                ],
+                order: "포텐자 먼저 2회 → 2주 후 쥬베룩 시작"
+            },
+            {
+                name: "프리미엄 리프팅",
+                concept: "확실한 리프팅 효과를 원하시는 분께. 고출력 장비로 빠른 효과를 경험하세요.",
+                totalPrice: `약 ${Math.min(budget, 150)}만원`,
+                treatments: [
+                    { name: "울쎄라", reason: "HIFU 리프팅의 대표 시술", price: "100~200만원", sessions: "1회 (6-12개월 지속)" }
+                ],
+                order: "1회 시술로 충분, 6개월 후 유지 시술 고려"
+            }
+        ],
+        recommendation: "고객님의 상황을 고려하면 '집중 개선 코스'를 가장 추천드려요. 예산 대비 가장 균형 잡힌 효과를 기대할 수 있습니다.",
+        tips: [
+            "첫 시술은 테스트 삼아 약한 세팅으로 시작하세요",
+            "시술 전후 2주는 자외선 차단제 필수예요",
+            "여러 병원 상담 받아보시고 비교해보세요",
+            "시술 간격은 최소 2주 이상 두시는 게 좋아요",
+            "충분한 수분 섭취가 회복에 도움 됩니다"
+        ],
+        closing: "궁금한 점이 있으시면 언제든 다시 상담해주세요. 고객님의 피부 고민이 해결되시길 응원합니다! 💙"
+    };
+}
+
+function displayResult(response) {
+    document.getElementById('consultLoading').classList.add('hidden');
+    document.getElementById('consultResult').classList.remove('hidden');
+    
+    const userData = consultState.data;
+    
+    const html = `
+        <div class="report-container">
+            <div class="report-header">
+                <h2 class="report-title">맞춤 시술 상담 리포트</h2>
+                <p class="report-subtitle">AI 상담사가 분석한 고객님만을 위한 추천</p>
+            </div>
+            
+            <div class="report-summary-box">
+                <div class="report-summary-title">상담 요약</div>
+                <div class="report-summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-label">연령대</div>
+                        <div class="summary-value">${userData.age || '-'}</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">주요 고민</div>
+                        <div class="summary-value">${userData.concerns?.slice(0,2).join(', ') || '-'}</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">총 예산</div>
+                        <div class="summary-value">${userData.budget ? userData.budget + '만원' : '-'}</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">다운타임</div>
+                        <div class="summary-value">${userData.downtime || '-'}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-section">
+                <h3 class="report-section-title">💬 상담사 인사</h3>
+                <div class="report-greeting">
+                    <p>${response.greeting}</p>
+                    ${response.analysis ? `<p>${response.analysis}</p>` : ''}
+                </div>
+            </div>
+            
+            <div class="report-section">
+                <h3 class="report-section-title">
+                    🎯 맞춤 시술 조합 
+                    <span class="badge">3가지 제안</span>
+                </h3>
+                
+                <div class="combinations-grid">
+                ${response.combinations?.map((combo, i) => `
+                    <div class="combination-card">
+                        <div class="combination-header">
+                            <div class="combination-title">
+                                <span class="num">${i + 1}</span>
+                                ${combo.name}
+                            </div>
+                            <div class="combination-price">${combo.totalPrice}</div>
+                        </div>
+                        <div class="combination-desc">${combo.concept}</div>
+                        <div class="combination-treatments">
+                            ${combo.treatments?.map(t => `
+                                <div class="treatment-item">
+                                    <div class="treatment-info">
+                                        <div class="treatment-name">${t.name}</div>
+                                        <div class="treatment-detail">${t.reason}</div>
+                                    </div>
+                                    <div class="treatment-price">
+                                        ${t.price}
+                                        <div class="treatment-sessions">${t.sessions}</div>
+                                    </div>
+                                </div>
+                            `).join('') || ''}
+                        </div>
+                        ${combo.order ? `
+                            <div class="order-guide">
+                                <div class="order-guide-title">📅 순서</div>
+                                <div class="order-guide-content">${combo.order}</div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `).join('') || ''}
+                </div>
+            </div>
+            
+            ${response.recommendation ? `
+            <div class="report-section">
+                <h3 class="report-section-title">⭐ 상담사 추천</h3>
+                <div class="report-comment">
+                    <p>${response.recommendation}</p>
+                </div>
+            </div>
+            ` : ''}
+            
+            ${response.tips?.length ? `
+            <div class="report-section">
+                <h3 class="report-section-title">✓ 시술 전 체크리스트</h3>
+                <ul class="report-tips">
+                    ${response.tips.map(tip => `<li>${tip}</li>`).join('')}
+                </ul>
+            </div>
+            ` : ''}
+            
+            ${response.closing ? `
+            <div class="report-section">
+                <div class="report-comment">
+                    <p>${response.closing}</p>
+                </div>
+            </div>
+            ` : ''}
+            
+            <div class="report-disclaimer">
+                <strong>안내:</strong> 본 상담 결과는 AI가 제공하는 일반적인 정보이며, 실제 시술 전 반드시 피부과 전문의 상담을 받으시기 바랍니다. 
+                표시된 가격은 최소 기준이며, 병원 및 시술 범위에 따라 달라질 수 있습니다.
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('resultContent').innerHTML = html;
+}
+
+function resetConsultation() {
+    consultState = {
+        currentStep: 1,
+        totalSteps: 6,
+        data: {
+            age: null,
+            experience: null,
+            concerns: [],
+            concernsExtra: '',
+            areas: [],
+            budget: null,
+            downtime: null,
+            pain: null,
+            event: '',
+            extra: ''
+        }
+    };
+    
+    document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+    document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('selected'));
+    document.querySelectorAll('.text-input').forEach(input => input.value = '');
+    
+    goToStep(1);
+    
+    document.getElementById('consultResult').classList.add('hidden');
+    document.getElementById('consultLoading').classList.add('hidden');
+    document.getElementById('consultWizard').classList.remove('hidden');
 }
