@@ -1121,6 +1121,328 @@ body {
     margin-top: 10px;
 }
 
+/* 외부 리뷰 링크 */
+.modal-external-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px 0;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+.external-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.external-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+.external-link.youtube {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.external-link.youtube:hover {
+    background: #fecaca;
+}
+
+.external-link.youtube-en {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.external-link.youtube-en:hover {
+    background: #fde68a;
+}
+
+.external-link.naver {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.external-link.naver:hover {
+    background: #bbf7d0;
+}
+
+.external-link.realself {
+    background: #fce7f3;
+    color: #db2777;
+}
+
+.external-link.realself:hover {
+    background: #fbcfe8;
+}
+
+.external-link.google {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+.external-link.google:hover {
+    background: #bae6fd;
+}
+
+/* 상세 리뷰 섹션 */
+.modal-review {
+    margin-bottom: 24px;
+}
+
+/* 한줄 요약 */
+.modal-summary {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+/* 핵심 정보 카드 */
+.modal-key-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.key-info-item {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+}
+
+.key-info-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.key-info-icon {
+    font-size: 14px;
+}
+
+.key-info-label {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.key-info-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+}
+
+/* 추천 대상 */
+.modal-recommend {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.recommend-yes, .recommend-no {
+    padding: 16px;
+    border-radius: var(--radius-md);
+}
+
+.recommend-yes {
+    background: #ecfdf5;
+}
+
+.recommend-no {
+    background: #fef3c7;
+}
+
+.recommend-yes h4, .recommend-no h4 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.recommend-yes h4 { color: #059669; }
+.recommend-no h4 { color: #b45309; }
+
+.recommend-yes ul, .recommend-no ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recommend-yes li, .recommend-no li {
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 4px 0;
+    color: var(--text-secondary);
+}
+
+.recommend-age {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin: 0;
+}
+
+/* 시술 팁 */
+.modal-tips {
+    background: #fffbeb;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+}
+
+.modal-tips ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.modal-tips li {
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 5px 0 5px 20px;
+    position: relative;
+    color: var(--text-secondary);
+}
+
+.modal-tips li::before {
+    content: "💡";
+    position: absolute;
+    left: 0;
+    font-size: 12px;
+}
+
+/* 총평 */
+.modal-verdict {
+    background: linear-gradient(135deg, #e8eef6 0%, #dce5f0 100%);
+    padding: 16px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--navy);
+}
+
+.modal-verdict strong {
+    color: var(--navy-dark);
+}
+
+/* 비교 조합 best-with */
+.best-with {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .modal-key-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .modal-recommend {
+        grid-template-columns: 1fr;
+    }
+}
+
+.review-summary {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    padding: 16px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+}
+
+.review-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.review-likes, .review-dislikes {
+    padding: 16px;
+    border-radius: var(--radius-md);
+}
+
+.review-likes {
+    background: #ecfdf5;
+}
+
+.review-dislikes {
+    background: #fef2f2;
+}
+
+.review-likes h4, .review-dislikes h4, .review-tips h4 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.review-likes h4 { color: #059669; }
+.review-dislikes h4 { color: #dc2626; }
+.review-tips h4 { color: #b45309; }
+
+.review-likes ul, .review-dislikes ul, .review-tips ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.review-likes li, .review-dislikes li, .review-tips li {
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 5px 0;
+    padding-left: 18px;
+    position: relative;
+}
+
+.review-likes li::before { content: "✓"; position: absolute; left: 0; color: #059669; font-weight: 600; }
+.review-dislikes li::before { content: "✗"; position: absolute; left: 0; color: #dc2626; font-weight: 600; }
+.review-tips li::before { content: "→"; position: absolute; left: 0; color: #b45309; font-weight: 500; }
+
+.review-tips {
+    background: #fffbeb;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+}
+
+.review-overall {
+    background: linear-gradient(135deg, #e8eef6 0%, #dce5f0 100%);
+    padding: 16px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--navy);
+}
+
+.review-overall strong {
+    color: var(--navy-dark);
+}
+
+@media (max-width: 768px) {
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .modal-section {
     margin-bottom: 18px;
 }
@@ -1185,7 +1507,7 @@ body {
 .modal-pros-cons {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 12px;
 }
 
 .modal-pros, .modal-cons {
@@ -1204,7 +1526,8 @@ body {
 .modal-pros h4 {
     color: #059669;
     font-size: 13px;
-    margin-bottom: 10px;
+    font-weight: 600;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -1219,7 +1542,8 @@ body {
 .modal-cons h4 {
     color: #dc2626;
     font-size: 13px;
-    margin-bottom: 10px;
+    font-weight: 600;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -1230,15 +1554,35 @@ body {
     height: 16px;
     stroke: #dc2626;
 }
-}
 
 .modal-list {
     list-style: none;
-    font-size: 14px;
+    padding: 0;
+    margin: 0;
 }
 
 .modal-list li {
-    padding: 4px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 5px 0 5px 18px;
+    position: relative;
+    list-style: none;
+}
+
+.modal-pros .modal-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 600;
+}
+
+.modal-cons .modal-list li::before {
+    content: "✗";
+    position: absolute;
+    left: 0;
+    color: #dc2626;
+    font-weight: 600;
 }
 
 .modal-comparison {
