@@ -1082,12 +1082,12 @@ function updateProgress(step, message, percent) {
     if (msgEl) msgEl.textContent = message;
     
     // 프로그레스 바 업데이트
-    const fillEl = document.getElementById('progressFill');
+    const fillEl = document.getElementById('loadingProgressFill');
     if (fillEl) fillEl.style.width = percent + '%';
     
     // 단계 업데이트
     for (let i = 1; i <= 4; i++) {
-        const stepEl = document.getElementById('step' + i);
+        const stepEl = document.getElementById('loadingStep' + i);
         if (stepEl) {
             stepEl.classList.remove('active', 'completed');
             if (i < step) {
@@ -1369,6 +1369,17 @@ function enrichResponseWithDB(aiResponse, userData) {
             t.name === name || t.name.includes(name) || name.includes(t.name)
         );
         if (dbTreatment) {
+            // mechanism 처리 (객체일 수 있음)
+            let mechanismText = '';
+            if (typeof dbTreatment.mechanism === 'object') {
+                mechanismText = dbTreatment.mechanism?.detailed || dbTreatment.mechanism?.summary || '';
+            } else {
+                mechanismText = dbTreatment.mechanism || '';
+            }
+            
+            // review 객체에서 정보 추출
+            const review = dbTreatment.review || {};
+            
             treatmentDetails.push({
                 name: dbTreatment.name,
                 fullName: dbTreatment.fullName || dbTreatment.name,
@@ -1378,19 +1389,37 @@ function enrichResponseWithDB(aiResponse, userData) {
                 priceNote: dbTreatment.pricing?.note || '병원마다 상이',
                 sessions: dbTreatment.procedure?.sessions || '',
                 duration: dbTreatment.procedure?.duration || '',
-                description: dbTreatment.description || '',
-                mechanism: dbTreatment.mechanism || '',
+                anesthesia: dbTreatment.procedure?.anesthesia || '',
+                
+                // 설명
+                description: review.summary || dbTreatment.description || '',
+                mechanism: mechanismText,
+                
+                // 효과
                 expectedEffects: dbTreatment.effects?.primary || [],
+                secondaryEffects: dbTreatment.effects?.secondary || [],
                 targets: dbTreatment.effects?.targets || [],
-                pros: dbTreatment.pros || [],
-                cons: dbTreatment.cons || [],
+                notFor: dbTreatment.effects?.notFor || [],
+                
+                // 장단점 (review에서)
+                pros: review.likes || dbTreatment.pros || [],
+                cons: review.dislikes || dbTreatment.cons || [],
+                tips: review.tips || [],
+                overall: review.overall || '',
+                
+                // 회복
                 painLevel: dbTreatment.recovery?.painLevel || 0,
                 downtime: dbTreatment.recovery?.downtime || '없음',
                 recoveryTips: dbTreatment.recovery?.tips || [],
+                aftercare: dbTreatment.recovery?.aftercare || [],
+                
+                // 주의사항
                 warnings: dbTreatment.warnings || [],
                 contraindications: dbTreatment.contraindications || [],
+                
+                // 추천 대상
                 idealFor: dbTreatment.idealFor || '',
-                notFor: dbTreatment.notFor || ''
+                bestFor: dbTreatment.bestFor || []
             });
         }
     });
@@ -1410,6 +1439,7 @@ function enrichResponseWithDB(aiResponse, userData) {
                 t.downtime = dbTreatment.recovery?.downtime || '없음';
                 t.painLevel = dbTreatment.recovery?.painLevel || 0;
                 t.effect = dbTreatment.effects?.primary?.[0] || '';
+                t.sessions = dbTreatment.procedure?.sessions || '';
                 
                 // 가격 합산
                 const priceMatch = (dbTreatment.pricing?.range || '').match(/(\d+)/g);
@@ -1446,7 +1476,6 @@ function enrichResponseWithDB(aiResponse, userData) {
             emergency: "심한 붓기, 발적, 통증 시 즉시 시술 병원에 연락하세요."
         }
     };
-}
 }
 
 function extractMinPrice(priceRange) {
@@ -1620,53 +1649,64 @@ function displayResult(response) {
                                 <span class="detail-number">${idx + 1}</span>
                                 <div class="detail-title-wrap">
                                     <h4 class="detail-name">${detail.name}</h4>
-                                    ${detail.fullName && detail.fullName !== detail.name ? `<span class="detail-fullname">${detail.fullName}</span>` : ''}
-                                    ${detail.brand ? `<span class="detail-brand">${detail.brand}</span>` : ''}
+                                    <div class="detail-meta-tags">
+                                        ${detail.category ? `<span class="meta-tag category">${detail.category}</span>` : ''}
+                                        ${detail.brand ? `<span class="meta-tag brand">${detail.brand}</span>` : ''}
+                                    </div>
                                 </div>
                                 ${detail.priceRange ? `<span class="detail-price">${detail.priceRange}</span>` : ''}
                             </div>
                             
-                            <div class="detail-price-info">
-                                ${detail.sessions ? `<span class="price-info-item">📅 ${detail.sessions}</span>` : ''}
-                                ${detail.priceNote ? `<span class="price-info-item">💡 ${detail.priceNote}</span>` : ''}
-                                ${detail.downtime ? `<span class="price-info-item">⏱️ 회복: ${detail.downtime}</span>` : ''}
-                                ${detail.painLevel ? `<span class="price-info-item">😣 통증: ${'●'.repeat(detail.painLevel)}${'○'.repeat(5-detail.painLevel)}</span>` : ''}
+                            <div class="detail-quick-info">
+                                ${detail.sessions ? `<div class="quick-info-item"><span class="qi-icon">📅</span><span class="qi-label">횟수</span><span class="qi-value">${detail.sessions}</span></div>` : ''}
+                                ${detail.downtime ? `<div class="quick-info-item"><span class="qi-icon">⏱️</span><span class="qi-label">회복</span><span class="qi-value">${detail.downtime}</span></div>` : ''}
+                                ${detail.painLevel ? `<div class="quick-info-item"><span class="qi-icon">😣</span><span class="qi-label">통증</span><span class="qi-value">${'●'.repeat(detail.painLevel)}${'○'.repeat(5-detail.painLevel)}</span></div>` : ''}
+                                ${detail.anesthesia ? `<div class="quick-info-item"><span class="qi-icon">💉</span><span class="qi-label">마취</span><span class="qi-value">${detail.anesthesia}</span></div>` : ''}
+                                ${detail.duration ? `<div class="quick-info-item"><span class="qi-icon">⌛</span><span class="qi-label">지속</span><span class="qi-value">${detail.duration}</span></div>` : ''}
                             </div>
                             
                             ${detail.description ? `
                             <div class="detail-description">
+                                <h5>📝 시술 설명</h5>
                                 <p>${detail.description}</p>
                             </div>
                             ` : ''}
                             
                             ${detail.mechanism ? `
                             <div class="detail-mechanism">
-                                <p>🔬 <strong>작용 원리:</strong> ${detail.mechanism}</p>
+                                <h5>🔬 작용 원리</h5>
+                                <p>${detail.mechanism}</p>
                             </div>
                             ` : ''}
                             
-                            ${detail.idealFor ? `
-                            <div class="detail-ideal">
-                                <span class="ideal-label">✨ 이런 분께 추천</span>
-                                <span class="ideal-text">${detail.idealFor}</span>
-                            </div>
-                            ` : ''}
-                            
-                            ${detail.expectedEffects?.length ? `
-                            <div class="detail-section effects">
+                            ${detail.expectedEffects?.length || detail.secondaryEffects?.length ? `
+                            <div class="detail-effects">
                                 <h5>🎯 기대 효과</h5>
-                                <ul>
-                                    ${detail.expectedEffects.map(e => `<li>${e}</li>`).join('')}
-                                </ul>
+                                <div class="effects-grid">
+                                    ${detail.expectedEffects?.length ? `
+                                    <div class="effects-primary">
+                                        <span class="effects-label">주요 효과</span>
+                                        <div class="effect-tags">
+                                            ${detail.expectedEffects.map(e => `<span class="effect-tag primary">${e}</span>`).join('')}
+                                        </div>
+                                    </div>
+                                    ` : ''}
+                                    ${detail.secondaryEffects?.length ? `
+                                    <div class="effects-secondary">
+                                        <span class="effects-label">부가 효과</span>
+                                        <div class="effect-tags">
+                                            ${detail.secondaryEffects.map(e => `<span class="effect-tag secondary">${e}</span>`).join('')}
+                                        </div>
+                                    </div>
+                                    ` : ''}
+                                </div>
                             </div>
                             ` : ''}
                             
-                            ${detail.targets?.length ? `
-                            <div class="detail-section targets">
-                                <h5>📍 시술 부위</h5>
-                                <div class="target-tags">
-                                    ${detail.targets.map(t => `<span class="target-tag">${t}</span>`).join('')}
-                                </div>
+                            ${detail.notFor?.length ? `
+                            <div class="detail-not-for">
+                                <span class="not-for-label">❌ 이런 효과는 어려워요:</span>
+                                <span class="not-for-items">${detail.notFor.join(', ')}</span>
                             </div>
                             ` : ''}
                             
@@ -1690,30 +1730,41 @@ function displayResult(response) {
                                 ` : ''}
                             </div>
                             
-                            ${detail.recoveryTips?.length ? `
-                            <div class="detail-section tips">
-                                <h5>💡 회복 팁</h5>
+                            ${detail.tips?.length ? `
+                            <div class="detail-section tips-section">
+                                <h5>💡 시술 팁</h5>
                                 <ul>
-                                    ${detail.recoveryTips.map(t => `<li>${t}</li>`).join('')}
+                                    ${detail.tips.map(t => `<li>${t}</li>`).join('')}
                                 </ul>
                             </div>
                             ` : ''}
                             
-                            ${detail.warnings?.length ? `
-                            <div class="detail-section warnings">
-                                <h5>⚠️ 주의사항</h5>
-                                <ul>
-                                    ${detail.warnings.map(w => `<li>${w}</li>`).join('')}
-                                </ul>
+                            ${detail.overall ? `
+                            <div class="detail-overall">
+                                <h5>📋 총평</h5>
+                                <p>${detail.overall}</p>
                             </div>
                             ` : ''}
                             
-                            ${detail.contraindications?.length ? `
-                            <div class="detail-section contraindications">
-                                <h5>🚫 이런 분은 피하세요</h5>
-                                <ul>
-                                    ${detail.contraindications.map(c => `<li>${c}</li>`).join('')}
-                                </ul>
+                            ${detail.warnings?.length || detail.contraindications?.length ? `
+                            <div class="detail-warnings-section">
+                                ${detail.warnings?.length ? `
+                                <div class="detail-section warnings">
+                                    <h5>⚠️ 주의사항</h5>
+                                    <ul>
+                                        ${detail.warnings.map(w => `<li>${w}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                ` : ''}
+                                
+                                ${detail.contraindications?.length ? `
+                                <div class="detail-section contraindications">
+                                    <h5>🚫 시술 불가</h5>
+                                    <ul>
+                                        ${detail.contraindications.map(c => `<li>${c}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                ` : ''}
                             </div>
                             ` : ''}
                         </div>
@@ -1782,29 +1833,6 @@ function displayResult(response) {
             <div class="report-actions">
                 <button class="btn-retry" onclick="backToConsultWizard()">← 다시 상담받기</button>
                 <button class="btn-print" onclick="window.print()">🖨️ 인쇄하기</button>
-            </div>
-        </div>
-    `;
-    
-    document.getElementById('resultContent').innerHTML = html;
-}
-                    ${tips.map(tip => `<li>${tip}</li>`).join('')}
-                </ul>
-            </div>
-            ` : ''}
-            
-            ${response.closing ? `
-            <div class="report-section">
-                <div class="report-closing">
-                    <p>${response.closing}</p>
-                </div>
-            </div>
-            ` : ''}
-            
-            <div class="report-disclaimer">
-                <strong>📌 안내:</strong> 본 상담 결과는 True Korea 피부과 가이드의 196개 시술 데이터베이스를 기반으로 AI가 분석한 참고 정보입니다. 
-                실제 시술 전 반드시 피부과 전문의 상담을 받으시기 바랍니다. 
-                표시된 가격은 최소 기준이며, 병원 및 시술 범위에 따라 달라질 수 있습니다.
             </div>
         </div>
     `;
