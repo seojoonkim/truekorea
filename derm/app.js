@@ -51,7 +51,7 @@ function updateConcernCounts() {
     Object.keys(concernMap).forEach(concern => {
         const keywords = concernMap[concern];
         const count = treatments.filter(t => {
-            const searchText = `${t.category} ${t.subcategory} ${t.tags.join(' ')} ${t.effects.primary.join(' ')} ${t.mechanism.keywords.join(' ')}`.toLowerCase();
+            const searchText = `${t.category} ${t.subcategory} ${t.tags.join(' ')} ${t.effects.primary.join(' ')}`.toLowerCase();
             return keywords.some(k => searchText.includes(k.toLowerCase()));
         }).length;
         
@@ -82,58 +82,36 @@ function setupViewTabs() {
 }
 
 // ===== Search =====
-let currentSearchQuery = '';
-
 function setupSearch() {
     const searchInput = document.getElementById('searchInput');
     
-    // 실시간 검색 (input)
     searchInput.addEventListener('input', (e) => {
-        currentSearchQuery = e.target.value.toLowerCase().trim();
-        applySearchFilter();
-    });
-    
-    // 엔터 키 검색
-    searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            currentSearchQuery = e.target.value.toLowerCase().trim();
-            applySearchFilter();
+        const query = e.target.value.toLowerCase().trim();
+        
+        if (query.length < 2) {
+            if (currentView === 'cards') renderCardsView(currentCategory);
+            if (currentView === 'table') renderTableView();
+            if (currentView === 'filter') applyFilters();
+            return;
         }
+        
+        const results = treatments.filter(t => 
+            t.name.toLowerCase().includes(query) ||
+            t.nameEn.toLowerCase().includes(query) ||
+            t.brand.toLowerCase().includes(query) ||
+            (t.review && t.review.summary.includes(query)) ||
+            t.tags.some(tag => tag.includes(query)) ||
+            t.effects.primary.some(e => e.includes(query))
+        );
+        
+        // Switch to cards view and show results
+        document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector('[data-view="cards"]').classList.add('active');
+        document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('view-cards').classList.add('active');
+        
+        renderTreatmentCards(results, 'cardsGrid');
     });
-}
-
-function applySearchFilter() {
-    // 현재 뷰에 따라 다르게 처리
-    if (currentView === 'concern') {
-        renderConcernTreatments();
-    } else if (currentView === 'filter') {
-        applyFilters();
-    } else if (currentView === 'table') {
-        renderTableView();
-    } else {
-        // cards view - 기본
-        if (currentSearchQuery.length < 1) {
-            renderCardsView(currentCategory);
-        } else {
-            const results = filterBySearch(treatments);
-            renderTreatmentCards(results, 'cardsGrid');
-        }
-    }
-}
-
-function filterBySearch(items) {
-    if (!currentSearchQuery || currentSearchQuery.length < 1) {
-        return items;
-    }
-    
-    return items.filter(t => 
-        t.name.toLowerCase().includes(currentSearchQuery) ||
-        t.nameEn.toLowerCase().includes(currentSearchQuery) ||
-        t.brand.toLowerCase().includes(currentSearchQuery) ||
-        t.mechanism.simple.includes(currentSearchQuery) ||
-        t.tags.some(tag => tag.includes(currentSearchQuery)) ||
-        t.effects.primary.some(e => e.includes(currentSearchQuery))
-    );
 }
 
 // ===== View 1: 고민별 찾기 =====
@@ -196,7 +174,7 @@ function renderConcernTreatments() {
     const budgetMax = parseInt(document.getElementById('concernBudgetMax').value);
     
     let filtered = treatments.filter(t => {
-        const searchText = `${t.category} ${t.subcategory} ${t.tags.join(' ')} ${t.effects.primary.join(' ')} ${t.mechanism.keywords.join(' ')}`.toLowerCase();
+        const searchText = `${t.category} ${t.subcategory} ${t.tags.join(' ')} ${t.effects.primary.join(' ')}`.toLowerCase();
         return keywords.some(k => searchText.includes(k.toLowerCase()));
     });
     
@@ -207,9 +185,6 @@ function renderConcernTreatments() {
         if (budgetMax < 200 && price > budgetMax) return false;
         return true;
     });
-    
-    // Search filter 적용
-    filtered = filterBySearch(filtered);
     
     renderTreatmentCards(filtered, 'concernTreatments');
 }
@@ -334,9 +309,6 @@ function applyFilters() {
         
         return true;
     });
-    
-    // Search filter 적용
-    filtered = filterBySearch(filtered);
     
     renderTreatmentCards(filtered, 'filterResults');
 }
@@ -493,9 +465,6 @@ function renderTableView() {
         return true;
     });
     
-    // Search filter 적용
-    filtered = filterBySearch(filtered);
-    
     // Sort
     filtered.sort((a, b) => {
         let aVal, bVal;
@@ -594,7 +563,7 @@ function renderTreatmentCards(items, containerId) {
                 </div>
                 <span class="card-badge">${t.subcategory || t.category}</span>
             </div>
-            <div class="card-desc">${t.mechanism.simple}</div>
+            <div class="card-desc">${t.review ? t.review.summary : t.mechanism.detailed}</div>
             <div class="card-tags">
                 ${t.effects.primary.slice(0, 3).map(e => `<span class="card-tag">${e}</span>`).join('')}
             </div>
@@ -655,13 +624,10 @@ function showModal(t) {
     const searchName = encodeURIComponent(t.name + ' 후기');
     const searchNameEn = encodeURIComponent(t.nameEn + ' review');
     const naverBlogUrl = `https://search.naver.com/search.naver?ssc=tab.blog.all&query=${searchName}`;
-    const realSelfUrl = `https://www.realself.com/find/${encodeURIComponent(t.nameEn)}`;
+    const naverBlogEnUrl = `https://search-naver-com.translate.goog/search.naver?ssc=tab.blog.all&query=${searchName}&_x_tr_sl=ko&_x_tr_tl=en&_x_tr_hl=en`;
     const youtubeUrl = `https://www.youtube.com/results?search_query=${searchName}`;
     const youtubeEnUrl = `https://www.youtube.com/results?search_query=${searchNameEn}`;
     const googleUrl = `https://www.google.com/search?q=${searchNameEn}`;
-    
-    // 리뷰 데이터
-    const review = t.mechanism.review;
     
     content.innerHTML = `
         <!-- 1. 헤더 -->
@@ -671,101 +637,112 @@ function showModal(t) {
             <span class="modal-badge">${t.category} / ${t.subcategory}</span>
         </div>
         
-        <!-- 2. 한줄 요약 + 효과 태그 -->
+        <!-- 2. 한줄 요약 -->
+        ${t.review ? `
         <div class="modal-section">
-            <div class="modal-summary">
-                ${review ? review.summary : t.mechanism.simple}
-            </div>
+            <div class="review-summary">${t.review.summary}</div>
+        </div>
+        ` : ''}
+        
+        <!-- 3. 기대 효과 -->
+        <div class="modal-section">
+            <h3 class="modal-section-title">기대 효과</h3>
             <div class="modal-effects">
-                ${t.effects.primary.map(e => `<span class="modal-effect-tag">${e}</span>`).join('')}
+                ${t.effects.primary.map(e => `<span class="modal-effect-tag primary">${e}</span>`).join('')}
+                ${t.effects.secondary.map(e => `<span class="modal-effect-tag secondary">${e}</span>`).join('')}
             </div>
         </div>
         
-        <!-- 3. 핵심 정보 카드 (빠른 의사결정) -->
+        <!-- 4. 핵심 정보 (빠른 판단용) -->
         <div class="modal-section">
-            <div class="modal-key-info">
-                <div class="key-info-item">
-                    <div class="key-info-header">
-                        <span class="key-info-icon">💰</span>
-                        <span class="key-info-label">가격</span>
-                    </div>
-                    <div class="key-info-value">${t.pricing.range}</div>
+            <div class="modal-stats-grid modal-key-stats">
+                <div class="modal-stat highlight">
+                    <div class="modal-stat-label">💰 가격</div>
+                    <div class="modal-stat-value">${t.pricing.range}</div>
                 </div>
-                <div class="key-info-item">
-                    <div class="key-info-header">
-                        <span class="key-info-icon">⏱</span>
-                        <span class="key-info-label">효과 지속</span>
-                    </div>
-                    <div class="key-info-value">${t.effects.duration}</div>
+                <div class="modal-stat highlight">
+                    <div class="modal-stat-label">⏱️ 효과 지속</div>
+                    <div class="modal-stat-value">${t.effects.duration}</div>
                 </div>
-                <div class="key-info-item">
-                    <div class="key-info-header">
-                        <span class="key-info-icon">🩹</span>
-                        <span class="key-info-label">다운타임</span>
-                    </div>
-                    <div class="key-info-value">${t.recovery.downtime || '없음'}</div>
+                <div class="modal-stat highlight">
+                    <div class="modal-stat-label">🩹 다운타임</div>
+                    <div class="modal-stat-value">${t.recovery.downtime || '없음'}</div>
                 </div>
-                <div class="key-info-item">
-                    <div class="key-info-header">
-                        <span class="key-info-icon">😣</span>
-                        <span class="key-info-label">통증</span>
-                    </div>
-                    <div class="key-info-value">${t.recovery.painLevel}/5</div>
+                <div class="modal-stat highlight">
+                    <div class="modal-stat-label">😣 통증</div>
+                    <div class="modal-stat-value">${t.recovery.painLevel}/5</div>
                 </div>
             </div>
         </div>
         
-        <!-- 4. 추천 대상 -->
+        <!-- 4. 상세 리뷰 (이런 점이 좋아요/아쉬워요) -->
+        ${t.review ? `
+        <div class="modal-section">
+            <h3 class="modal-section-title">실제 후기 분석</h3>
+            <div class="review-grid">
+                <div class="review-likes">
+                    <h4>👍 이런 점이 좋아요</h4>
+                    <ul>${t.review.likes.map(l => `<li>${l}</li>`).join('')}</ul>
+                </div>
+                <div class="review-dislikes">
+                    <h4>👎 이런 점은 아쉬워요</h4>
+                    <ul>${t.review.dislikes.map(d => `<li>${d}</li>`).join('')}</ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 5. 시술 팁 + 총평 -->
+        <div class="modal-section">
+            <div class="review-tips">
+                <h4>💡 시술 팁</h4>
+                <ul>${t.review.tips.map(tip => `<li>${tip}</li>`).join('')}</ul>
+            </div>
+            <div class="review-overall">
+                <strong>💬 총평:</strong> ${t.review.overall}
+            </div>
+        </div>
+        ` : ''}
+        
+        <!-- 6. 이런 분께 추천 -->
         <div class="modal-section">
             <h3 class="modal-section-title">이런 분께 추천해요</h3>
-            <div class="modal-recommend">
-                <div class="recommend-yes">
+            <div class="modal-suitability">
+                <div class="suitability-recommend">
                     <h4>✅ 추천</h4>
                     <ul>${t.suitability.bestFor.map(b => `<li>${b}</li>`).join('')}</ul>
                 </div>
                 ${t.suitability.notRecommended.length ? `
-                <div class="recommend-no">
+                <div class="suitability-caution">
                     <h4>⚠️ 비추천</h4>
                     <ul>${t.suitability.notRecommended.map(n => `<li>${n}</li>`).join('')}</ul>
                 </div>
                 ` : ''}
             </div>
-            <p class="recommend-age">👤 적정 연령대: ${t.suitability.idealAge}</p>
+            <p class="suitability-age">👤 적정 연령대: ${t.suitability.idealAge}</p>
         </div>
         
-        <!-- 5. 장단점 -->
+        <!-- 7. 장단점 (키워드 요약) -->
+        ${t.pros.length || t.cons.length ? `
         <div class="modal-section">
-            <h3 class="modal-section-title">장단점</h3>
+            <h3 class="modal-section-title">한눈에 보는 장단점</h3>
             <div class="modal-pros-cons">
                 <div class="modal-pros">
                     <h4>👍 장점</h4>
                     <ul class="modal-list">
-                        ${review ? review.likes.map(l => `<li>${l}</li>`).join('') : t.pros.map(p => `<li>${p}</li>`).join('')}
+                        ${t.pros.map(p => `<li>${p}</li>`).join('')}
                     </ul>
                 </div>
                 <div class="modal-cons">
                     <h4>👎 단점</h4>
                     <ul class="modal-list">
-                        ${review ? review.dislikes.map(d => `<li>${d}</li>`).join('') : t.cons.map(c => `<li>${c}</li>`).join('')}
+                        ${t.cons.map(c => `<li>${c}</li>`).join('')}
                     </ul>
                 </div>
             </div>
         </div>
-        
-        <!-- 6. 시술 팁 -->
-        ${review ? `
-        <div class="modal-section">
-            <h3 class="modal-section-title">시술 팁</h3>
-            <div class="modal-tips">
-                <ul>${review.tips.map(tip => `<li>${tip}</li>`).join('')}</ul>
-            </div>
-            <div class="modal-verdict">
-                <strong>💬 총평:</strong> ${review.overall}
-            </div>
-        </div>
         ` : ''}
         
-        <!-- 7. 상세 시술 정보 -->
+        <!-- 8. 상세 시술 정보 -->
         <div class="modal-section">
             <h3 class="modal-section-title">상세 시술 정보</h3>
             <div class="modal-stats-grid">
@@ -788,15 +765,15 @@ function showModal(t) {
             </div>
         </div>
         
-        <!-- 8. 시술 원리 -->
+        <!-- 10. 시술 원리 -->
         <div class="modal-section">
             <h3 class="modal-section-title">시술 원리</h3>
             <div class="modal-mechanism">
-                ${t.mechanism.detailed || t.mechanism.simple}
+                ${t.mechanism.detailed}
             </div>
         </div>
         
-        <!-- 9. 비교 & 조합 -->
+        <!-- 11. 비교 & 조합 -->
         ${Object.keys(t.comparison.vs).length || t.comparison.bestWith.length ? `
         <div class="modal-section">
             <h3 class="modal-section-title">비교 & 함께 하면 좋은 시술</h3>
@@ -807,7 +784,7 @@ function showModal(t) {
         </div>
         ` : ''}
         
-        <!-- 10. 외부 후기 링크 -->
+        <!-- 12. 외부 링크 (더 알아보기) -->
         <div class="modal-section">
             <h3 class="modal-section-title">더 많은 후기 보기</h3>
             <div class="modal-external-links">
@@ -823,9 +800,9 @@ function showModal(t) {
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845z"/></svg>
                     네이버 블로그
                 </a>
-                <a href="${realSelfUrl}" target="_blank" class="external-link realself">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    RealSelf (EN)
+                <a href="${naverBlogEnUrl}" target="_blank" class="external-link naver-en">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845z"/></svg>
+                    Naver (EN)
                 </a>
                 <a href="${googleUrl}" target="_blank" class="external-link google">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
