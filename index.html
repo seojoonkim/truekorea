@@ -6,169 +6,323 @@
     <title>TrueKorea | 진짜 한국을 경험하세요</title>
     <link href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --bg: #fafafa;
-            --card-bg: #ffffff;
-            --text: #1a1a1a;
-            --text-secondary: #666;
-            --accent: #2563eb;
-            --border: #e5e5e5;
+            --navy-dark: #0d1b2a;
+            --navy: #1b2d4f;
+            --navy-light: #2d4a6f;
+            --gold: #c9a962;
+            --gold-light: #e8d5a3;
+            --white: #ffffff;
         }
-        
+
         body {
-            font-family: 'Pretendard', -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: linear-gradient(160deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
             min-height: 100vh;
-        }
-        
-        .header {
-            text-align: center;
-            padding: 60px 20px 40px;
-        }
-        
-        .logo {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 12px;
-        }
-        
-        .logo span { color: var(--accent); }
-        
-        .tagline {
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
-        
-        .categories {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 16px;
-        }
-        
-        .category-card {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-            padding: 32px 20px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            text-decoration: none;
-            color: var(--text);
-            transition: all 0.2s ease;
+            justify-content: center;
+            padding: 60px 24px;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
         }
-        
-        .category-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            transform: translateY(-4px);
-        }
-        
-        .category-card.active {
-            border-color: var(--accent);
-            background: linear-gradient(135deg, #eff6ff, #ffffff);
-        }
-        
-        .category-card.disabled {
-            opacity: 0.5;
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(201, 169, 98, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(45, 74, 111, 0.2) 0%, transparent 50%);
             pointer-events: none;
         }
-        
-        .category-emoji { font-size: 40px; }
-        
-        .category-name {
-            font-size: 18px;
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .logo-true {
+            color: var(--white);
+        }
+
+        .logo-korea {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Card */
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 36px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card.active {
+            background: rgba(201, 169, 98, 0.15);
+            border-color: var(--gold);
+            box-shadow: 0 0 40px rgba(201, 169, 98, 0.2);
+        }
+
+        .card.active:hover {
+            background: rgba(201, 169, 98, 0.2);
+            box-shadow: 0 20px 50px rgba(201, 169, 98, 0.25);
+        }
+
+        .card.disabled {
+            cursor: default;
+            opacity: 0.5;
+        }
+
+        .card.disabled:hover {
+            transform: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+        }
+
+        /* Card Icon */
+        .card-icon {
+            width: 72px;
+            height: 72px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        /* Card Content */
+        .card-title {
+            font-size: 20px;
             font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
         }
-        
-        .category-desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-            text-align: center;
-        }
-        
-        .category-badge {
-            padding: 4px 10px;
-            background: var(--accent);
-            color: white;
-            font-size: 11px;
-            font-weight: 600;
-            border-radius: 12px;
-        }
-        
-        .category-badge.soon {
-            background: #e5e5e5;
-            color: #999;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-secondary);
+
+        .card-desc {
             font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-live {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: var(--navy-dark);
+            box-shadow: 0 4px 16px rgba(201, 169, 98, 0.4);
+        }
+
+        .badge-soon {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 80px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 13px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 40px 16px;
+            }
+
+            .logo {
+                font-size: 36px;
+            }
+
+            .tagline {
+                font-size: 15px;
+            }
+
+            .header {
+                margin-bottom: 40px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .card {
+                padding: 28px 20px;
+                flex-direction: row;
+                text-align: left;
+                gap: 20px;
+            }
+
+            .card-icon {
+                width: 56px;
+                height: 56px;
+                margin-bottom: 0;
+                font-size: 36px;
+                flex-shrink: 0;
+            }
+
+            .card-content {
+                flex: 1;
+            }
+
+            .card-desc {
+                margin-bottom: 12px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
-        <h1 class="logo">True<span>Korea</span></h1>
+        <h1 class="logo">
+            <span class="logo-true">True</span><span class="logo-korea">Korea</span>
+        </h1>
         <p class="tagline">진짜 한국을 경험하세요</p>
     </header>
-    
-    <main class="categories">
-        <a href="derm/index.html" class="category-card active">
-            <span class="category-emoji">💉</span>
-            <span class="category-name">피부과 시술</span>
-            <span class="category-desc">201개 시술 가이드</span>
-            <span class="category-badge">LIVE</span>
+
+    <!-- Cards Grid -->
+    <div class="cards-grid">
+        <!-- 피부과 시술 - Active -->
+        <a href="index.html" class="card active">
+            <div class="card-icon">💉</div>
+            <div class="card-content">
+                <h3 class="card-title">피부과 시술</h3>
+                <p class="card-desc">196개 시술 가이드</p>
+                <span class="badge badge-live">LIVE</span>
+            </div>
         </a>
-        
-        <div class="category-card disabled">
-            <span class="category-emoji">💄</span>
-            <span class="category-name">K-뷰티</span>
-            <span class="category-desc">화장품 · 스킨케어</span>
-            <span class="category-badge soon">SOON</span>
+
+        <!-- K-뷰티 -->
+        <div class="card disabled">
+            <div class="card-icon">💄</div>
+            <div class="card-content">
+                <h3 class="card-title">K-뷰티</h3>
+                <p class="card-desc">화장품 · 스킨케어</p>
+                <span class="badge badge-soon">SOON</span>
+            </div>
         </div>
-        
-        <div class="category-card disabled">
-            <span class="category-emoji">🍜</span>
-            <span class="category-name">맛집</span>
-            <span class="category-desc">로컬 맛집 · 카페</span>
-            <span class="category-badge soon">SOON</span>
+
+        <!-- 맛집 -->
+        <div class="card disabled">
+            <div class="card-icon">🍜</div>
+            <div class="card-content">
+                <h3 class="card-title">맛집</h3>
+                <p class="card-desc">로컬 맛집 · 카페</p>
+                <span class="badge badge-soon">SOON</span>
+            </div>
         </div>
-        
-        <div class="category-card disabled">
-            <span class="category-emoji">🏛️</span>
-            <span class="category-name">관광지</span>
-            <span class="category-desc">명소 · 액티비티</span>
-            <span class="category-badge soon">SOON</span>
+
+        <!-- 관광지 -->
+        <div class="card disabled">
+            <div class="card-icon">🏛️</div>
+            <div class="card-content">
+                <h3 class="card-title">관광지</h3>
+                <p class="card-desc">명소 · 액티비티</p>
+                <span class="badge badge-soon">SOON</span>
+            </div>
         </div>
-        
-        <div class="category-card disabled">
-            <span class="category-emoji">👗</span>
-            <span class="category-name">K-패션</span>
-            <span class="category-desc">브랜드 · 쇼핑</span>
-            <span class="category-badge soon">SOON</span>
+
+        <!-- K-패션 -->
+        <div class="card disabled">
+            <div class="card-icon">👗</div>
+            <div class="card-content">
+                <h3 class="card-title">K-패션</h3>
+                <p class="card-desc">브랜드 · 쇼핑</p>
+                <span class="badge badge-soon">SOON</span>
+            </div>
         </div>
-        
-        <div class="category-card disabled">
-            <span class="category-emoji">🏥</span>
-            <span class="category-name">성형외과</span>
-            <span class="category-desc">수술 · 시술 가이드</span>
-            <span class="category-badge soon">SOON</span>
+
+        <!-- 성형외과 -->
+        <div class="card disabled">
+            <div class="card-icon">🏥</div>
+            <div class="card-content">
+                <h3 class="card-title">성형외과</h3>
+                <p class="card-desc">수술 · 시술 가이드</p>
+                <span class="badge badge-soon">SOON</span>
+            </div>
         </div>
-    </main>
-    
+    </div>
+
+    <!-- Footer -->
     <footer class="footer">
-        © 2024 TrueKorea. All rights reserved.
+        © 2025 TrueKorea. All rights reserved.
     </footer>
 </body>
 </html>

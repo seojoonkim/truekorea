@@ -193,9 +193,9 @@ function renderConcernTreatments() {
 function setupFilterView() {
     const budgetMin = document.getElementById('budgetMin');
     const budgetMax = document.getElementById('budgetMax');
+    const downtimeRange = document.getElementById('downtimeRange');
     const painRange = document.getElementById('painRange');
     const checkboxList = document.getElementById('categoryCheckboxList');
-    const downtimeChecks = document.querySelectorAll('input[name="downtime"]');
     const resetBtn = document.getElementById('resetFilters');
     
     // Populate category checkboxes
@@ -239,13 +239,19 @@ function setupFilterView() {
     budgetMin.addEventListener('input', updateBudgetDisplay);
     budgetMax.addEventListener('input', updateBudgetDisplay);
     
+    // Downtime slider
+    const downtimeLabels = ['없음', '~3일', '전체'];
+    downtimeRange.addEventListener('input', () => {
+        document.getElementById('downtimeValue').textContent = downtimeLabels[downtimeRange.value];
+        applyFilters();
+    });
+    
     painRange.addEventListener('input', () => {
         document.getElementById('painValue').textContent = painRange.value;
         applyFilters();
     });
     
     checkboxList.addEventListener('change', applyFilters);
-    downtimeChecks.forEach(cb => cb.addEventListener('change', applyFilters));
     
     // Select All / Deselect All buttons
     document.getElementById('filterSelectAll').addEventListener('click', () => {
@@ -261,10 +267,11 @@ function setupFilterView() {
     resetBtn.addEventListener('click', () => {
         budgetMin.value = 0;
         budgetMax.value = 200;
+        downtimeRange.value = 2;
         painRange.value = 5;
         document.getElementById('budgetDisplay').textContent = '전체';
+        document.getElementById('downtimeValue').textContent = '전체';
         document.getElementById('painValue').textContent = '5';
-        downtimeChecks.forEach(cb => cb.checked = true);
         document.querySelectorAll('input[name="filterCategory"]').forEach(cb => cb.checked = true);
         applyFilters();
     });
@@ -275,9 +282,9 @@ function setupFilterView() {
 function applyFilters() {
     const budgetMin = parseInt(document.getElementById('budgetMin').value);
     const budgetMax = parseInt(document.getElementById('budgetMax').value);
+    const downtimeLevel = parseInt(document.getElementById('downtimeRange').value);
     const pain = parseFloat(document.getElementById('painRange').value);
     const selectedCategories = [...document.querySelectorAll('input[name="filterCategory"]:checked')].map(cb => cb.value);
-    const downtimeChecks = [...document.querySelectorAll('input[name="downtime"]:checked')].map(cb => cb.value);
     
     let filtered = treatments.filter(t => {
         // Budget (min ~ max)
@@ -291,15 +298,14 @@ function applyFilters() {
         // Category
         if (!selectedCategories.includes(t.category)) return false;
         
-        // Downtime
+        // Downtime (0: 없음만, 1: ~3일까지, 2: 전체)
         const downtime = t.recovery.downtime.toLowerCase();
-        let downtimeMatch = false;
-        if (downtimeChecks.includes('없음') && (downtime.includes('없음') || downtime === '')) downtimeMatch = true;
-        if (downtimeChecks.includes('1~3일') && (downtime.includes('1') || downtime.includes('2') || downtime.includes('3'))) downtimeMatch = true;
-        if (downtimeChecks.includes('1주일') && (downtime.includes('7') || downtime.includes('주') || downtime.includes('14'))) downtimeMatch = true;
-        if (downtimeChecks.length === 3) downtimeMatch = true;
-        if (downtimeChecks.length === 0) downtimeMatch = false;
-        if (!downtimeMatch) return false;
+        if (downtimeLevel === 0) {
+            if (!(downtime.includes('없음') || downtime === '')) return false;
+        } else if (downtimeLevel === 1) {
+            if (downtime.includes('주') || downtime.includes('7') || downtime.includes('14')) return false;
+        }
+        // downtimeLevel === 2는 전체이므로 필터링 안함
         
         return true;
     });
@@ -313,8 +319,8 @@ function setupTableView() {
     const categories = [...new Set(treatments.map(t => t.category))];
     const tableBudgetMin = document.getElementById('tableBudgetMin');
     const tableBudgetMax = document.getElementById('tableBudgetMax');
+    const tableDowntimeRange = document.getElementById('tableDowntimeRange');
     const tablePainRange = document.getElementById('tablePainRange');
-    const tableDowntimeChecks = document.querySelectorAll('input[name="tableDowntime"]');
     
     // Initialize selected categories
     selectedTableCategories = [...categories];
@@ -364,14 +370,18 @@ function setupTableView() {
     tableBudgetMin.addEventListener('input', updateTableBudget);
     tableBudgetMax.addEventListener('input', updateTableBudget);
     
+    // Downtime slider
+    const downtimeLabels = ['없음', '~3일', '전체'];
+    tableDowntimeRange.addEventListener('input', () => {
+        document.getElementById('tableDowntimeValue').textContent = downtimeLabels[tableDowntimeRange.value];
+        renderTableView();
+    });
+    
     // Pain range
     tablePainRange.addEventListener('input', () => {
         document.getElementById('tablePainValue').textContent = tablePainRange.value;
         renderTableView();
     });
-    
-    // Downtime checkboxes
-    tableDowntimeChecks.forEach(cb => cb.addEventListener('change', renderTableView));
     
     // Select All / Deselect All buttons
     document.getElementById('tableSelectAll').addEventListener('click', () => {
@@ -390,10 +400,11 @@ function setupTableView() {
     document.getElementById('resetTableFilters').addEventListener('click', () => {
         tableBudgetMin.value = 0;
         tableBudgetMax.value = 200;
+        tableDowntimeRange.value = 2;
         tablePainRange.value = 5;
         document.getElementById('tableBudgetDisplay').textContent = '전체';
+        document.getElementById('tableDowntimeValue').textContent = '전체';
         document.getElementById('tablePainValue').textContent = '5';
-        tableDowntimeChecks.forEach(cb => cb.checked = true);
         document.querySelectorAll('input[name="tableCategory"]').forEach(cb => cb.checked = true);
         selectedTableCategories = [...categories];
         renderTableView();
@@ -428,8 +439,8 @@ function setupTableView() {
 function renderTableView() {
     const budgetMin = parseInt(document.getElementById('tableBudgetMin').value);
     const budgetMax = parseInt(document.getElementById('tableBudgetMax').value);
+    const downtimeLevel = parseInt(document.getElementById('tableDowntimeRange').value);
     const pain = parseFloat(document.getElementById('tablePainRange').value);
-    const downtimeChecks = [...document.querySelectorAll('input[name="tableDowntime"]:checked')].map(cb => cb.value);
     
     let filtered = treatments.filter(t => {
         // Category
@@ -443,15 +454,13 @@ function renderTableView() {
         // Pain
         if (t.recovery.painLevel > pain) return false;
         
-        // Downtime
+        // Downtime (0: 없음만, 1: ~3일까지, 2: 전체)
         const downtime = t.recovery.downtime.toLowerCase();
-        let downtimeMatch = false;
-        if (downtimeChecks.includes('없음') && (downtime.includes('없음') || downtime === '')) downtimeMatch = true;
-        if (downtimeChecks.includes('1~3일') && (downtime.includes('1') || downtime.includes('2') || downtime.includes('3'))) downtimeMatch = true;
-        if (downtimeChecks.includes('1주일') && (downtime.includes('7') || downtime.includes('주') || downtime.includes('14'))) downtimeMatch = true;
-        if (downtimeChecks.length === 3) downtimeMatch = true;
-        if (downtimeChecks.length === 0) downtimeMatch = false;
-        if (!downtimeMatch) return false;
+        if (downtimeLevel === 0) {
+            if (!(downtime.includes('없음') || downtime === '')) return false;
+        } else if (downtimeLevel === 1) {
+            if (downtime.includes('주') || downtime.includes('7') || downtime.includes('14')) return false;
+        }
         
         return true;
     });
@@ -560,17 +569,17 @@ function renderTreatmentCards(items, containerId) {
             </div>
             <div class="card-stats">
                 <div class="stat-item">
-                    <div class="stat-icon">💰</div>
+                    <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
                     <div class="stat-value">${t.pricing.average}</div>
                     <div class="stat-label">가격</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-icon">⏱</div>
+                    <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
                     <div class="stat-value">${t.effects.duration || '-'}</div>
                     <div class="stat-label">지속</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-icon">😣</div>
+                    <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
                     <div class="stat-value">${t.recovery.painLevel}/5</div>
                     <div class="stat-label">통증</div>
                 </div>
@@ -592,17 +601,23 @@ function setupModal() {
     const overlay = document.getElementById('modalOverlay');
     const closeBtn = document.getElementById('modalClose');
     
-    closeBtn.addEventListener('click', () => overlay.classList.add('hidden'));
+    const closeModal = () => {
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+    };
+    
+    closeBtn.addEventListener('click', closeModal);
     overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) overlay.classList.add('hidden');
+        if (e.target === overlay) closeModal();
     });
     
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') overlay.classList.add('hidden');
+        if (e.key === 'Escape') closeModal();
     });
 }
 
 function showModal(t) {
+    document.body.style.overflow = 'hidden';
     const content = document.getElementById('modalContent');
     
     content.innerHTML = `
@@ -679,13 +694,13 @@ function showModal(t) {
             <h3 class="modal-section-title">장단점</h3>
             <div class="modal-pros-cons">
                 <div class="modal-pros">
-                    <h4>👍 장점</h4>
+                    <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-icon"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg> 장점</h4>
                     <ul class="modal-list">
                         ${t.pros.map(p => `<li>• ${p}</li>`).join('')}
                     </ul>
                 </div>
                 <div class="modal-cons">
-                    <h4>👎 단점</h4>
+                    <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-icon"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg> 단점</h4>
                     <ul class="modal-list">
                         ${t.cons.map(c => `<li>• ${c}</li>`).join('')}
                     </ul>
@@ -699,7 +714,7 @@ function showModal(t) {
             <h3 class="modal-section-title">비교 & 조합</h3>
             <div class="modal-comparison">
                 ${Object.entries(t.comparison.vs).map(([k, v]) => `<p><strong>vs ${k}:</strong> ${v}</p>`).join('')}
-                ${t.comparison.bestWith.length ? `<p><strong>🤝 함께 하면 좋은 시술:</strong> ${t.comparison.bestWith.join(', ')}</p>` : ''}
+                ${t.comparison.bestWith.length ? `<p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> <strong>함께 하면 좋은 시술:</strong> ${t.comparison.bestWith.join(', ')}</p>` : ''}
             </div>
         </div>
         ` : ''}
