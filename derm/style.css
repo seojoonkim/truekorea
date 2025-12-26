@@ -5141,3 +5141,606 @@ textarea.text-input.tall {
 .detail-section.cons ul li {
     color: #ea580c;
 }
+
+/* ===== Simple Detail Card Style (Modal-like) ===== */
+.treatment-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.detail-card-simple {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.detail-header-simple {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #111827;
+}
+
+.detail-header-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.detail-num {
+    width: 32px;
+    height: 32px;
+    background: #111827;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.detail-title-info h4 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 6px 0;
+}
+
+.detail-tags {
+    display: flex;
+    gap: 8px;
+}
+
+.detail-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    background: #f3f4f6;
+    color: #6b7280;
+    border-radius: 4px;
+}
+
+.detail-tag.brand {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.detail-price-badge {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    background: #f9fafb;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+/* Stats Row */
+.detail-stats-row {
+    display: flex;
+    gap: 24px;
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Description Box */
+.detail-desc-box {
+    margin-bottom: 16px;
+}
+
+.detail-desc-box p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #374151;
+    margin: 0;
+}
+
+/* Mechanism Box */
+.detail-mechanism-box {
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.detail-mechanism-box .box-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.detail-mechanism-box p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #374151;
+    margin: 0;
+}
+
+/* Effects Row */
+.detail-effects-row {
+    margin-bottom: 16px;
+}
+
+.detail-effects-row .effects-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.effect-tags-simple {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.effect-tag-simple {
+    font-size: 13px;
+    padding: 6px 14px;
+    background: #f3f4f6;
+    color: #374151;
+    border-radius: 20px;
+}
+
+/* Pros Cons Simple */
+.detail-pros-cons-simple {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 600px) {
+    .detail-pros-cons-simple {
+        grid-template-columns: 1fr;
+    }
+    .detail-stats-row {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+}
+
+.pros-box, .cons-box {
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.pros-box .box-title, .cons-box .box-title {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 12px;
+}
+
+.pros-box ul, .cons-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pros-box ul li, .cons-box ul li {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #6b7280;
+    padding: 4px 0 4px 16px;
+    position: relative;
+}
+
+.pros-box ul li::before, .cons-box ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #9ca3af;
+}
+
+/* Tips Box */
+.detail-tips-box {
+    padding: 16px;
+    background: #fffbeb;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.detail-tips-box .box-title {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #92400e;
+    margin-bottom: 12px;
+}
+
+.detail-tips-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.detail-tips-box ul li {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #78350f;
+    padding: 4px 0 4px 16px;
+    position: relative;
+}
+
+.detail-tips-box ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #d97706;
+}
+
+/* Overall Box */
+.detail-overall-box {
+    padding: 16px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 8px;
+    border-left: 3px solid #111827;
+}
+
+.detail-overall-box p {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.7;
+    color: #374151;
+    margin: 0;
+}
+
+/* ===== New Combo Card Style ===== */
+.combo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.combo-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.combo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.combo-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    flex: 1;
+}
+
+.combo-num {
+    width: 28px;
+    height: 28px;
+    background: #111827;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.combo-title-wrap {
+    flex: 1;
+}
+
+.combo-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 4px 0;
+}
+
+.combo-desc {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.combo-right {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.combo-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.combo-budget {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 2px;
+}
+
+/* Combo Treatments */
+.combo-treatments {
+    padding: 16px 20px;
+}
+
+.combo-treatment-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.combo-treatment-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.combo-treatment-item:first-child {
+    padding-top: 0;
+}
+
+.cti-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.cti-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.cti-category {
+    font-size: 11px;
+    padding: 2px 8px;
+    background: #f3f4f6;
+    color: #6b7280;
+    border-radius: 4px;
+}
+
+.cti-details {
+    margin-bottom: 8px;
+}
+
+.cti-reason {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 0 0 4px 0;
+    line-height: 1.5;
+}
+
+.cti-effect {
+    font-size: 12px;
+    color: #3b82f6;
+}
+
+.cti-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+}
+
+.cti-price {
+    font-weight: 600;
+    color: #111827;
+}
+
+.cti-sessions {
+    color: #6b7280;
+}
+
+.cti-recovery {
+    display: flex;
+    gap: 12px;
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.no-data {
+    text-align: center;
+    color: #9ca3af;
+    padding: 40px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .combo-header {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .combo-right {
+        text-align: left;
+    }
+    
+    .cti-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+}
+
+/* ===== Combo Card A/B/C Style ===== */
+.combo-label {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+/* Combo A - Blue */
+.combo-card.combo-a {
+    border: 2px solid #3b82f6;
+}
+
+.combo-card.combo-a .combo-header {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-bottom-color: #bfdbfe;
+}
+
+.combo-card.combo-a .combo-label {
+    background: #3b82f6;
+    color: white;
+}
+
+/* Combo B - Green */
+.combo-card.combo-b {
+    border: 2px solid #10b981;
+}
+
+.combo-card.combo-b .combo-header {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border-bottom-color: #a7f3d0;
+}
+
+.combo-card.combo-b .combo-label {
+    background: #10b981;
+    color: white;
+}
+
+/* Combo C - Purple */
+.combo-card.combo-c {
+    border: 2px solid #8b5cf6;
+}
+
+.combo-card.combo-c .combo-header {
+    background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+    border-bottom-color: #ddd6fe;
+}
+
+.combo-card.combo-c .combo-label {
+    background: #8b5cf6;
+    color: white;
+}
+
+/* Treatment item with number */
+.combo-treatment-item {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.combo-treatment-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.combo-treatment-item:first-child {
+    padding-top: 0;
+}
+
+.cti-num {
+    width: 24px;
+    height: 24px;
+    background: #f3f4f6;
+    color: #6b7280;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.cti-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.cti-main {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.cti-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.cti-reason {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 0 0 8px 0;
+    line-height: 1.5;
+}
+
+.cti-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.cti-price {
+    font-weight: 600;
+    color: #374151;
+}
+
+.cti-sessions,
+.cti-pain,
+.cti-down {
+    color: #9ca3af;
+}
+
+/* Section description */
+.section-desc {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 20px;
+}

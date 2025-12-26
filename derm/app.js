@@ -1228,9 +1228,10 @@ ${userData.event ? '일정:'+userData.event : ''}
 [시술DB] ${treatmentList}
 
 [규칙]
-1. 예산의 80-95% 사용하는 3가지 조합 제안
-2. 각 조합에 2-4개 시술 포함
-3. 시술명은 반드시 [시술DB]에 있는 이름 그대로 사용
+1. 예산의 80-95% 사용하는 3가지 조합 제안 (A, B, C)
+2. 각 조합에 3-5개 시술 포함
+3. 중요하고 효과적인 시술은 여러 조합에 중복 포함 가능
+4. 시술명은 반드시 [시술DB]에 있는 이름 그대로 사용
 
 [JSON형식]
 {
@@ -1260,6 +1261,10 @@ ${userData.event ? '일정:'+userData.event : ''}
                 messages: [{ role: 'user', content: prompt }]
             })
         });
+        
+        // 연결 성공 → Step 3
+        updateProgress(3, 'AI가 맞춤 시술을 분석하고 있어요...', 50);
+        
     } catch (fetchError) {
         const error = new Error('Failed to fetch');
         error.details = {
@@ -1270,9 +1275,6 @@ ${userData.event ? '일정:'+userData.event : ''}
         };
         throw error;
     }
-    
-    // Step 3: AI 분석 중
-    updateProgress(3, 'AI가 맞춤 시술을 분석하고 있어요...', 50);
     
     if (!response.ok) {
         const errorBody = await response.text();
@@ -1488,23 +1490,29 @@ function extractMinPrice(priceRange) {
 function getPriceRange(combinations) {
     if (!combinations || combinations.length === 0) return '-';
     
-    let minTotal = 0;
-    let maxTotal = 0;
-    
-    combinations.forEach(combo => {
+    // 각 조합별 총 가격 계산
+    const comboPrices = combinations.map(combo => {
+        let min = 0;
+        let max = 0;
         combo.treatments?.forEach(t => {
             const priceStr = t.price || '';
             const matches = priceStr.match(/(\d+)/g);
             if (matches) {
-                minTotal += parseInt(matches[0]) || 0;
-                maxTotal += parseInt(matches[matches.length - 1]) || parseInt(matches[0]) || 0;
+                min += parseInt(matches[0]) || 0;
+                max += parseInt(matches[matches.length - 1]) || parseInt(matches[0]) || 0;
             }
         });
-    });
+        return { min, max };
+    }).filter(p => p.min > 0);
     
-    if (minTotal === 0) return '-';
-    if (minTotal === maxTotal) return `약 ${minTotal}만원`;
-    return `${minTotal}~${maxTotal}만원`;
+    if (comboPrices.length === 0) return '-';
+    
+    // 조합들 중 최저가와 최고가
+    const lowestMin = Math.min(...comboPrices.map(p => p.min));
+    const highestMax = Math.max(...comboPrices.map(p => p.max));
+    
+    if (lowestMin === highestMax) return `약 ${lowestMin}만원`;
+    return `${lowestMin}~${highestMax}만원`;
 }
 
 function getTotalTreatments(combinations) {
@@ -1585,47 +1593,58 @@ function displayResult(response) {
             <div class="report-section">
                 <h3 class="report-section-title">
                     🎯 맞춤 시술 조합 
-                    <span class="badge">3가지 제안</span>
+                    <span class="badge">${response.combinations?.length || 0}가지 제안</span>
                 </h3>
                 
-                <div class="combinations-grid">
-                ${response.combinations?.map((combo, i) => `
-                    <div class="combination-card ${i === 0 ? 'recommended' : ''}">
-                        <div class="combination-header">
-                            <div class="combination-title">
-                                <span class="num">${i + 1}</span>
-                                ${combo.name}
+                <div class="combo-list">
+                ${response.combinations?.map((combo, i) => {
+                    // 시술 목록이 없으면 빈 배열
+                    const treatments = combo.treatments || [];
+                    if (treatments.length === 0) return '';
+                    
+                    const labels = ['A', 'B', 'C', 'D', 'E'];
+                    const label = labels[i] || (i + 1);
+                    const colorClass = ['combo-a', 'combo-b', 'combo-c'][i] || '';
+                    
+                    return `
+                    <div class="combo-card ${colorClass}">
+                        <div class="combo-header">
+                            <div class="combo-left">
+                                <span class="combo-label">${label}</span>
+                                <div class="combo-title-wrap">
+                                    <h4 class="combo-name">${combo.name || '조합 ' + label}</h4>
+                                    ${combo.tip ? `<p class="combo-desc">${combo.tip}</p>` : ''}
+                                </div>
                             </div>
-                            <div class="combination-price-wrap">
-                                <div class="combination-price">${combo.totalPrice || combo.price || ''}</div>
-                                ${combo.budgetUsage ? `<div class="budget-usage">예산의 ${combo.budgetUsage}</div>` : ''}
+                            <div class="combo-right">
+                                <div class="combo-price">${combo.totalPrice || combo.price || ''}</div>
+                                ${combo.budgetUsage ? `<div class="combo-budget">예산의 ${combo.budgetUsage}</div>` : ''}
                             </div>
                         </div>
-                        ${combo.tip ? `<p class="combo-tip">💡 ${combo.tip}</p>` : ''}
-                        <div class="combination-treatments">
-                            ${combo.treatments?.map(t => `
-                                <div class="treatment-item">
-                                    <div class="treatment-info">
-                                        <div class="treatment-header">
-                                            <span class="treatment-name">${t.name}</span>
-                                            ${t.category ? `<span class="treatment-category">${t.category}</span>` : ''}
+                        
+                        <div class="combo-treatments">
+                            ${treatments.map((t, ti) => `
+                                <div class="combo-treatment-item">
+                                    <div class="cti-num">${ti + 1}</div>
+                                    <div class="cti-content">
+                                        <div class="cti-main">
+                                            <span class="cti-name">${t.name || ''}</span>
+                                            ${t.category ? `<span class="cti-category">${t.category}</span>` : ''}
                                         </div>
-                                        <div class="treatment-detail">${t.reason || ''}</div>
-                                        ${t.effect ? `<div class="treatment-effect">→ ${t.effect}</div>` : ''}
-                                        <div class="treatment-meta">
-                                            ${t.painLevel ? `<span>통증: ${'●'.repeat(t.painLevel)}${'○'.repeat(5-t.painLevel)}</span>` : ''}
-                                            ${t.downtime ? `<span>회복: ${t.downtime}</span>` : ''}
+                                        ${t.reason ? `<p class="cti-reason">${t.reason}</p>` : ''}
+                                        <div class="cti-meta">
+                                            <span class="cti-price">${t.price || ''}</span>
+                                            ${t.sessions ? `<span class="cti-sessions">${t.sessions}</span>` : ''}
+                                            ${t.painLevel ? `<span class="cti-pain">통증 ${'●'.repeat(Math.min(t.painLevel, 5))}${'○'.repeat(Math.max(5-t.painLevel, 0))}</span>` : ''}
+                                            ${t.downtime ? `<span class="cti-down">회복 ${t.downtime}</span>` : ''}
                                         </div>
-                                    </div>
-                                    <div class="treatment-price-info">
-                                        <div class="treatment-price">${t.price || ''}</div>
-                                        <div class="treatment-sessions">${t.sessions || ''}</div>
                                     </div>
                                 </div>
-                            `).join('') || ''}
+                            `).join('')}
                         </div>
                     </div>
-                `).join('') || ''}
+                    `;
+                }).join('') || '<p class="no-data">추천 조합을 불러올 수 없습니다.</p>'}
                 </div>
             </div>
             
@@ -1640,131 +1659,81 @@ function displayResult(response) {
             
             ${response.treatmentDetails?.length ? `
             <div class="report-section">
-                <h3 class="report-section-title">📖 추천 시술 상세 가이드</h3>
-                <p class="section-desc">추천된 모든 시술에 대한 상세 정보입니다. 병원 상담 전 미리 알아두시면 도움이 됩니다.</p>
-                <div class="treatment-details-grid">
+                <h3 class="report-section-title">📖 추천 시술 상세 가이드 <span class="badge">${response.treatmentDetails.length}개 시술</span></h3>
+                <p class="section-desc">조합 A, B, C에 포함된 모든 시술에 대한 상세 정보입니다.</p>
+                <div class="treatment-details-list">
                     ${response.treatmentDetails.map((detail, idx) => `
-                        <div class="treatment-detail-card">
-                            <div class="detail-card-header">
-                                <span class="detail-number">${idx + 1}</span>
-                                <div class="detail-title-wrap">
-                                    <h4 class="detail-name">${detail.name}</h4>
-                                    <div class="detail-meta-tags">
-                                        ${detail.category ? `<span class="meta-tag category">${detail.category}</span>` : ''}
-                                        ${detail.brand ? `<span class="meta-tag brand">${detail.brand}</span>` : ''}
+                        <div class="detail-card-simple">
+                            <div class="detail-header-simple">
+                                <div class="detail-header-left">
+                                    <span class="detail-num">${idx + 1}</span>
+                                    <div class="detail-title-info">
+                                        <h4>${detail.name}</h4>
+                                        <div class="detail-tags">
+                                            ${detail.category ? `<span class="detail-tag">${detail.category}</span>` : ''}
+                                            ${detail.brand ? `<span class="detail-tag brand">${detail.brand}</span>` : ''}
+                                        </div>
                                     </div>
                                 </div>
-                                ${detail.priceRange ? `<span class="detail-price">${detail.priceRange}</span>` : ''}
+                                ${detail.priceRange ? `<span class="detail-price-badge">${detail.priceRange}</span>` : ''}
                             </div>
                             
-                            <div class="detail-quick-info">
-                                ${detail.sessions ? `<div class="quick-info-item"><span class="qi-icon">📅</span><span class="qi-label">횟수</span><span class="qi-value">${detail.sessions}</span></div>` : ''}
-                                ${detail.downtime ? `<div class="quick-info-item"><span class="qi-icon">⏱️</span><span class="qi-label">회복</span><span class="qi-value">${detail.downtime}</span></div>` : ''}
-                                ${detail.painLevel ? `<div class="quick-info-item"><span class="qi-icon">😣</span><span class="qi-label">통증</span><span class="qi-value">${'●'.repeat(detail.painLevel)}${'○'.repeat(5-detail.painLevel)}</span></div>` : ''}
-                                ${detail.anesthesia ? `<div class="quick-info-item"><span class="qi-icon">💉</span><span class="qi-label">마취</span><span class="qi-value">${detail.anesthesia}</span></div>` : ''}
-                                ${detail.duration ? `<div class="quick-info-item"><span class="qi-icon">⌛</span><span class="qi-label">지속</span><span class="qi-value">${detail.duration}</span></div>` : ''}
+                            <div class="detail-stats-row">
+                                ${detail.sessions ? `<div class="stat-item"><span class="stat-label">횟수</span><span class="stat-value">${detail.sessions}</span></div>` : ''}
+                                ${detail.downtime ? `<div class="stat-item"><span class="stat-label">회복</span><span class="stat-value">${detail.downtime}</span></div>` : ''}
+                                ${detail.painLevel ? `<div class="stat-item"><span class="stat-label">통증</span><span class="stat-value">${'●'.repeat(detail.painLevel)}${'○'.repeat(5-detail.painLevel)}</span></div>` : ''}
+                                ${detail.anesthesia ? `<div class="stat-item"><span class="stat-label">마취</span><span class="stat-value">${detail.anesthesia}</span></div>` : ''}
                             </div>
                             
                             ${detail.description ? `
-                            <div class="detail-description">
-                                <h5>📝 시술 설명</h5>
+                            <div class="detail-desc-box">
                                 <p>${detail.description}</p>
                             </div>
                             ` : ''}
                             
                             ${detail.mechanism ? `
-                            <div class="detail-mechanism">
-                                <h5>🔬 작용 원리</h5>
+                            <div class="detail-mechanism-box">
+                                <span class="box-label">작용 원리</span>
                                 <p>${detail.mechanism}</p>
                             </div>
                             ` : ''}
                             
-                            ${detail.expectedEffects?.length || detail.secondaryEffects?.length ? `
-                            <div class="detail-effects">
-                                <h5>🎯 기대 효과</h5>
-                                <div class="effects-grid">
-                                    ${detail.expectedEffects?.length ? `
-                                    <div class="effects-primary">
-                                        <span class="effects-label">주요 효과</span>
-                                        <div class="effect-tags">
-                                            ${detail.expectedEffects.map(e => `<span class="effect-tag primary">${e}</span>`).join('')}
-                                        </div>
-                                    </div>
-                                    ` : ''}
-                                    ${detail.secondaryEffects?.length ? `
-                                    <div class="effects-secondary">
-                                        <span class="effects-label">부가 효과</span>
-                                        <div class="effect-tags">
-                                            ${detail.secondaryEffects.map(e => `<span class="effect-tag secondary">${e}</span>`).join('')}
-                                        </div>
-                                    </div>
-                                    ` : ''}
+                            ${detail.expectedEffects?.length ? `
+                            <div class="detail-effects-row">
+                                <span class="effects-label">주요 효과</span>
+                                <div class="effect-tags-simple">
+                                    ${detail.expectedEffects.map(e => `<span class="effect-tag-simple">${e}</span>`).join('')}
                                 </div>
                             </div>
                             ` : ''}
                             
-                            ${detail.notFor?.length ? `
-                            <div class="detail-not-for">
-                                <span class="not-for-label">❌ 이런 효과는 어려워요:</span>
-                                <span class="not-for-items">${detail.notFor.join(', ')}</span>
-                            </div>
-                            ` : ''}
-                            
-                            <div class="detail-pros-cons">
+                            ${detail.pros?.length || detail.cons?.length ? `
+                            <div class="detail-pros-cons-simple">
                                 ${detail.pros?.length ? `
-                                <div class="detail-section pros">
-                                    <h5>👍 장점</h5>
-                                    <ul>
-                                        ${detail.pros.map(p => `<li>${p}</li>`).join('')}
-                                    </ul>
+                                <div class="pros-box">
+                                    <span class="box-title">👍 장점</span>
+                                    <ul>${detail.pros.map(p => `<li>${p}</li>`).join('')}</ul>
                                 </div>
                                 ` : ''}
-                                
                                 ${detail.cons?.length ? `
-                                <div class="detail-section cons">
-                                    <h5>👎 단점</h5>
-                                    <ul>
-                                        ${detail.cons.map(c => `<li>${c}</li>`).join('')}
-                                    </ul>
+                                <div class="cons-box">
+                                    <span class="box-title">👎 단점</span>
+                                    <ul>${detail.cons.map(c => `<li>${c}</li>`).join('')}</ul>
                                 </div>
                                 ` : ''}
                             </div>
+                            ` : ''}
                             
                             ${detail.tips?.length ? `
-                            <div class="detail-section tips-section">
-                                <h5>💡 시술 팁</h5>
-                                <ul>
-                                    ${detail.tips.map(t => `<li>${t}</li>`).join('')}
-                                </ul>
+                            <div class="detail-tips-box">
+                                <span class="box-title">💡 시술 팁</span>
+                                <ul>${detail.tips.map(t => `<li>${t}</li>`).join('')}</ul>
                             </div>
                             ` : ''}
                             
                             ${detail.overall ? `
-                            <div class="detail-overall">
-                                <h5>📋 총평</h5>
+                            <div class="detail-overall-box">
                                 <p>${detail.overall}</p>
-                            </div>
-                            ` : ''}
-                            
-                            ${detail.warnings?.length || detail.contraindications?.length ? `
-                            <div class="detail-warnings-section">
-                                ${detail.warnings?.length ? `
-                                <div class="detail-section warnings">
-                                    <h5>⚠️ 주의사항</h5>
-                                    <ul>
-                                        ${detail.warnings.map(w => `<li>${w}</li>`).join('')}
-                                    </ul>
-                                </div>
-                                ` : ''}
-                                
-                                ${detail.contraindications?.length ? `
-                                <div class="detail-section contraindications">
-                                    <h5>🚫 시술 불가</h5>
-                                    <ul>
-                                        ${detail.contraindications.map(c => `<li>${c}</li>`).join('')}
-                                    </ul>
-                                </div>
-                                ` : ''}
                             </div>
                             ` : ''}
                         </div>
