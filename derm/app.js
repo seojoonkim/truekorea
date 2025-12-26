@@ -1072,6 +1072,49 @@ function showValidationMessage(message) {
     }, 3000);
 }
 
+// 프로그레스 관련 변수
+let progressTimer = null;
+let progressStartTime = null;
+
+function updateProgress(step, message, percent) {
+    // 메시지 업데이트
+    const msgEl = document.getElementById('loadingMessage');
+    if (msgEl) msgEl.textContent = message;
+    
+    // 프로그레스 바 업데이트
+    const fillEl = document.getElementById('progressFill');
+    if (fillEl) fillEl.style.width = percent + '%';
+    
+    // 단계 업데이트
+    for (let i = 1; i <= 4; i++) {
+        const stepEl = document.getElementById('step' + i);
+        if (stepEl) {
+            stepEl.classList.remove('active', 'completed');
+            if (i < step) {
+                stepEl.classList.add('completed');
+            } else if (i === step) {
+                stepEl.classList.add('active');
+            }
+        }
+    }
+}
+
+function startProgressTimer() {
+    progressStartTime = Date.now();
+    progressTimer = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - progressStartTime) / 1000);
+        const timeEl = document.getElementById('progressTime');
+        if (timeEl) timeEl.textContent = `경과 시간: ${elapsed}초`;
+    }, 1000);
+}
+
+function stopProgressTimer() {
+    if (progressTimer) {
+        clearInterval(progressTimer);
+        progressTimer = null;
+    }
+}
+
 async function submitConsultation() {
     consultState.data.event = document.getElementById('eventInput')?.value || '';
     consultState.data.extra = document.getElementById('extraInput')?.value || '';
@@ -1080,10 +1123,16 @@ async function submitConsultation() {
     document.getElementById('consultWizard').classList.add('hidden');
     document.getElementById('consultLoading').classList.remove('hidden');
     
+    // 프로그레스 초기화 및 시작
+    updateProgress(1, '요청을 준비하고 있어요...', 5);
+    startProgressTimer();
+    
     try {
         const response = await callClaudeAPI(consultState.data);
+        stopProgressTimer();
         displayResult(response);
     } catch (error) {
+        stopProgressTimer();
         console.error('API Error:', error);
         displayError(error);
     }
@@ -1096,6 +1145,7 @@ function displayError(error) {
     const errorMessage = error.message || '알 수 없는 오류';
     const errorDetails = error.details || '';
     const errorStatus = error.status || '';
+    const errorHint = errorDetails?.hint || '';
     
     const html = `
         <div class="report-container">
@@ -1109,6 +1159,13 @@ function displayError(error) {
                     <h3>🔴 오류 메시지</h3>
                     <p class="error-message">${errorMessage}</p>
                 </div>
+                
+                ${errorHint ? `
+                <div class="error-section hint-section">
+                    <h3>💡 원인 분석</h3>
+                    <p class="error-hint">${errorHint}</p>
+                </div>
+                ` : ''}
                 
                 ${errorStatus ? `
                 <div class="error-section">
@@ -1125,7 +1182,7 @@ function displayError(error) {
                 ` : ''}
                 
                 <div class="error-section">
-                    <h3>💡 해결 방법</h3>
+                    <h3>🔧 해결 방법</h3>
                     <ul>
                         <li>인터넷 연결 상태를 확인해주세요.</li>
                         <li>잠시 후 다시 시도해주세요.</li>
@@ -1153,172 +1210,69 @@ async function callClaudeAPI(userData) {
     const SUPABASE_URL = 'https://iausfassbdmpieinhaba.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlhdXNmYXNzYmRtcGllaW5oYWJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3NTg1ODQsImV4cCI6MjA4MjMzNDU4NH0.E6zhK_NvH8MMjAbGU9yJruJPytwtL8TeJm-pqWhIduc';
     
-    const treatmentSummary = treatments.map(t => ({
-        name: t.name,
-        brand: t.brand || '',
-        category: t.category,
-        effects: t.effects?.primary?.join(', ') || '',
-        priceMin: extractMinPrice(t.pricing?.range),
-        priceRange: t.pricing?.range || '',
-        downtime: t.recovery?.downtime || '없음',
-        pain: t.recovery?.painLevel || 0,
-        sessions: t.procedure?.sessions || ''
-    }));
+    // 시술 DB를 간략화 (이름, 카테고리, 최소가격만)
+    const treatmentList = treatments.map(t => 
+        `${t.name}(${t.category},${extractMinPrice(t.pricing?.range)}만원)`
+    ).join(', ');
     
-    const budgetLevel = userData.budget >= 500 ? '고예산' : userData.budget >= 200 ? '중예산' : '일반';
-    const minTreatments = userData.budget >= 500 ? 6 : userData.budget >= 200 ? 4 : 3;
+    const budget = userData.budget || 100;
     
-    const systemPrompt = `당신은 10년 경력의 피부과 전문 상담사입니다. 오프라인에서 1:1로 상담하듯 따뜻하고 전문적으로 설명해주세요.
+    // 최적화된 간결한 프롬프트
+    const prompt = `피부과 시술 추천 JSON을 생성하세요.
 
-[핵심 규칙]
-1. 고객의 총 예산은 ${userData.budget}만원입니다. (${budgetLevel} 고객)
-2. 예산의 85~95%를 사용하는 조합을 제안하세요. 예산을 최대한 활용해주세요!
-3. 각 조합에 최소 ${minTreatments}개 이상의 시술을 포함하세요.
-4. 3가지 조합을 제안하되:
-   - 조합1 "프리미엄 풀케어": 예산의 90-95% 활용, 고급 시술 중심, 최대한 많은 시술
-   - 조합2 "스마트 밸런스": 예산의 85-90% 활용, 효과 대비 가성비 좋은 조합
-   - 조합3 "전략적 집중": 예산의 75-85% 활용, 핵심 고민에 집중
-5. 가격은 최소 가격 기준으로 계산하되, 실제 범위도 함께 표시하세요.
-6. 우리 데이터베이스의 실제 시술 정보를 기반으로 추천해주세요.
-7. 중요: 3가지 조합 모두 예산 내이므로, 하나를 고르라고 하지 말고 모두 진행을 권장하세요.
+[고객정보]
+나이:${userData.age||'-'}, 고민:${userData.concerns?.join(',')||'-'}, 예산:${budget}만원, 다운타임:${userData.downtime||'-'}, 통증민감도:${userData.pain||'-'}
+${userData.concernsExtra ? '추가고민:'+userData.concernsExtra : ''}
+${userData.event ? '일정:'+userData.event : ''}
 
-[응답 형식 - 반드시 이 JSON 형식으로]
+[시술DB] ${treatmentList}
+
+[규칙]
+1. 예산의 80-95% 사용하는 3가지 조합 제안
+2. 각 조합에 2-4개 시술 포함
+3. 시술명은 반드시 [시술DB]에 있는 이름 그대로 사용
+
+[JSON형식]
 {
-    "greeting": "고객 맞춤 인사말 (3-4문장, 고민에 공감하며 따뜻하게, 예산 언급)",
-    "requestAnalysis": {
-        "included": [
-            {
-                "concern": "포함된 고민/요청사항",
-                "reason": "왜 이 고민을 포함했는지 (1문장)",
-                "relatedTreatments": ["관련 시술명 1", "관련 시술명 2"]
-            }
-        ],
-        "excluded": [
-            {
-                "concern": "제외된 고민/요청사항 (있는 경우만)",
-                "reason": "왜 우선순위에서 밀렸는지 설명 (예산, 다운타임, 시술 간 간격 등)",
-                "suggestion": "나중에 추가로 고려하시면 좋을 시술이나 방법"
-            }
-        ],
-        "priorityExplanation": "전체 우선순위를 이렇게 정한 이유 (2-3문장, 예산 활용, 시너지 효과, 고객 조건 등 종합)"
-    },
-    "analysis": {
-        "summary": "피부 상태 종합 분석 (3-4문장)",
-        "mainConcerns": ["핵심 고민 1", "핵심 고민 2", "핵심 고민 3"],
-        "approach": "치료 접근 방향 설명 (2-3문장)",
-        "expectedDuration": "전체 관리 예상 기간"
-    },
-    "combinations": [
-        {
-            "name": "조합 이름",
-            "badge": "뱃지 (예: 가장 인기, 가성비 최고, 프리미엄)",
-            "concept": "이 조합의 컨셉 (2문장)",
-            "targetPerson": "이런 분께 추천 (1문장)",
-            "totalPrice": "총 예상 비용 (예: 약 450만원)",
-            "budgetUsage": "예산 대비 사용률 (예: 90%)",
-            "expectedResult": "기대 효과 상세 (2-3문장)",
-            "treatments": [
-                {
-                    "name": "시술명",
-                    "category": "카테고리 (예: 리프팅, 스킨부스터)",
-                    "reason": "선택 이유 (2문장, 구체적으로)",
-                    "effect": "주요 효과",
-                    "price": "가격 범위 (예: 30~50만원)",
-                    "priceNote": "가격 참고사항 (예: 병원마다 상이)",
-                    "sessions": "권장 횟수 및 주기",
-                    "painLevel": "통증 (1-5단계)",
-                    "downtime": "다운타임",
-                    "duration": "효과 지속 기간"
-                }
-            ],
-            "schedule": {
-                "total": "전체 소요 기간",
-                "steps": ["1단계: 시술A (1-2주차)", "2단계: 시술B (3-4주차)"],
-                "interval": "시술 간 권장 간격"
+"greeting":"인사(2문장)",
+"analysis":"피부분석(2문장)",
+"combinations":[
+{"name":"조합명","price":"총XX만원","treatments":[
+{"name":"시술명(DB와 동일)","reason":"추천이유(1문장)","sessions":"횟수"}
+],"tip":"조합팁(1문장)"}
+],
+"recommendation":"종합추천(2문장)",
+"tips":["팁1","팁2","팁3"]
+}`;
+
+    // Step 2: 서버 연결
+    updateProgress(2, '서버에 연결하고 있어요...', 20);
+    
+    let response;
+    try {
+        response = await fetch(`${SUPABASE_URL}/functions/v1/claude-proxy`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
             },
-            "synergy": "시술 조합의 시너지 효과 설명 (2문장)",
-            "maintenance": "유지 관리 방법 (2문장)"
-        }
-    ],
-    "treatmentDetails": [
-        // 중요: 위 combinations에서 추천한 모든 시술에 대해 각각 상세 정보를 작성하세요!
-        // 예: 3개 조합에 총 6종류 시술이 있다면, 6개의 상세 정보를 작성해야 합니다.
-        {
-            "name": "시술명",
-            "fullName": "정식 명칭 (영문 포함)",
-            "priceRange": "가격 범위 (예: 20~50만원)",
-            "priceNote": "가격 참고사항 (예: 1회 기준, 부위별 상이)",
-            "sessions": "권장 횟수 및 주기 (예: 3회 권장, 2-4주 간격)",
-            "description": "시술 설명 (3-4문장, 원리와 방법)",
-            "expectedEffects": ["기대 효과 1", "기대 효과 2", "기대 효과 3"],
-            "pros": ["장점 1", "장점 2", "장점 3"],
-            "cons": ["단점 1", "단점 2", "단점 3"],
-            "tips": ["시술 팁 1", "시술 팁 2", "시술 팁 3"],
-            "warnings": ["주의사항 1", "주의사항 2", "주의사항 3"],
-            "idealFor": "이런 분께 추천",
-            "notFor": "이런 분은 피하세요",
-            "recoveryGuide": "회복 과정 가이드 (2-3문장)"
-        }
-        // ... 추천된 모든 시술에 대해 반복
-    ],
-    "overallRecommendation": {
-        "summary": "3가지 조합 모두 예산 내이므로 순차적으로 모두 진행하시는 것을 권장드립니다 (3-4문장)",
-        "suggestedOrder": "추천 진행 순서와 이유 (2-3문장)",
-        "budgetTip": "예산 활용 팁 (2문장)"
-    },
-    "precautions": {
-        "before": ["시술 전 주의사항 5가지 (구체적으로)"],
-        "after": ["시술 후 관리법 5가지 (구체적으로)"],
-        "avoid": ["반드시 피해야 할 것 3가지"],
-        "emergency": "이상 반응 시 대처법"
-    },
-    "hospitalChecklist": [
-        "병원 선택 시 확인할 점 5가지 (질문 포함)"
-    ],
-    "priceGuide": {
-        "note": "가격 관련 안내 (병원마다 다름 등)",
-        "negotiationTip": "가격 협상 팁",
-        "packageTip": "패키지 할인 팁"
-    },
-    "timeline": {
-        "summary": "전체 플랜 요약 (2-3문장)",
-        "milestones": ["1개월 후 예상", "3개월 후 예상", "6개월 후 예상"]
-    },
-    "expertTips": ["전문가 꿀팁 5가지 (실용적이고 구체적인 조언)"],
-    "closing": "따뜻한 마무리와 응원 (2-3문장)"
-}
-
-[시술 데이터베이스]
-${JSON.stringify(treatmentSummary, null, 2)}`;
-
-    const userMessage = `고객 정보:
-- 연령대: ${userData.age || '미입력'}
-- 시술 경험: ${userData.experience || '미입력'}
-- 피부 타입: ${userData.skinType || '미입력'}
-- 주요 고민: ${userData.concerns?.join(', ') || '미입력'}
-- 추가 고민: ${userData.concernsExtra || '없음'}
-- 관심 부위: ${userData.areas?.join(', ') || '미입력'}
-- 총 예산: ${userData.budget || '미입력'}만원
-- 다운타임 허용: ${userData.downtime || '미입력'}
-- 통증 민감도: ${userData.pain || '미입력'}
-- 마취 선호: ${userData.anesthesia || '미입력'}
-- 중요 일정: ${userData.event || '없음'}
-- 추가 요청: ${userData.extra || '없음'}
-
-위 정보를 바탕으로 예산 내에서 3가지 시술 조합을 추천해주세요. 최대한 자세하고 친절하게 설명해주세요.`;
-
-    const response = await fetch(`${SUPABASE_URL}/functions/v1/claude-proxy`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-            messages: [
-                { role: 'user', content: systemPrompt + '\n\n' + userMessage }
-            ]
-        })
-    });
+            body: JSON.stringify({
+                messages: [{ role: 'user', content: prompt }]
+            })
+        });
+    } catch (fetchError) {
+        const error = new Error('Failed to fetch');
+        error.details = {
+            type: 'NETWORK_ERROR',
+            message: fetchError.message,
+            hint: '네트워크 연결을 확인하거나, Supabase Edge Function이 배포되었는지 확인하세요.',
+            url: `${SUPABASE_URL}/functions/v1/claude-proxy`
+        };
+        throw error;
+    }
+    
+    // Step 3: AI 분석 중
+    updateProgress(3, 'AI가 맞춤 시술을 분석하고 있어요...', 50);
     
     if (!response.ok) {
         const errorBody = await response.text();
@@ -1328,43 +1282,171 @@ ${JSON.stringify(treatmentSummary, null, 2)}`;
         } catch {
             errorDetails = errorBody;
         }
-        const error = new Error(`API 요청 실패: HTTP ${response.status} ${response.statusText}`);
+        const error = new Error(`API 요청 실패: HTTP ${response.status}`);
         error.status = response.status;
-        error.details = errorDetails;
+        error.details = {
+            httpStatus: response.status,
+            statusText: response.statusText,
+            body: errorDetails,
+            hint: response.status === 500 ? 'Edge Function 내부 오류. Supabase 로그를 확인하세요.' :
+                  response.status === 401 ? 'API 키가 올바르지 않습니다.' :
+                  response.status === 429 ? 'API 요청 한도 초과. 잠시 후 다시 시도하세요.' :
+                  '알 수 없는 오류입니다.'
+        };
         throw error;
     }
+    
+    // Step 4: 결과 생성
+    updateProgress(4, '결과를 생성하고 있어요...', 80);
     
     let data;
     try {
         data = await response.json();
     } catch (e) {
         const error = new Error('API 응답을 JSON으로 파싱할 수 없습니다.');
-        error.details = await response.text();
+        error.details = {
+            parseError: e.message,
+            hint: 'Edge Function 응답이 올바른 JSON이 아닙니다.'
+        };
         throw error;
     }
     
     if (!data.content || !data.content[0] || !data.content[0].text) {
         const error = new Error('API 응답 형식이 올바르지 않습니다.');
-        error.details = data;
+        error.details = {
+            receivedData: data,
+            hint: data.error ? `Anthropic API 오류: ${data.error.message || JSON.stringify(data.error)}` : 
+                  'content 필드가 없습니다. Edge Function을 확인하세요.'
+        };
         throw error;
     }
     
     const content = data.content[0].text;
     
+    // 프로그레스 완료
+    updateProgress(4, '완료! 결과를 표시합니다...', 100);
+    
     const jsonMatch = content.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
         try {
-            return JSON.parse(jsonMatch[0]);
+            const aiResponse = JSON.parse(jsonMatch[0]);
+            // AI 응답에 DB 상세정보 병합
+            return enrichResponseWithDB(aiResponse, userData);
         } catch (e) {
             const error = new Error('AI 응답의 JSON 파싱 실패');
-            error.details = { parseError: e.message, content: content.substring(0, 500) };
+            error.details = { 
+                parseError: e.message, 
+                content: content.substring(0, 1000),
+                hint: 'AI 응답이 완전한 JSON이 아닙니다.'
+            };
             throw error;
         }
     }
     
     const error = new Error('AI 응답에서 JSON 형식을 찾을 수 없습니다.');
-    error.details = { content: content.substring(0, 500) };
+    error.details = { 
+        content: content.substring(0, 1000),
+        hint: 'AI가 JSON 형식으로 응답하지 않았습니다.'
+    };
     throw error;
+}
+
+// AI 응답에 DB 상세정보 병합
+function enrichResponseWithDB(aiResponse, userData) {
+    const recommendedTreatmentNames = new Set();
+    
+    // 추천된 시술명 수집
+    aiResponse.combinations?.forEach(combo => {
+        combo.treatments?.forEach(t => {
+            recommendedTreatmentNames.add(t.name);
+        });
+    });
+    
+    // 시술 상세정보 DB에서 가져오기
+    const treatmentDetails = [];
+    recommendedTreatmentNames.forEach(name => {
+        const dbTreatment = treatments.find(t => 
+            t.name === name || t.name.includes(name) || name.includes(t.name)
+        );
+        if (dbTreatment) {
+            treatmentDetails.push({
+                name: dbTreatment.name,
+                fullName: dbTreatment.fullName || dbTreatment.name,
+                brand: dbTreatment.brand || '',
+                category: dbTreatment.category || '',
+                priceRange: dbTreatment.pricing?.range || '',
+                priceNote: dbTreatment.pricing?.note || '병원마다 상이',
+                sessions: dbTreatment.procedure?.sessions || '',
+                duration: dbTreatment.procedure?.duration || '',
+                description: dbTreatment.description || '',
+                mechanism: dbTreatment.mechanism || '',
+                expectedEffects: dbTreatment.effects?.primary || [],
+                targets: dbTreatment.effects?.targets || [],
+                pros: dbTreatment.pros || [],
+                cons: dbTreatment.cons || [],
+                painLevel: dbTreatment.recovery?.painLevel || 0,
+                downtime: dbTreatment.recovery?.downtime || '없음',
+                recoveryTips: dbTreatment.recovery?.tips || [],
+                warnings: dbTreatment.warnings || [],
+                contraindications: dbTreatment.contraindications || [],
+                idealFor: dbTreatment.idealFor || '',
+                notFor: dbTreatment.notFor || ''
+            });
+        }
+    });
+    
+    // combinations 내 시술에도 DB 정보 추가
+    aiResponse.combinations?.forEach(combo => {
+        let totalMin = 0;
+        let totalMax = 0;
+        
+        combo.treatments?.forEach(t => {
+            const dbTreatment = treatments.find(db => 
+                db.name === t.name || db.name.includes(t.name) || t.name.includes(db.name)
+            );
+            if (dbTreatment) {
+                t.category = dbTreatment.category || '';
+                t.price = dbTreatment.pricing?.range || '';
+                t.downtime = dbTreatment.recovery?.downtime || '없음';
+                t.painLevel = dbTreatment.recovery?.painLevel || 0;
+                t.effect = dbTreatment.effects?.primary?.[0] || '';
+                
+                // 가격 합산
+                const priceMatch = (dbTreatment.pricing?.range || '').match(/(\d+)/g);
+                if (priceMatch) {
+                    totalMin += parseInt(priceMatch[0]) || 0;
+                    totalMax += parseInt(priceMatch[priceMatch.length - 1]) || parseInt(priceMatch[0]) || 0;
+                }
+            }
+        });
+        
+        // 총 가격 범위 계산
+        if (totalMin > 0) {
+            combo.totalPrice = totalMin === totalMax ? 
+                `약 ${totalMin}만원` : 
+                `약 ${totalMin}~${totalMax}만원`;
+            combo.budgetUsage = Math.round((totalMin / userData.budget) * 100) + '%';
+        }
+    });
+    
+    // 병합된 응답 반환
+    return {
+        ...aiResponse,
+        treatmentDetails,
+        // 가격 가이드 기본값
+        priceGuide: {
+            note: "가격은 병원, 지역, 프로모션에 따라 달라질 수 있습니다.",
+            negotiationTip: "첫 방문 시 상담만 받고 여러 병원 비교 후 결정하세요.",
+            packageTip: "3회 이상 패키지로 구매하면 10-20% 할인받을 수 있습니다."
+        },
+        // 주의사항 기본값
+        precautions: {
+            before: ["시술 2주 전부터 레티놀, 필링 제품 중단", "시술 당일 음주 금지", "아스피린 등 혈액 응고제 복용 시 의사에게 알리기"],
+            after: ["시술 부위 자외선 차단 철저히", "시술 후 2-3일간 사우나, 격렬한 운동 피하기", "충분한 수분 섭취와 보습"],
+            emergency: "심한 붓기, 발적, 통증 시 즉시 시술 병원에 연락하세요."
+        }
+    };
+}
 }
 
 function extractMinPrice(priceRange) {
@@ -1413,14 +1495,10 @@ function displayResult(response) {
     document.getElementById('consultResult').classList.remove('hidden');
     
     const userData = consultState.data;
-    
-    // 새 응답 형식과 기존 형식 모두 지원
-    const analysis = typeof response.analysis === 'object' ? response.analysis : { summary: response.analysis };
-    const comparison = response.comparison || { recommendation: response.recommendation };
-    const timeline = typeof response.timeline === 'object' ? response.timeline : { summary: response.timeline };
+    const analysis = response.analysis || '';
+    const tips = response.tips || [];
     const priceGuide = response.priceGuide || {};
-    const tips = response.expertTips || response.tips || [];
-    const checkList = response.hospitalChecklist || response.checkList || [];
+    const precautions = response.precautions || {};
     
     const html = `
         <div class="report-container">
@@ -1466,86 +1544,11 @@ function displayResult(response) {
                 </div>
             </div>
             
-            ${response.requestAnalysis ? `
-            <div class="report-section">
-                <h3 class="report-section-title">📋 요청사항 분석</h3>
-                <div class="request-analysis-box">
-                    ${response.requestAnalysis.included?.length ? `
-                    <div class="included-section">
-                        <h4 class="subsection-title included">✅ 포함된 고민</h4>
-                        <div class="concern-list">
-                            ${response.requestAnalysis.included.map(item => `
-                                <div class="concern-item included">
-                                    <div class="concern-header">
-                                        <span class="concern-name">${item.concern}</span>
-                                        ${item.relatedTreatments?.length ? `
-                                        <span class="related-treatments">${item.relatedTreatments.join(', ')}</span>
-                                        ` : ''}
-                                    </div>
-                                    <p class="concern-reason">${item.reason}</p>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                    ` : ''}
-                    
-                    ${response.requestAnalysis.excluded?.length ? `
-                    <div class="excluded-section">
-                        <h4 class="subsection-title excluded">⏸️ 이번에 제외된 고민</h4>
-                        <div class="concern-list">
-                            ${response.requestAnalysis.excluded.map(item => `
-                                <div class="concern-item excluded">
-                                    <div class="concern-header">
-                                        <span class="concern-name">${item.concern}</span>
-                                    </div>
-                                    <p class="concern-reason">${item.reason}</p>
-                                    ${item.suggestion ? `<p class="concern-suggestion">💡 ${item.suggestion}</p>` : ''}
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                    ` : ''}
-                    
-                    ${response.requestAnalysis.priorityExplanation ? `
-                    <div class="priority-explanation">
-                        <h4 class="subsection-title">🎯 우선순위 결정 이유</h4>
-                        <p>${response.requestAnalysis.priorityExplanation}</p>
-                    </div>
-                    ` : ''}
-                </div>
-            </div>
-            ` : ''}
-            
+            ${analysis ? `
             <div class="report-section">
                 <h3 class="report-section-title">🔍 피부 분석</h3>
                 <div class="analysis-box">
-                    <p>${analysis.summary || ''}</p>
-                    ${analysis.mainConcerns?.length ? `
-                    <div class="concern-tags">
-                        <strong>핵심 고민:</strong>
-                        ${analysis.mainConcerns.map(c => `<span class="concern-tag">${c}</span>`).join('')}
-                    </div>
-                    ` : ''}
-                    ${analysis.approach ? `<p class="approach"><strong>접근 방향:</strong> ${analysis.approach}</p>` : ''}
-                    ${analysis.expectedDuration ? `<p class="duration">📅 예상 관리 기간: <strong>${analysis.expectedDuration}</strong></p>` : ''}
-                </div>
-            </div>
-            
-            ${timeline.summary || timeline.milestones ? `
-            <div class="report-section">
-                <h3 class="report-section-title">📅 전체 플랜 타임라인</h3>
-                <div class="timeline-box">
-                    ${timeline.summary ? `<p>${timeline.summary}</p>` : ''}
-                    ${timeline.milestones?.length ? `
-                    <div class="milestones">
-                        ${timeline.milestones.map((m, i) => `
-                            <div class="milestone">
-                                <span class="milestone-dot"></span>
-                                <span>${m}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                    ` : ''}
+                    <p>${typeof analysis === 'string' ? analysis : analysis.summary || ''}</p>
                 </div>
             </div>
             ` : ''}
@@ -1563,18 +1566,13 @@ function displayResult(response) {
                             <div class="combination-title">
                                 <span class="num">${i + 1}</span>
                                 ${combo.name}
-                                ${combo.badge ? `<span class="combo-badge">${combo.badge}</span>` : ''}
                             </div>
                             <div class="combination-price-wrap">
-                                <div class="combination-price">${combo.totalPrice}</div>
+                                <div class="combination-price">${combo.totalPrice || combo.price || ''}</div>
                                 ${combo.budgetUsage ? `<div class="budget-usage">예산의 ${combo.budgetUsage}</div>` : ''}
                             </div>
                         </div>
-                        <div class="combination-desc">
-                            <p>${combo.concept || ''}</p>
-                            ${combo.targetPerson ? `<p class="target-person">👤 ${combo.targetPerson}</p>` : ''}
-                            ${combo.expectedResult ? `<div class="expected-result">✨ <strong>기대효과:</strong> ${combo.expectedResult}</div>` : ''}
-                        </div>
+                        ${combo.tip ? `<p class="combo-tip">💡 ${combo.tip}</p>` : ''}
                         <div class="combination-treatments">
                             ${combo.treatments?.map(t => `
                                 <div class="treatment-item">
@@ -1586,73 +1584,30 @@ function displayResult(response) {
                                         <div class="treatment-detail">${t.reason || ''}</div>
                                         ${t.effect ? `<div class="treatment-effect">→ ${t.effect}</div>` : ''}
                                         <div class="treatment-meta">
-                                            ${t.painLevel ? `<span>통증: ${t.painLevel}</span>` : ''}
+                                            ${t.painLevel ? `<span>통증: ${'●'.repeat(t.painLevel)}${'○'.repeat(5-t.painLevel)}</span>` : ''}
                                             ${t.downtime ? `<span>회복: ${t.downtime}</span>` : ''}
-                                            ${t.duration ? `<span>지속: ${t.duration}</span>` : ''}
                                         </div>
                                     </div>
                                     <div class="treatment-price-info">
                                         <div class="treatment-price">${t.price || ''}</div>
                                         <div class="treatment-sessions">${t.sessions || ''}</div>
-                                        ${t.priceNote ? `<div class="price-note">${t.priceNote}</div>` : ''}
                                     </div>
                                 </div>
                             `).join('') || ''}
                         </div>
-                        ${combo.schedule ? `
-                            <div class="schedule-guide">
-                                <div class="guide-title">📅 시술 스케줄</div>
-                                <div class="guide-content">
-                                    ${combo.schedule.total ? `<p><strong>총 기간:</strong> ${combo.schedule.total}</p>` : ''}
-                                    ${combo.schedule.steps?.length ? `
-                                    <ul class="schedule-steps">
-                                        ${combo.schedule.steps.map(s => `<li>${s}</li>`).join('')}
-                                    </ul>
-                                    ` : ''}
-                                    ${combo.schedule.interval ? `<p class="interval">⏱️ ${combo.schedule.interval}</p>` : ''}
-                                </div>
-                            </div>
-                        ` : (combo.order ? `
-                            <div class="order-guide">
-                                <div class="guide-title">📅 순서</div>
-                                <div class="guide-content">${combo.order}</div>
-                            </div>
-                        ` : '')}
-                        ${combo.synergy ? `
-                            <div class="synergy-box">
-                                <div class="guide-title">🔗 시너지 효과</div>
-                                <div class="guide-content">${combo.synergy}</div>
-                            </div>
-                        ` : ''}
-                        ${combo.maintenance || combo.maintenancePlan ? `
-                            <div class="maintenance-guide">
-                                <div class="guide-title">🔄 유지 관리</div>
-                                <div class="guide-content">${combo.maintenance || combo.maintenancePlan}</div>
-                            </div>
-                        ` : ''}
                     </div>
                 `).join('') || ''}
                 </div>
             </div>
             
-            ${response.overallRecommendation ? `
+            ${response.recommendation ? `
             <div class="report-section">
                 <h3 class="report-section-title">🎯 종합 추천</h3>
                 <div class="recommendation-box overall">
-                    <p>${response.overallRecommendation.summary || ''}</p>
-                    ${response.overallRecommendation.suggestedOrder ? `<p class="suggested-order">📋 <strong>추천 진행 순서:</strong> ${response.overallRecommendation.suggestedOrder}</p>` : ''}
-                    ${response.overallRecommendation.budgetTip ? `<p class="budget-tip">💡 ${response.overallRecommendation.budgetTip}</p>` : ''}
+                    <p>${response.recommendation}</p>
                 </div>
             </div>
-            ` : (comparison.recommendation ? `
-            <div class="report-section">
-                <h3 class="report-section-title">🎯 종합 추천</h3>
-                <div class="recommendation-box">
-                    <p>${comparison.recommendation}</p>
-                    ${comparison.budgetTip ? `<p class="budget-tip">💡 ${comparison.budgetTip}</p>` : ''}
-                </div>
-            </div>
-            ` : '')}
+            ` : ''}
             
             ${response.treatmentDetails?.length ? `
             <div class="report-section">
@@ -1666,20 +1621,27 @@ function displayResult(response) {
                                 <div class="detail-title-wrap">
                                     <h4 class="detail-name">${detail.name}</h4>
                                     ${detail.fullName && detail.fullName !== detail.name ? `<span class="detail-fullname">${detail.fullName}</span>` : ''}
+                                    ${detail.brand ? `<span class="detail-brand">${detail.brand}</span>` : ''}
                                 </div>
                                 ${detail.priceRange ? `<span class="detail-price">${detail.priceRange}</span>` : ''}
                             </div>
                             
-                            ${detail.priceNote || detail.sessions ? `
                             <div class="detail-price-info">
                                 ${detail.sessions ? `<span class="price-info-item">📅 ${detail.sessions}</span>` : ''}
                                 ${detail.priceNote ? `<span class="price-info-item">💡 ${detail.priceNote}</span>` : ''}
+                                ${detail.downtime ? `<span class="price-info-item">⏱️ 회복: ${detail.downtime}</span>` : ''}
+                                ${detail.painLevel ? `<span class="price-info-item">😣 통증: ${'●'.repeat(detail.painLevel)}${'○'.repeat(5-detail.painLevel)}</span>` : ''}
                             </div>
-                            ` : ''}
                             
                             ${detail.description ? `
                             <div class="detail-description">
                                 <p>${detail.description}</p>
+                            </div>
+                            ` : ''}
+                            
+                            ${detail.mechanism ? `
+                            <div class="detail-mechanism">
+                                <p>🔬 <strong>작용 원리:</strong> ${detail.mechanism}</p>
                             </div>
                             ` : ''}
                             
@@ -1696,6 +1658,15 @@ function displayResult(response) {
                                 <ul>
                                     ${detail.expectedEffects.map(e => `<li>${e}</li>`).join('')}
                                 </ul>
+                            </div>
+                            ` : ''}
+                            
+                            ${detail.targets?.length ? `
+                            <div class="detail-section targets">
+                                <h5>📍 시술 부위</h5>
+                                <div class="target-tags">
+                                    ${detail.targets.map(t => `<span class="target-tag">${t}</span>`).join('')}
+                                </div>
                             </div>
                             ` : ''}
                             
@@ -1719,11 +1690,11 @@ function displayResult(response) {
                                 ` : ''}
                             </div>
                             
-                            ${detail.tips?.length ? `
+                            ${detail.recoveryTips?.length ? `
                             <div class="detail-section tips">
-                                <h5>💡 시술 팁</h5>
+                                <h5>💡 회복 팁</h5>
                                 <ul>
-                                    ${detail.tips.map(t => `<li>${t}</li>`).join('')}
+                                    ${detail.recoveryTips.map(t => `<li>${t}</li>`).join('')}
                                 </ul>
                             </div>
                             ` : ''}
@@ -1737,17 +1708,12 @@ function displayResult(response) {
                             </div>
                             ` : ''}
                             
-                            ${detail.notFor ? `
-                            <div class="detail-notfor">
-                                <span class="notfor-label">🚫 이런 분은 피하세요</span>
-                                <span class="notfor-text">${detail.notFor}</span>
-                            </div>
-                            ` : ''}
-                            
-                            ${detail.recoveryGuide ? `
-                            <div class="detail-recovery">
-                                <span class="recovery-label">🩹 회복 가이드</span>
-                                <p>${detail.recoveryGuide}</p>
+                            ${detail.contraindications?.length ? `
+                            <div class="detail-section contraindications">
+                                <h5>🚫 이런 분은 피하세요</h5>
+                                <ul>
+                                    ${detail.contraindications.map(c => `<li>${c}</li>`).join('')}
+                                </ul>
                             </div>
                             ` : ''}
                         </div>
@@ -1761,61 +1727,67 @@ function displayResult(response) {
                 <h3 class="report-section-title">💰 가격 가이드</h3>
                 <div class="price-guide-box">
                     ${priceGuide.note ? `<p>${priceGuide.note}</p>` : ''}
-                    ${priceGuide.negotiationTip ? `<p>💬 <strong>협상 팁:</strong> ${priceGuide.negotiationTip}</p>` : ''}
-                    ${priceGuide.packageTip ? `<p>📦 <strong>패키지 팁:</strong> ${priceGuide.packageTip}</p>` : ''}
+                    ${priceGuide.negotiationTip ? `<p>💡 <strong>협상 팁:</strong> ${priceGuide.negotiationTip}</p>` : ''}
+                    ${priceGuide.packageTip ? `<p>🎁 <strong>패키지 팁:</strong> ${priceGuide.packageTip}</p>` : ''}
                 </div>
             </div>
             ` : ''}
             
-            ${response.precautions ? `
+            ${precautions.before?.length || precautions.after?.length ? `
             <div class="report-section">
-                <h3 class="report-section-title">⚠️ 시술 전후 주의사항</h3>
+                <h3 class="report-section-title">📋 시술 전후 주의사항</h3>
                 <div class="precautions-grid">
+                    ${precautions.before?.length ? `
                     <div class="precaution-box before">
-                        <h4>🔸 시술 전 주의사항</h4>
+                        <h4>시술 전</h4>
                         <ul>
-                            ${response.precautions.before?.map(item => `<li>${item}</li>`).join('') || ''}
+                            ${precautions.before.map(p => `<li>${p}</li>`).join('')}
                         </ul>
                     </div>
+                    ` : ''}
+                    ${precautions.after?.length ? `
                     <div class="precaution-box after">
-                        <h4>🔹 시술 후 관리법</h4>
+                        <h4>시술 후</h4>
                         <ul>
-                            ${response.precautions.after?.map(item => `<li>${item}</li>`).join('') || ''}
-                        </ul>
-                    </div>
-                    ${response.precautions.avoid?.length ? `
-                    <div class="precaution-box avoid">
-                        <h4>🚫 피해야 할 것</h4>
-                        <ul>
-                            ${response.precautions.avoid?.map(item => `<li>${item}</li>`).join('') || ''}
+                            ${precautions.after.map(p => `<li>${p}</li>`).join('')}
                         </ul>
                     </div>
                     ` : ''}
                 </div>
-                ${response.precautions.emergency ? `
+                ${precautions.emergency ? `
                 <div class="emergency-box">
-                    <strong>🚨 이상 반응 시:</strong> ${response.precautions.emergency}
+                    <strong>🚨 응급 상황:</strong> ${precautions.emergency}
                 </div>
                 ` : ''}
             </div>
             ` : ''}
             
-            ${checkList?.length ? `
+            ${tips?.length ? `
             <div class="report-section">
-                <h3 class="report-section-title">📋 병원 방문 전 체크리스트</h3>
-                <div class="checklist-box">
-                    <p class="checklist-intro">상담 시 아래 내용을 꼭 확인하세요:</p>
-                    <ul class="checklist">
-                        ${checkList.map(item => `<li>${item}</li>`).join('')}
+                <h3 class="report-section-title">💡 전문가 팁</h3>
+                <div class="tips-box">
+                    <ul>
+                        ${tips.map(tip => `<li>${tip}</li>`).join('')}
                     </ul>
                 </div>
             </div>
             ` : ''}
             
-            ${tips?.length ? `
-            <div class="report-section">
-                <h3 class="report-section-title">💡 전문가 꿀팁</h3>
-                <ul class="report-tips">
+            ${response.closing ? `
+            <div class="report-section closing">
+                <p>${response.closing}</p>
+            </div>
+            ` : ''}
+            
+            <div class="report-actions">
+                <button class="btn-retry" onclick="backToConsultWizard()">← 다시 상담받기</button>
+                <button class="btn-print" onclick="window.print()">🖨️ 인쇄하기</button>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('resultContent').innerHTML = html;
+}
                     ${tips.map(tip => `<li>${tip}</li>`).join('')}
                 </ul>
             </div>
