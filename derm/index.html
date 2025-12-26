@@ -18,7 +18,8 @@
             
             <!-- View Tabs (Center) -->
             <nav class="view-tabs">
-                <button class="view-tab active" data-view="concern">고민별 찾기</button>
+                <button class="view-tab active" data-view="consult">✨ AI 상담</button>
+                <button class="view-tab" data-view="concern">고민별 찾기</button>
                 <button class="view-tab" data-view="filter">카드 뷰</button>
                 <button class="view-tab" data-view="table">테이블 뷰</button>
             </nav>
@@ -35,8 +36,235 @@
         <!-- Main Content -->
         <main class="main-content">
             
+            <!-- View 0: AI 상담 -->
+            <section class="view-panel active" id="view-consult">
+                <div class="consult-container">
+                    <!-- 상담 진행 화면 -->
+                    <div class="consult-wizard" id="consultWizard">
+                        <div class="consult-header">
+                            <div class="consult-avatar">
+                                <svg viewBox="0 0 48 48" fill="none">
+                                    <circle cx="24" cy="24" r="20" fill="url(#avatarGrad)"/>
+                                    <path d="M24 14c-4 0-7 3-7 7 0 2.5 1.2 4.6 3 6v4l4 2 4-2v-4c1.8-1.4 3-3.5 3-6 0-4-3-7-7-7z" fill="white" opacity="0.9"/>
+                                    <circle cx="21" cy="20" r="1.5" fill="#334155"/>
+                                    <circle cx="27" cy="20" r="1.5" fill="#334155"/>
+                                    <path d="M21 24c0 0 1.5 2 3 2s3-2 3-2" stroke="#334155" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                                    <defs>
+                                        <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#3b82f6"/>
+                                            <stop offset="100%" stop-color="#1d4ed8"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="consult-title-area">
+                                <h2 class="consult-title">맞춤 시술 상담</h2>
+                                <p class="consult-subtitle">몇 가지 질문에 답해주시면 딱 맞는 시술을 추천해드릴게요</p>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="consult-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <span class="progress-text" id="progressText">1 / 6</span>
+                        </div>
+
+                        <!-- Step 1: 인사 + 연령대 -->
+                        <div class="consult-step active" data-step="1">
+                            <div class="step-message">
+                                <p>안녕하세요! 😊 피부 고민 해결을 도와드릴 <strong>AI 상담사</strong>예요.</p>
+                                <p>먼저 연령대와 시술 경험을 알려주시겠어요?</p>
+                            </div>
+                            <div class="step-questions">
+                                <div class="question-group">
+                                    <label class="question-label">연령대</label>
+                                    <div class="option-grid cols-4">
+                                        <button class="option-btn" data-field="age" data-value="20대">20대</button>
+                                        <button class="option-btn" data-field="age" data-value="30대">30대</button>
+                                        <button class="option-btn" data-field="age" data-value="40대">40대</button>
+                                        <button class="option-btn" data-field="age" data-value="50대+">50대+</button>
+                                    </div>
+                                </div>
+                                <div class="question-group">
+                                    <label class="question-label">피부과 시술 경험</label>
+                                    <div class="option-grid cols-3">
+                                        <button class="option-btn" data-field="experience" data-value="처음">처음이에요</button>
+                                        <button class="option-btn" data-field="experience" data-value="몇번">몇 번 해봤어요</button>
+                                        <button class="option-btn" data-field="experience" data-value="자주">자주 받아요</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: 고민 선택 -->
+                        <div class="consult-step" data-step="2">
+                            <div class="step-message">
+                                <p>어떤 피부 고민이 있으신가요? <strong>여러 개</strong> 선택하셔도 돼요!</p>
+                            </div>
+                            <div class="step-questions">
+                                <div class="question-group">
+                                    <div class="option-grid cols-3 multi-select" data-field="concerns">
+                                        <button class="option-btn" data-value="처진피부">😔 처진 피부</button>
+                                        <button class="option-btn" data-value="주름">👵 주름</button>
+                                        <button class="option-btn" data-value="탄력저하">✨ 탄력 저하</button>
+                                        <button class="option-btn" data-value="모공">🔵 모공</button>
+                                        <button class="option-btn" data-value="기미잡티">🎨 기미/잡티</button>
+                                        <button class="option-btn" data-value="여드름">😣 여드름</button>
+                                        <button class="option-btn" data-value="볼륨손실">💧 볼륨 손실</button>
+                                        <button class="option-btn" data-value="흉터">🩹 흉터</button>
+                                        <button class="option-btn" data-value="피부결">🪞 피부결/톤</button>
+                                    </div>
+                                </div>
+                                <div class="question-group">
+                                    <label class="question-label">그 외 고민이 있다면 자유롭게 적어주세요</label>
+                                    <textarea class="text-input" id="concernsExtra" placeholder="예: 눈밑 다크서클이 심해요, 목주름이 신경쓰여요..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: 부위 선택 -->
+                        <div class="consult-step" data-step="3">
+                            <div class="step-message">
+                                <p>주로 <strong>어느 부위</strong>가 신경 쓰이세요?</p>
+                            </div>
+                            <div class="step-questions">
+                                <div class="question-group">
+                                    <div class="option-grid cols-4 multi-select" data-field="areas">
+                                        <button class="option-btn" data-value="이마">이마</button>
+                                        <button class="option-btn" data-value="눈가">눈가</button>
+                                        <button class="option-btn" data-value="볼">볼</button>
+                                        <button class="option-btn" data-value="코">코</button>
+                                        <button class="option-btn" data-value="입주변">입 주변</button>
+                                        <button class="option-btn" data-value="턱선">턱선</button>
+                                        <button class="option-btn" data-value="목">목</button>
+                                        <button class="option-btn" data-value="전체">얼굴 전체</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: 예산 -->
+                        <div class="consult-step" data-step="4">
+                            <div class="step-message">
+                                <p>시술에 사용할 수 있는 <strong>총 예산</strong>은 어느 정도인가요?</p>
+                                <p class="step-hint">여러 시술을 조합해서 추천해드릴게요. 병원마다 가격이 다르니 최소 기준으로 계산해드려요.</p>
+                            </div>
+                            <div class="step-questions">
+                                <div class="question-group">
+                                    <label class="question-label">총 예산 (만원)</label>
+                                    <div class="budget-input-wrap">
+                                        <input type="number" class="text-input budget-input" id="budgetInput" placeholder="예: 100" min="10" step="10">
+                                        <span class="budget-unit">만원</span>
+                                    </div>
+                                    <div class="budget-presets">
+                                        <button class="preset-btn" data-amount="30">30만원</button>
+                                        <button class="preset-btn" data-amount="50">50만원</button>
+                                        <button class="preset-btn" data-amount="100">100만원</button>
+                                        <button class="preset-btn" data-amount="200">200만원</button>
+                                        <button class="preset-btn" data-amount="300">300만원</button>
+                                        <button class="preset-btn" data-amount="500">500만원+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: 다운타임 & 통증 -->
+                        <div class="consult-step" data-step="5">
+                            <div class="step-message">
+                                <p>시술 후 <strong>회복 기간</strong>과 <strong>통증</strong>에 대해 알려주세요.</p>
+                            </div>
+                            <div class="step-questions">
+                                <div class="question-group">
+                                    <label class="question-label">다운타임 (회복 기간)</label>
+                                    <div class="option-grid cols-2">
+                                        <button class="option-btn" data-field="downtime" data-value="없어야함">없어야 해요</button>
+                                        <button class="option-btn" data-field="downtime" data-value="1-2일">1~2일 괜찮아요</button>
+                                        <button class="option-btn" data-field="downtime" data-value="일주일">일주일까지 OK</button>
+                                        <button class="option-btn" data-field="downtime" data-value="상관없음">상관없어요</button>
+                                    </div>
+                                </div>
+                                <div class="question-group">
+                                    <label class="question-label">통증 민감도</label>
+                                    <div class="option-grid cols-3">
+                                        <button class="option-btn" data-field="pain" data-value="민감">많이 무서워요 😰</button>
+                                        <button class="option-btn" data-field="pain" data-value="보통">보통이에요</button>
+                                        <button class="option-btn" data-field="pain" data-value="괜찮음">잘 참아요 💪</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 6: 추가 정보 -->
+                        <div class="consult-step" data-step="6">
+                            <div class="step-message">
+                                <p>거의 다 왔어요! 마지막으로 <strong>추가 정보</strong>가 있다면 알려주세요.</p>
+                            </div>
+                            <div class="step-questions">
+                                <div class="question-group">
+                                    <label class="question-label">중요한 일정이 있나요?</label>
+                                    <input type="text" class="text-input" id="eventInput" placeholder="예: 2주 뒤 결혼식, 다음달 면접...">
+                                </div>
+                                <div class="question-group">
+                                    <label class="question-label">더 궁금하거나 원하는 게 있다면 편하게 말씀해주세요</label>
+                                    <textarea class="text-input tall" id="extraInput" placeholder="예: 자연스러운 결과를 원해요, 유지 비용도 고려해주세요, 주사는 무서워요..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="consult-nav">
+                            <button class="nav-btn prev" id="prevBtn" disabled>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                                이전
+                            </button>
+                            <button class="nav-btn next" id="nextBtn">
+                                다음
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 18l6-6-6-6"/>
+                                </svg>
+                            </button>
+                            <button class="nav-btn submit hidden" id="submitBtn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                                상담 결과 보기
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 결과 화면 -->
+                    <div class="consult-result hidden" id="consultResult">
+                        <div class="result-header">
+                            <button class="back-btn" id="backToConsult">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                                다시 상담하기
+                            </button>
+                        </div>
+                        <div class="result-content" id="resultContent">
+                            <!-- AI 응답이 여기에 표시됨 -->
+                        </div>
+                    </div>
+
+                    <!-- 로딩 화면 -->
+                    <div class="consult-loading hidden" id="consultLoading">
+                        <div class="loading-animation">
+                            <div class="loading-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <p>맞춤 시술을 분석하고 있어요...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- View 1: 고민별 찾기 -->
-            <section class="view-panel active" id="view-concern">
+            <section class="view-panel" id="view-concern">
                 <div class="concern-grid">
                     <button class="concern-card" data-concern="처진피부">
                         <div class="concern-icon">
@@ -532,6 +760,28 @@
                 <div class="modal-content" id="modalContent"></div>
             </div>
         </div>
+
+        <!-- Admin Modal -->
+        <div class="admin-modal hidden" id="adminModal">
+            <div class="admin-content">
+                <h3 class="admin-title">🔐 관리자 설정</h3>
+                <p class="admin-desc">AI 상담 기능을 위한 Claude API 키를 설정하세요.</p>
+                <input type="password" class="admin-input" id="apiKeyInput" placeholder="sk-ant-...">
+                <div class="admin-buttons">
+                    <button class="admin-btn cancel" id="adminCancel">취소</button>
+                    <button class="admin-btn save" id="adminSave">저장</button>
+                </div>
+                <div class="admin-status hidden" id="adminStatus"></div>
+            </div>
+        </div>
+
+        <!-- Admin Link -->
+        <button class="admin-link" id="adminLink" title="관리자 설정">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+            </svg>
+        </button>
     </div>
 
     <script src="db_extended.js"></script>
