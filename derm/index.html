@@ -41,225 +41,315 @@
                     <button class="concern-card" data-concern="처진피부">
                         <div class="concern-icon">
                             <svg viewBox="0 0 48 48" fill="none">
-                                <!-- 얼굴 윤곽 -->
                                 <ellipse cx="24" cy="22" rx="14" ry="16" stroke="currentColor" stroke-width="1.5"/>
-                                <!-- 눈 -->
                                 <path d="M17 20 Q19 18 21 20" stroke="currentColor" stroke-width="1.2" fill="none"/>
                                 <path d="M27 20 Q29 18 31 20" stroke="currentColor" stroke-width="1.2" fill="none"/>
-                                <!-- 처진 볼 라인 -->
                                 <path d="M12 26 Q16 32 20 30" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 1" opacity="0.6"/>
                                 <path d="M36 26 Q32 32 28 30" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 1" opacity="0.6"/>
-                                <!-- 아래로 향하는 화살표 -->
-                                <path d="M24 34 L24 42 M20 38 L24 42 L28 38" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                             </svg>
                         </div>
-                        <span class="concern-title">처진 피부</span>
-                        <span class="concern-desc">리프팅이 필요해요</span>
-                        <span class="concern-count" data-concern-count="처진피부">0개</span>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">처진 피부</span>
+                                <span class="concern-count" data-concern-count="처진피부">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">턱선이 흐릿해졌어요</span>
+                                <span class="concern-bullet">볼살이 아래로 처졌어요</span>
+                                <span class="concern-bullet">얼굴이 길어 보여요</span>
+                            </div>
+                        </div>
                     </button>
                     <button class="concern-card" data-concern="주름">
                         <div class="concern-icon">
                             <svg viewBox="0 0 48 48" fill="none">
-                                <!-- 얼굴 -->
                                 <ellipse cx="24" cy="24" rx="14" ry="16" stroke="currentColor" stroke-width="1.5"/>
-                                <!-- 이마 주름 -->
                                 <path d="M16 12 Q24 10 32 12" stroke="currentColor" stroke-width="1" opacity="0.7"/>
                                 <path d="M17 15 Q24 13 31 15" stroke="currentColor" stroke-width="1" opacity="0.5"/>
-                                <!-- 눈가 주름 (crow's feet) -->
-                                <path d="M10 20 L14 21 M10 22 L14 22 M10 24 L14 23" stroke="currentColor" stroke-width="0.8" opacity="0.6"/>
-                                <path d="M38 20 L34 21 M38 22 L34 22 M38 24 L34 23" stroke="currentColor" stroke-width="0.8" opacity="0.6"/>
-                                <!-- 눈 -->
-                                <ellipse cx="18" cy="22" rx="3" ry="1.5" stroke="currentColor" stroke-width="1.2"/>
-                                <ellipse cx="30" cy="22" rx="3" ry="1.5" stroke="currentColor" stroke-width="1.2"/>
-                                <!-- 팔자 주름 -->
-                                <path d="M18 30 Q20 34 22 36" stroke="currentColor" stroke-width="1" opacity="0.6"/>
-                                <path d="M30 30 Q28 34 26 36" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+                                <path d="M10 20 L14 21 M10 22 L14 22" stroke="currentColor" stroke-width="0.8" opacity="0.6"/>
                             </svg>
                         </div>
-                        <span class="concern-title">주름</span>
-                        <span class="concern-desc">잔주름, 깊은주름</span>
-                        <span class="concern-count" data-concern-count="주름">0개</span>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">주름</span>
+                                <span class="concern-count" data-concern-count="주름">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">이마에 가로 주름이 생겼어요</span>
+                                <span class="concern-bullet">눈가 잔주름이 늘었어요</span>
+                                <span class="concern-bullet">웃을 때 주름이 남아요</span>
+                            </div>
+                        </div>
                     </button>
-                    <button class="concern-card" data-concern="탄력">
+                    <button class="concern-card" data-concern="탄력저하">
                         <div class="concern-icon">
                             <svg viewBox="0 0 48 48" fill="none">
-                                <!-- 탄력있는 피부 표현 - 바운스 효과 -->
                                 <circle cx="24" cy="24" r="14" stroke="currentColor" stroke-width="1.5"/>
-                                <!-- 빛나는 효과 -->
                                 <path d="M24 6 L24 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                                 <path d="M24 38 L24 42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                                 <path d="M6 24 L10 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                                 <path d="M38 24 L42 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                                <!-- 대각선 빛 -->
-                                <path d="M11 11 L14 14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-                                <path d="M34 14 L37 11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-                                <path d="M14 34 L11 37" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-                                <path d="M37 37 L34 34" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-                                <!-- 중앙 스파클 -->
-                                <path d="M24 18 L25 22 L29 23 L25 24 L24 28 L23 24 L19 23 L23 22 Z" fill="currentColor" opacity="0.3"/>
-                                <circle cx="24" cy="23" r="2" fill="currentColor" opacity="0.5"/>
                             </svg>
                         </div>
-                        <span class="concern-title">탄력 저하</span>
-                        <span class="concern-desc">탱탱함이 사라졌어요</span>
-                        <span class="concern-count" data-concern-count="탄력">0개</span>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">탄력 저하</span>
+                                <span class="concern-count" data-concern-count="탄력저하">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">피부가 푸석푸석해요</span>
+                                <span class="concern-bullet">탱탱한 느낌이 없어요</span>
+                                <span class="concern-bullet">화장이 잘 안 먹어요</span>
+                            </div>
+                        </div>
                     </button>
                     <button class="concern-card" data-concern="모공">
                         <div class="concern-icon">
                             <svg viewBox="0 0 48 48" fill="none">
-                                <!-- 피부 표면 -->
                                 <circle cx="24" cy="24" r="15" stroke="currentColor" stroke-width="1.5"/>
-                                <!-- 모공들 - 다양한 크기 -->
                                 <circle cx="18" cy="18" r="2.5" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.1"/>
                                 <circle cx="28" cy="16" r="2" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.1"/>
-                                <circle cx="32" cy="24" r="2.5" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.1"/>
-                                <circle cx="16" cy="26" r="2" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.1"/>
-                                <circle cx="24" cy="22" r="3" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.15"/>
-                                <circle cx="22" cy="30" r="2" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.1"/>
-                                <circle cx="30" cy="32" r="1.5" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.1"/>
-                                <!-- 확대경 -->
-                                <circle cx="36" cy="36" r="6" stroke="currentColor" stroke-width="1.5" fill="white"/>
-                                <path d="M40 40 L44 44" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="24" cy="24" r="3" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.15"/>
                             </svg>
                         </div>
-                        <span class="concern-title">모공</span>
-                        <span class="concern-desc">넓은 모공, 피지</span>
-                        <span class="concern-count" data-concern-count="모공">0개</span>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">모공</span>
+                                <span class="concern-count" data-concern-count="모공">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">코 주변 모공이 커요</span>
+                                <span class="concern-bullet">볼 모공이 눈에 띄어요</span>
+                                <span class="concern-bullet">피지가 많이 나요</span>
+                            </div>
+                        </div>
                     </button>
-                    <button class="concern-card" data-concern="기미">
+                    <button class="concern-card" data-concern="기미/잡티">
                         <div class="concern-icon">
                             <svg viewBox="0 0 48 48" fill="none">
-                                <!-- 얼굴 -->
                                 <ellipse cx="24" cy="24" rx="14" ry="16" stroke="currentColor" stroke-width="1.5"/>
-                                <!-- 기미/잡티 - 광대 부근 -->
                                 <ellipse cx="15" cy="24" rx="4" ry="3" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="0.5"/>
                                 <ellipse cx="33" cy="24" rx="4" ry="3" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="0.5"/>
-                                <!-- 작은 잡티들 -->
-                                <circle cx="18" cy="28" r="1.5" fill="currentColor" fill-opacity="0.25"/>
-                                <circle cx="30" cy="27" r="1" fill="currentColor" fill-opacity="0.2"/>
-                                <circle cx="22" cy="32" r="1" fill="currentColor" fill-opacity="0.15"/>
-                                <circle cx="27" cy="20" r="0.8" fill="currentColor" fill-opacity="0.2"/>
-                                <!-- 눈 -->
-                                <path d="M18 20 Q20 18 22 20" stroke="currentColor" stroke-width="1"/>
-                                <path d="M26 20 Q28 18 30 20" stroke="currentColor" stroke-width="1"/>
                             </svg>
                         </div>
-                        <span class="concern-title">기미 / 잡티</span>
-                        <span class="concern-desc">색소, 피부톤</span>
-                        <span class="concern-count" data-concern-count="기미">0개</span>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">기미 / 잡티</span>
+                                <span class="concern-count" data-concern-count="기미/잡티">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">광대뼈에 기미가 생겼어요</span>
+                                <span class="concern-bullet">잡티가 점점 늘어요</span>
+                                <span class="concern-bullet">피부톤이 칙칙해요</span>
+                            </div>
+                        </div>
                     </button>
                     <button class="concern-card" data-concern="여드름">
                         <div class="concern-icon">
                             <svg viewBox="0 0 48 48" fill="none">
-                                <!-- 얼굴 -->
                                 <ellipse cx="24" cy="24" rx="14" ry="16" stroke="currentColor" stroke-width="1.5"/>
-                                <!-- 여드름들 - 빨간 포인트 -->
                                 <circle cx="18" cy="20" r="2.5" fill="#ef4444" fill-opacity="0.4" stroke="#ef4444" stroke-width="0.8"/>
-                                <circle cx="30" cy="18" r="2" fill="#ef4444" fill-opacity="0.3" stroke="#ef4444" stroke-width="0.8"/>
-                                <circle cx="22" cy="28" r="3" fill="#ef4444" fill-opacity="0.35" stroke="#ef4444" stroke-width="0.8"/>
-                                <circle cx="32" cy="26" r="1.5" fill="#ef4444" fill-opacity="0.3" stroke="#ef4444" stroke-width="0.8"/>
-                                <circle cx="16" cy="30" r="2" fill="#ef4444" fill-opacity="0.25" stroke="#ef4444" stroke-width="0.8"/>
-                                <circle cx="28" cy="32" r="1.5" fill="#ef4444" fill-opacity="0.2"/>
-                                <!-- 중심점 (화이트헤드) -->
-                                <circle cx="18" cy="20" r="0.8" fill="white"/>
-                                <circle cx="22" cy="28" r="1" fill="white"/>
+                                <circle cx="30" cy="22" r="2" fill="#ef4444" fill-opacity="0.3" stroke="#ef4444" stroke-width="0.8"/>
+                                <circle cx="22" cy="30" r="2.5" fill="#ef4444" fill-opacity="0.35" stroke="#ef4444" stroke-width="0.8"/>
                             </svg>
                         </div>
-                        <span class="concern-title">여드름</span>
-                        <span class="concern-desc">트러블, 피지</span>
-                        <span class="concern-count" data-concern-count="여드름">0개</span>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">여드름</span>
+                                <span class="concern-count" data-concern-count="여드름">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">뾰루지가 자꾸 나요</span>
+                                <span class="concern-bullet">턱 라인에 트러블이 많아요</span>
+                                <span class="concern-bullet">짜도 또 생겨요</span>
+                            </div>
+                        </div>
                     </button>
-                    <button class="concern-card" data-concern="볼륨">
+                    <button class="concern-card" data-concern="볼륨손실">
                         <div class="concern-icon">
                             <svg viewBox="0 0 48 48" fill="none">
-                                <!-- 얼굴 윤곽 -->
                                 <path d="M24 6 C34 6 40 14 40 24 C40 36 32 42 24 42 C16 42 8 36 8 24 C8 14 14 6 24 6" stroke="currentColor" stroke-width="1.5"/>
-                                <!-- 꺼진 볼 표현 (음영) -->
-                                <path d="M12 22 Q16 26 18 32" stroke="currentColor" stroke-width="1" stroke-dasharray="2 1" opacity="0.5"/>
-                                <path d="M36 22 Q32 26 30 32" stroke="currentColor" stroke-width="1" stroke-dasharray="2 1" opacity="0.5"/>
-                                <!-- 꺼진 부분 표시 -->
                                 <ellipse cx="16" cy="28" rx="4" ry="5" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2 2" opacity="0.4"/>
                                 <ellipse cx="32" cy="28" rx="4" ry="5" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2 2" opacity="0.4"/>
-                                <!-- 눈 -->
-                                <ellipse cx="18" cy="20" rx="2.5" ry="1.5" stroke="currentColor" stroke-width="1"/>
-                                <ellipse cx="30" cy="20" rx="2.5" ry="1.5" stroke="currentColor" stroke-width="1"/>
-                                <!-- 팔자 주름 -->
-                                <path d="M20 30 Q22 36 24 38" stroke="currentColor" stroke-width="1" opacity="0.6"/>
-                                <path d="M28 30 Q26 36 24 38" stroke="currentColor" stroke-width="1" opacity="0.6"/>
                             </svg>
                         </div>
-                        <span class="concern-title">볼륨 손실</span>
-                        <span class="concern-desc">꺼진 볼, 팔자</span>
-                        <span class="concern-count" data-concern-count="볼륨">0개</span>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">볼륨 손실</span>
+                                <span class="concern-count" data-concern-count="볼륨손실">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">볼이 꺼져 보여요</span>
+                                <span class="concern-bullet">팔자주름이 깊어졌어요</span>
+                                <span class="concern-bullet">얼굴이 빈약해 보여요</span>
+                            </div>
+                        </div>
                     </button>
                     <button class="concern-card" data-concern="흉터">
                         <div class="concern-icon">
                             <svg viewBox="0 0 48 48" fill="none">
-                                <!-- 피부 표면 -->
                                 <rect x="8" y="12" width="32" height="24" rx="4" stroke="currentColor" stroke-width="1.5"/>
-                                <!-- 다양한 흉터 패턴 -->
-                                <!-- 박스카 흉터 -->
                                 <rect x="12" y="18" width="6" height="4" rx="1" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.1"/>
-                                <!-- 아이스픽 흉터 -->
-                                <path d="M24 16 L24 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                                <circle cx="24" cy="22" r="1.5" fill="currentColor" fill-opacity="0.2"/>
-                                <!-- 롤링 흉터 -->
-                                <path d="M30 18 Q33 20 36 18 Q33 22 30 20" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.1"/>
-                                <!-- 패인 흉터들 -->
-                                <circle cx="14" cy="28" r="2" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.15"/>
-                                <circle cx="22" cy="30" r="1.5" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.1"/>
-                                <ellipse cx="32" cy="28" rx="3" ry="2" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.1"/>
+                                <circle cx="24" cy="24" r="2" fill="currentColor" fill-opacity="0.15"/>
+                                <ellipse cx="32" cy="26" rx="3" ry="2" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.1"/>
                             </svg>
                         </div>
-                        <span class="concern-title">흉터</span>
-                        <span class="concern-desc">여드름흉터, 패인흉터</span>
-                        <span class="concern-count" data-concern-count="흉터">0개</span>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">흉터</span>
+                                <span class="concern-count" data-concern-count="흉터">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">여드름 자국이 남았어요</span>
+                                <span class="concern-bullet">피부가 울퉁불퉁해요</span>
+                                <span class="concern-bullet">패인 흉터가 있어요</span>
+                            </div>
+                        </div>
                     </button>
                     <button class="concern-card" data-concern="제모">
                         <div class="concern-icon">
                             <svg viewBox="0 0 48 48" fill="none">
-                                <!-- 레이저 제모기 -->
                                 <rect x="18" y="6" width="12" height="24" rx="3" stroke="currentColor" stroke-width="1.5"/>
-                                <!-- 손잡이 -->
                                 <path d="M20 30 L20 40 Q20 42 22 42 L26 42 Q28 42 28 40 L28 30" stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.1"/>
-                                <!-- 레이저 헤드 -->
                                 <rect x="20" y="8" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.2"/>
-                                <!-- 레이저 빔 -->
-                                <path d="M24 14 L24 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 2"/>
-                                <path d="M20 4 L24 8 L28 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
-                                <!-- 버튼들 -->
-                                <circle cx="24" cy="20" r="2" stroke="currentColor" stroke-width="1"/>
-                                <rect x="22" y="24" width="4" height="2" rx="0.5" stroke="currentColor" stroke-width="0.8"/>
                             </svg>
                         </div>
-                        <span class="concern-title">제모</span>
-                        <span class="concern-desc">털 고민</span>
-                        <span class="concern-count" data-concern-count="제모">0개</span>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">제모</span>
+                                <span class="concern-count" data-concern-count="제모">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">면도가 귀찮아요</span>
+                                <span class="concern-bullet">털이 금방 다시 나요</span>
+                                <span class="concern-bullet">제모 후 피부가 까칠해요</span>
+                            </div>
+                        </div>
                     </button>
                     <button class="concern-card" data-concern="바디">
                         <div class="concern-icon">
                             <svg viewBox="0 0 48 48" fill="none">
-                                <!-- 바디 실루엣 -->
                                 <ellipse cx="24" cy="10" rx="5" ry="6" stroke="currentColor" stroke-width="1.5"/>
-                                <!-- 목 -->
                                 <path d="M22 16 L22 18 L26 18 L26 16" stroke="currentColor" stroke-width="1.5"/>
-                                <!-- 몸통 -->
                                 <path d="M18 18 Q14 20 12 26 L14 36 Q18 38 24 38 Q30 38 34 36 L36 26 Q34 20 30 18" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                                <!-- 허리 라인 -->
-                                <path d="M16 28 Q24 26 32 28" stroke="currentColor" stroke-width="1" stroke-dasharray="2 1" opacity="0.5"/>
-                                <!-- 셀룰라이트/지방 부위 표시 -->
-                                <circle cx="16" cy="32" r="2" stroke="currentColor" stroke-width="0.8" stroke-dasharray="1 1" opacity="0.4"/>
-                                <circle cx="32" cy="32" r="2" stroke="currentColor" stroke-width="0.8" stroke-dasharray="1 1" opacity="0.4"/>
-                                <!-- 화살표 (슬리밍) -->
-                                <path d="M8 28 L12 28" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-                                <path d="M8 26 L8 30" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-                                <path d="M40 28 L36 28" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-                                <path d="M40 26 L40 30" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
                             </svg>
                         </div>
-                        <span class="concern-title">바디</span>
-                        <span class="concern-desc">지방, 셀룰라이트</span>
-                        <span class="concern-count" data-concern-count="바디">0개</span>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">바디</span>
+                                <span class="concern-count" data-concern-count="바디">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">뱃살이 안 빠져요</span>
+                                <span class="concern-bullet">팔뚝살이 신경쓰여요</span>
+                                <span class="concern-bullet">허벅지 셀룰라이트가 있어요</span>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="concern-card" data-concern="탈모">
+                        <div class="concern-icon">
+                            <svg viewBox="0 0 48 48" fill="none">
+                                <ellipse cx="24" cy="20" rx="12" ry="14" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M14 14 Q18 10 24 10 Q30 10 34 14" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M16 8 L14 4" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                                <path d="M24 6 L24 2" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                                <path d="M32 8 L34 4" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                            </svg>
+                        </div>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">탈모</span>
+                                <span class="concern-count" data-concern-count="탈모">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">머리카락이 많이 빠져요</span>
+                                <span class="concern-bullet">정수리가 비어 보여요</span>
+                                <span class="concern-bullet">이마가 넓어진 것 같아요</span>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="concern-card" data-concern="점/사마귀">
+                        <div class="concern-icon">
+                            <svg viewBox="0 0 48 48" fill="none">
+                                <rect x="8" y="8" width="32" height="32" rx="6" stroke="currentColor" stroke-width="1.5"/>
+                                <circle cx="16" cy="16" r="3" fill="currentColor" fill-opacity="0.6"/>
+                                <circle cx="32" cy="20" r="2" fill="currentColor" fill-opacity="0.5"/>
+                                <circle cx="20" cy="30" r="2.5" fill="currentColor" fill-opacity="0.5"/>
+                            </svg>
+                        </div>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">점 / 사마귀</span>
+                                <span class="concern-count" data-concern-count="점/사마귀">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">점이 커지거나 늘었어요</span>
+                                <span class="concern-bullet">사마귀가 거슬려요</span>
+                                <span class="concern-bullet">검버섯이 생겼어요</span>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="concern-card" data-concern="다한증/액취">
+                        <div class="concern-icon">
+                            <svg viewBox="0 0 48 48" fill="none">
+                                <path d="M12 16 Q12 8 24 8 Q36 8 36 16 L36 36 Q36 40 32 40 L16 40 Q12 40 12 36 Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                <path d="M18 20 Q17 24 18 26" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.3"/>
+                                <path d="M24 18 Q23 22 24 24" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.3"/>
+                                <path d="M30 22 Q29 26 30 28" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.3"/>
+                            </svg>
+                        </div>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">다한증 / 액취</span>
+                                <span class="concern-count" data-concern-count="다한증/액취">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">땀이 너무 많이 나요</span>
+                                <span class="concern-bullet">겨드랑이 냄새가 나요</span>
+                                <span class="concern-bullet">옷에 땀 자국이 생겨요</span>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="concern-card" data-concern="필링">
+                        <div class="concern-icon">
+                            <svg viewBox="0 0 48 48" fill="none">
+                                <rect x="8" y="20" width="32" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M8 20 Q16 12 24 16 Q32 20 40 14" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                <path d="M10 18 Q18 10 26 14 Q34 18 38 12" stroke="currentColor" stroke-width="1" opacity="0.5" fill="none"/>
+                            </svg>
+                        </div>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">필링</span>
+                                <span class="concern-count" data-concern-count="필링">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">피부결이 거칠어요</span>
+                                <span class="concern-bullet">각질이 자주 일어나요</span>
+                                <span class="concern-bullet">칙칙하고 생기가 없어요</span>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="concern-card" data-concern="스킨케어">
+                        <div class="concern-icon">
+                            <svg viewBox="0 0 48 48" fill="none">
+                                <rect x="16" y="16" width="16" height="24" rx="3" stroke="currentColor" stroke-width="1.5"/>
+                                <rect x="20" y="10" width="8" height="6" stroke="currentColor" stroke-width="1.5"/>
+                                <ellipse cx="24" cy="8" rx="4" ry="2" stroke="currentColor" stroke-width="1.5"/>
+                                <rect x="18" y="26" width="12" height="12" rx="2" fill="currentColor" fill-opacity="0.2"/>
+                            </svg>
+                        </div>
+                        <div class="concern-content">
+                            <div class="concern-header">
+                                <span class="concern-title">스킨케어</span>
+                                <span class="concern-count" data-concern-count="스킨케어">0개</span>
+                            </div>
+                            <div class="concern-bullets">
+                                <span class="concern-bullet">전체적으로 컨디션이 안 좋아요</span>
+                                <span class="concern-bullet">피부 관리를 시작하고 싶어요</span>
+                                <span class="concern-bullet">촉촉하고 건강한 피부를 원해요</span>
+                            </div>
+                        </div>
                     </button>
                 </div>
 
@@ -277,7 +367,7 @@
                     
                     <!-- Budget Filter -->
                     <div class="budget-filter">
-                        <span class="filter-label">💰 예산</span>
+                        <span class="filter-label">💵 예산</span>
                         <div class="range-values inline-values">
                             <span id="concernBudgetMinValue">0</span>
                             <span>~</span>
@@ -300,7 +390,7 @@
                 <div class="filter-container">
                     <div class="filter-sidebar">
                         <div class="filter-group">
-                            <label class="filter-label">💰 예산</label>
+                            <label class="filter-label">💵 예산</label>
                             <div class="slider-row">
                                 <span class="slider-label">0</span>
                                 <div class="dual-range-wrapper">
@@ -314,7 +404,7 @@
                         </div>
 
                         <div class="filter-group">
-                            <label class="filter-label">⏰ 다운타임</label>
+                            <label class="filter-label">🕐 다운타임</label>
                             <div class="slider-row">
                                 <span class="slider-label">없음</span>
                                 <input type="range" id="downtimeRange" min="0" max="2" value="2" step="1" class="range-slider">
@@ -324,7 +414,7 @@
                         </div>
 
                         <div class="filter-group">
-                            <label class="filter-label">😣 통증</label>
+                            <label class="filter-label">⚡ 통증</label>
                             <div class="slider-row">
                                 <span class="slider-label">무통</span>
                                 <input type="range" id="painRange" min="0" max="5" value="5" step="0.5" class="range-slider">
@@ -335,7 +425,7 @@
 
                         <div class="filter-group">
                             <div class="filter-label-row">
-                                <label class="filter-label">📂 카테고리</label>
+                                <label class="filter-label">📁 카테고리</label>
                                 <div class="sidebar-actions">
                                     <button class="mini-btn" id="filterSelectAll">전체</button>
                                     <button class="mini-btn" id="filterDeselectAll">해제</button>
@@ -360,7 +450,7 @@
                 <div class="table-layout">
                     <div class="filter-sidebar">
                         <div class="filter-group">
-                            <label class="filter-label">💰 예산</label>
+                            <label class="filter-label">💵 예산</label>
                             <div class="slider-row">
                                 <span class="slider-label">0</span>
                                 <div class="dual-range-wrapper">
@@ -374,7 +464,7 @@
                         </div>
 
                         <div class="filter-group">
-                            <label class="filter-label">⏰ 다운타임</label>
+                            <label class="filter-label">🕐 다운타임</label>
                             <div class="slider-row">
                                 <span class="slider-label">없음</span>
                                 <input type="range" id="tableDowntimeRange" min="0" max="2" value="2" step="1" class="range-slider">
@@ -384,7 +474,7 @@
                         </div>
 
                         <div class="filter-group">
-                            <label class="filter-label">😣 통증</label>
+                            <label class="filter-label">⚡ 통증</label>
                             <div class="slider-row">
                                 <span class="slider-label">무통</span>
                                 <input type="range" id="tablePainRange" min="0" max="5" value="5" step="0.5" class="range-slider">
@@ -395,7 +485,7 @@
 
                         <div class="filter-group">
                             <div class="filter-label-row">
-                                <label class="filter-label">📂 카테고리</label>
+                                <label class="filter-label">📁 카테고리</label>
                                 <div class="sidebar-actions">
                                     <button class="mini-btn" id="tableSelectAll">전체</button>
                                     <button class="mini-btn" id="tableDeselectAll">해제</button>

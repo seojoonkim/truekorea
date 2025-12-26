@@ -7,18 +7,23 @@ let treatments = [];
 let tableSort = { column: 'name', direction: 'asc' };
 let selectedTableCategories = [];
 
-// ===== Concern Map =====
+// ===== Concern Map (MECE) =====
 const concernMap = {
-    '처진피부': ['리프팅', '타이트닝', 'HIFU', 'RF', '실리프팅'],
-    '주름': ['주름', '보톡스', '필러', '리프팅'],
-    '탄력': ['탄력', 'RF', '콜라겐', '스킨부스터', '리프팅'],
-    '모공': ['모공', 'MRF', '피지', '필링', '레이저'],
-    '기미': ['기미', '색소', '미백', '토닝', '피코'],
-    '여드름': ['여드름', '트러블', '피지', 'PDT'],
-    '볼륨': ['볼륨', '필러', '스컬트라', '엘란쎄'],
-    '흉터': ['흉터', '프랙셔널', '재생', 'MRF'],
-    '제모': ['제모'],
-    '바디': ['바디', '지방', '셀룰라이트', '엠스컬프']
+    '처진피부': ['리프팅', '타이트닝', 'HIFU', '실리프팅', '울쎄라', '슈링크', '올리지오'],
+    '주름': ['주름', '보톡스', '리프팅', '타이트닝'],
+    '탄력저하': ['탄력', 'RF', '콜라겐', '스킨부스터', '리쥬란', '쥬베룩', '엑소좀'],
+    '모공': ['모공', 'MRF', '피지', '모공축소', '포텐자', '시크릿'],
+    '기미/잡티': ['기미', '색소', '미백', '토닝', '피코', '잡티', 'IPL', '브라이트닝'],
+    '여드름': ['여드름', '트러블', 'PDT', '압출', '아크네'],
+    '볼륨손실': ['볼륨', '필러', '스컬트라', '엘란쎄', 'HA필러', '지방이식'],
+    '흉터': ['흉터', '프랙셔널', '재생', '여드름흉터', '패인흉터'],
+    '제모': ['제모', '레이저제모'],
+    '바디': ['바디', '지방', '셀룰라이트', '엠스컬프', '지방분해', '윤곽', '냉각'],
+    '탈모': ['탈모', '모발', '두피', 'PRP', '엑소좀'],
+    '점/사마귀': ['점', '사마귀', '검버섯', '쥐젖', '한관종'],
+    '다한증/액취': ['다한증', '액취', '땀'],
+    '필링': ['필링', '화학필링', '각질', '피부결'],
+    '스킨케어': ['스킨케어', '관리', '클렌징', '영양', '수분', '진정', '재생관리']
 };
 
 // ===== Initialize =====
@@ -569,19 +574,25 @@ function renderTreatmentCards(items, containerId) {
             </div>
             <div class="card-stats">
                 <div class="stat-item">
-                    <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+                    <div class="stat-row">
+                        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 12h.01M18 12h.01"/></svg></div>
+                        <div class="stat-label">가격</div>
+                    </div>
                     <div class="stat-value">${t.pricing.average}</div>
-                    <div class="stat-label">가격</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                    <div class="stat-row">
+                        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                        <div class="stat-label">지속</div>
+                    </div>
                     <div class="stat-value">${t.effects.duration || '-'}</div>
-                    <div class="stat-label">지속</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+                    <div class="stat-row">
+                        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                        <div class="stat-label">통증</div>
+                    </div>
                     <div class="stat-value">${t.recovery.painLevel}/5</div>
-                    <div class="stat-label">통증</div>
                 </div>
             </div>
         </div>
@@ -642,19 +653,33 @@ function showModal(t) {
         <div class="modal-section">
             <div class="review-summary">${t.review.summary}</div>
         </div>
+        
+        <!-- 3. 총평 -->
+        <div class="modal-section">
+            <div class="review-overall">
+                <strong>💬 총평:</strong> ${t.review.overall}
+            </div>
+        </div>
         ` : ''}
         
-        <!-- 3. 기대 효과 -->
+        <!-- 4. 기대 효과 -->
         <div class="modal-section">
-            <h3 class="modal-section-title">기대 효과</h3>
-            <div class="modal-effects">
+            <div class="modal-section-header-with-legend">
+                <h3 class="modal-section-title">기대 효과</h3>
+                <div class="effects-legend">
+                    <span class="legend-item"><span class="legend-dot primary"></span>주요 효과</span>
+                    <span class="legend-item"><span class="legend-dot secondary"></span>부가 효과</span>
+                </div>
+            </div>
+            <div class="effects-tags-inline">
                 ${t.effects.primary.map(e => `<span class="modal-effect-tag primary">${e}</span>`).join('')}
                 ${t.effects.secondary.map(e => `<span class="modal-effect-tag secondary">${e}</span>`).join('')}
             </div>
         </div>
         
-        <!-- 4. 핵심 정보 (빠른 판단용) -->
+        <!-- 5. 핵심 정보 (빠른 판단용) -->
         <div class="modal-section">
+            <h3 class="modal-section-title">핵심 정보</h3>
             <div class="modal-stats-grid modal-key-stats">
                 <div class="modal-stat highlight">
                     <div class="modal-stat-label">💰 가격</div>
@@ -675,11 +700,15 @@ function showModal(t) {
             </div>
         </div>
         
-        <!-- 4. 상세 리뷰 (이런 점이 좋아요/아쉬워요) -->
+        <!-- 6. 팁 및 후기 분석 (3분할: 팁, 좋아요, 아쉬워요) -->
         ${t.review ? `
         <div class="modal-section">
-            <h3 class="modal-section-title">실제 후기 분석</h3>
-            <div class="review-grid">
+            <h3 class="modal-section-title">팁 및 후기 분석</h3>
+            <div class="review-grid-3col">
+                <div class="review-tips-box">
+                    <h4>💡 시술 팁</h4>
+                    <ul>${t.review.tips.map(tip => `<li>${tip}</li>`).join('')}</ul>
+                </div>
                 <div class="review-likes">
                     <h4>👍 이런 점이 좋아요</h4>
                     <ul>${t.review.likes.map(l => `<li>${l}</li>`).join('')}</ul>
@@ -690,23 +719,16 @@ function showModal(t) {
                 </div>
             </div>
         </div>
-        
-        <!-- 5. 시술 팁 + 총평 -->
-        <div class="modal-section">
-            <div class="review-tips">
-                <h4>💡 시술 팁</h4>
-                <ul>${t.review.tips.map(tip => `<li>${tip}</li>`).join('')}</ul>
-            </div>
-            <div class="review-overall">
-                <strong>💬 총평:</strong> ${t.review.overall}
-            </div>
-        </div>
         ` : ''}
         
-        <!-- 6. 이런 분께 추천 -->
+        <!-- 7. 이런 분께 추천 -->
         <div class="modal-section">
             <h3 class="modal-section-title">이런 분께 추천해요</h3>
             <div class="modal-suitability">
+                <div class="suitability-age-box">
+                    <h4>👤 적정 연령대</h4>
+                    <p>${t.suitability.idealAge}</p>
+                </div>
                 <div class="suitability-recommend">
                     <h4>✅ 추천</h4>
                     <ul>${t.suitability.bestFor.map(b => `<li>${b}</li>`).join('')}</ul>
@@ -718,7 +740,6 @@ function showModal(t) {
                 </div>
                 ` : ''}
             </div>
-            <p class="suitability-age">👤 적정 연령대: ${t.suitability.idealAge}</p>
         </div>
         
         <!-- 7. 장단점 (키워드 요약) -->

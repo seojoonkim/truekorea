@@ -188,39 +188,40 @@ body {
 /* ===== View 1: 고민별 찾기 ===== */
 .concern-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 14px;
-    max-width: 1000px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 1100px;
     margin: 0 auto;
 }
 
 .concern-card {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    padding: 24px 16px;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     cursor: pointer;
     transition: var(--transition);
     box-shadow: var(--shadow-sm);
+    text-align: left;
 }
 
 .concern-card:hover {
     border-color: var(--accent);
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .concern-icon {
-    width: 56px;
-    height: 56px;
-    margin-bottom: 12px;
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
     color: var(--navy);
     background: linear-gradient(145deg, #f0f4f8 0%, #e4eaf2 100%);
-    border-radius: 16px;
+    border-radius: 14px;
     padding: 12px;
     display: flex;
     align-items: center;
@@ -233,27 +234,55 @@ body {
     height: 100%;
 }
 
-.concern-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-    letter-spacing: -0.2px;
+.concern-content {
+    flex: 1;
+    min-width: 0;
 }
 
-.concern-desc {
-    font-size: 12px;
-    color: var(--text-tertiary);
-    text-align: center;
+.concern-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.concern-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
 }
 
 .concern-count {
-    margin-top: 6px;
-    padding: 4px 12px;
+    padding: 3px 8px;
     background: var(--gold-gradient);
     color: var(--navy-dark);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    border-radius: 20px;
+    border-radius: 10px;
+    white-space: nowrap;
+}
+
+.concern-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.concern-bullet {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.concern-bullet::before {
+    content: "•";
+    color: var(--text-tertiary);
+    font-size: 10px;
+    margin-top: 1px;
 }
 
 /* Concern Result */
@@ -378,6 +407,7 @@ body {
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 10px;
+    filter: grayscale(100%);
 }
 
 .filter-label-row {
@@ -826,12 +856,12 @@ body {
 }
 
 .card-desc {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-secondary);
-    margin-bottom: 14px;
-    line-height: 1.6;
+    margin-bottom: 10px;
+    line-height: 1.5;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -855,24 +885,46 @@ body {
 .card-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    padding-top: 14px;
+    gap: 8px;
+    padding-top: 12px;
     border-top: 1px solid var(--border-light);
 }
 
 .stat-item {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
 }
 
 .stat-icon {
-    font-size: 14px;
-    margin-bottom: 4px;
-    color: var(--navy);
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
 }
 
 .stat-icon svg {
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: var(--text-tertiary);
+}
+
+.stat-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
 }
 
 .inline-icon {
@@ -881,17 +933,6 @@ body {
     vertical-align: middle;
     margin-right: 4px;
     display: inline-block;
-}
-
-.stat-value {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.stat-label {
-    font-size: 11px;
-    color: var(--text-tertiary);
 }
 
 /* ===== View 4: 테이블 뷰 ===== */
@@ -1135,7 +1176,7 @@ body {
 }
 
 .modal-section-title {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     color: #6b7280;
     text-transform: uppercase;
@@ -1145,12 +1186,14 @@ body {
 
 /* 한줄 요약 */
 .review-summary {
-    font-size: 14px;
-    line-height: 1.7;
-    color: #374151;
-    padding: 14px;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    border-radius: 6px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #92700c;
+    padding: 16px 20px;
+    background: transparent;
+    border-left: 3px solid #c9a962;
+    font-style: italic;
+    margin-left: 4px;
 }
 
 /* 효과 태그 */
@@ -1160,21 +1203,71 @@ body {
     gap: 6px;
 }
 
+/* 기대 효과 - 헤더 + 레전드 */
+.modal-section-header-with-legend {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.modal-section-header-with-legend .modal-section-title {
+    margin-bottom: 0;
+}
+
+.effects-legend {
+    display: flex;
+    gap: 16px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+}
+
+.legend-dot.primary {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    border: 1px solid #93c5fd;
+}
+
+.legend-dot.secondary {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    border: 1px solid #cbd5e1;
+}
+
+/* 효과 태그 인라인 나열 */
+.effects-tags-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
 .modal-effect-tag {
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 12px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
     font-weight: 500;
 }
 
 .modal-effect-tag.primary {
-    background: #111827;
-    color: #ffffff;
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    color: #1e40af;
+    font-weight: 600;
 }
 
 .modal-effect-tag.secondary {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    color: #6b7280;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    color: #64748b;
 }
 
 /* 핵심 정보 & 상세 시술 정보 */
@@ -1196,6 +1289,7 @@ body {
     font-size: 10px;
     color: #6b7280;
     margin-bottom: 4px;
+    filter: grayscale(100%);
 }
 
 .modal-stat-value {
@@ -1211,26 +1305,33 @@ body {
     gap: 10px;
 }
 
-.review-likes, .review-dislikes {
+.review-grid-3col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.review-likes, .review-dislikes, .review-tips-box {
     padding: 14px;
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     border-radius: 6px;
 }
 
-.review-likes h4, .review-dislikes h4 {
+.review-likes h4, .review-dislikes h4, .review-tips-box h4 {
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 10px;
     color: #111827;
+    filter: grayscale(100%);
 }
 
-.review-likes ul, .review-dislikes ul {
+.review-likes ul, .review-dislikes ul, .review-tips-box ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.review-likes li, .review-dislikes li {
+.review-likes li, .review-dislikes li, .review-tips-box li {
     font-size: 13px;
     line-height: 1.6;
     padding: 4px 0 4px 16px;
@@ -1239,14 +1340,15 @@ body {
 }
 
 .review-likes li::before,
-.review-dislikes li::before {
+.review-dislikes li::before,
+.review-tips-box li::before {
     content: "•";
     position: absolute;
     left: 0;
     color: #9ca3af;
 }
 
-/* 시술 팁 */
+/* 시술 팁 (기존 - 단독 사용시) */
 .review-tips {
     padding: 14px;
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
@@ -1259,6 +1361,7 @@ body {
     font-weight: 600;
     color: #111827;
     margin-bottom: 10px;
+    filter: grayscale(100%);
 }
 
 .review-tips ul {
@@ -1282,18 +1385,34 @@ body {
     color: #9ca3af;
 }
 
-/* 총평 */
+/* 총평 - 말풍선 스타일 */
 .review-overall {
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-    padding: 14px;
-    border-radius: 6px;
-    font-size: 13px;
-    line-height: 1.6;
-    color: #f9fafb;
+    position: relative;
+    background: linear-gradient(135deg, #334155 0%, #475569 100%);
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #ffffff;
+    margin-top: 8px;
+}
+
+.review-overall::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 24px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #334155;
 }
 
 .review-overall strong {
     color: #ffffff;
+    filter: none;
+    font-weight: 600;
 }
 
 /* 추천 대상 */
@@ -1309,11 +1428,12 @@ body {
     border-radius: 6px;
 }
 
-.suitability-recommend h4, .suitability-caution h4 {
+.suitability-recommend h4, .suitability-caution h4, .suitability-age-box h4 {
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 10px;
     color: #111827;
+    filter: grayscale(100%);
 }
 
 .suitability-recommend ul, .suitability-caution ul {
@@ -1362,6 +1482,7 @@ body {
     font-weight: 600;
     margin-bottom: 10px;
     color: #111827;
+    filter: grayscale(100%);
 }
 
 .modal-list {
@@ -1388,7 +1509,8 @@ body {
 
 /* 시술 원리 */
 .modal-mechanism {
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 500;
     color: #374151;
     line-height: 1.7;
     padding: 14px;
@@ -1462,6 +1584,7 @@ body {
     }
     
     .review-grid,
+    .review-grid-3col,
     .modal-suitability,
     .modal-pros-cons {
         grid-template-columns: 1fr;
@@ -1623,8 +1746,28 @@ body {
         margin-bottom: 0;
     }
     
-    .budget-filter .dual-range-wrapper {
+    .budget-filter .inline-values {
         margin-left: 0;
+    }
+    
+    .budget-filter .dual-range-wrapper,
+    .budget-filter .dual-range-wrapper.inline-range {
+        margin-left: 0;
+        width: 100%;
+        flex: none;
+        height: 30px;
+    }
+    
+    .budget-filter .dual-range-track {
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
+    
+    .budget-filter .dual-range-wrapper input[type="range"] {
+        width: 100%;
+        left: 0;
+        margin: 0;
     }
 
     /* 필터 사이드바 */
@@ -1878,99 +2021,72 @@ body {
 }
 
 /* 새로 추가된 모달 스타일 */
+
+/* 핵심 정보 하이라이트 제거 - 통일된 스타일 */
 .modal-key-stats .modal-stat.highlight {
-    background: linear-gradient(135deg, #fef9c3 0%, #fef08a 100%);
-    border: 1px solid #fcd34d;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
 }
 
 .modal-key-stats .modal-stat.highlight .modal-stat-value {
-    color: #92400e;
-    font-weight: 700;
+    color: #111827;
+    font-weight: 600;
 }
 
+/* 추천 대상 - 3분할 */
 .modal-suitability {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 8px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
 }
 
-.suitability-recommend, .suitability-caution {
-    padding: 12px;
-    border-radius: 8px;
-}
-
-.suitability-recommend {
-    background: #ecfdf5;
-    border: 1px solid #a7f3d0;
-}
-
+.suitability-age-box,
+.suitability-recommend,
 .suitability-caution {
-    background: #fef3c7;
-    border: 1px solid #fcd34d;
+    padding: 14px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 6px;
 }
 
-.suitability-recommend h4, .suitability-caution h4 {
+.suitability-age-box h4,
+.suitability-recommend h4,
+.suitability-caution h4 {
     font-size: 12px;
-    font-weight: 700;
-    margin-bottom: 8px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #111827;
 }
 
-.suitability-recommend h4 { color: #059669; }
-.suitability-caution h4 { color: #b45309; }
+.suitability-age-box p {
+    font-size: 13px;
+    color: #374151;
+    margin: 0;
+}
 
-.suitability-recommend ul, .suitability-caution ul {
+.suitability-recommend ul,
+.suitability-caution ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.suitability-recommend li, .suitability-caution li {
-    font-size: 12px;
-    padding: 2px 0;
-    padding-left: 12px;
+.suitability-recommend li,
+.suitability-caution li {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 4px 0 4px 16px;
     position: relative;
+    color: #374151;
 }
 
-.suitability-recommend li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: #059669;
-}
-
+.suitability-recommend li::before,
 .suitability-caution li::before {
     content: "•";
     position: absolute;
     left: 0;
-    color: #b45309;
+    color: #9ca3af;
 }
 
-.suitability-age {
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin-top: 8px;
-    padding: 8px 12px;
-    background: var(--bg-tertiary);
-    border-radius: 6px;
-}
-
-.modal-effect-tag.primary {
-    background: var(--accent-light);
-    color: var(--accent);
-}
-
-.modal-effect-tag.secondary {
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
-}
-
-.best-with {
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px dashed var(--border);
-}
-
+/* 모바일 3분할 → 1열 */
 @media (max-width: 768px) {
     .modal-suitability {
         grid-template-columns: 1fr;
