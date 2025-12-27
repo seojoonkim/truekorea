@@ -1523,7 +1523,40 @@ function generateRuleBasedRecommendation(userData) {
         concernFactors: [],
         synergyFactors: [],
         timingFactors: [],
-        personalFactors: []
+        personalFactors: [],
+        skinTypeFactors: []
+    };
+    
+    // ===== 0. 피부 타입별 맞춤 추천 데이터 =====
+    const skinTypeRecommendations = {
+        '건성': {
+            preferred: ['물광주사', '리쥬란', '스킨부스터', '보습관리', '수분앰플', '히알루론산'],
+            avoid: ['살리실산필링', '고농도필링', '레티놀필링'],
+            boost: 1.2,
+            penalty: 0.7,
+            reason: '건성 피부는 수분 공급과 보습에 집중하는 시술이 적합합니다. 강한 필링은 피해야 합니다.'
+        },
+        '지성': {
+            preferred: ['아쿠아필', '살리실산필링', '피지조절', 'PDT', '모공관리', '스킨스케일링'],
+            avoid: ['오일베이스', '너무 무거운 보습'],
+            boost: 1.2,
+            penalty: 0.8,
+            reason: '지성 피부는 피지 조절과 모공 관리에 집중하는 시술이 효과적입니다.'
+        },
+        '복합성': {
+            preferred: ['아쿠아필', '물광주사', '리쥬란', 'IPL', '레이저토닝'],
+            avoid: [],
+            boost: 1.1,
+            penalty: 0.9,
+            reason: '복합성 피부는 대부분의 시술이 적합하며, T존과 U존을 다르게 관리할 수 있습니다.'
+        },
+        '민감성': {
+            preferred: ['진정관리', '저자극필링', '리쥬란', '물광주사', 'LED테라피', '재생관리'],
+            avoid: ['고농도필링', '강한레이저', '프락셀', 'CO2레이저', '살리실산필링', '강한MRF'],
+            boost: 1.3,
+            penalty: 0.5,
+            reason: '민감성 피부는 자극이 적은 순한 시술 위주로 선택해야 합니다. 강한 레이저나 필링은 피해야 합니다.'
+        }
     };
     
     // ===== 1. 연령대별 맞춤 추천 데이터 =====
@@ -2177,6 +2210,21 @@ function generateRuleBasedRecommendation(userData) {
             // penalty가 낮을수록 (0.1~0.2) 더 강한 페널티 (-80~-90점)
             const penaltyScore = 100 * (1 - (ageData.penalty || 1.0));
             score -= penaltyScore;
+        }
+        
+        // ===== NEW: 피부 타입별 맞춤 점수 =====
+        const skinTypeData = skinTypeRecommendations[skinType];
+        if (skinTypeData) {
+            if (skinTypeData.preferred.some(p => treatmentName.includes(p))) {
+                score += 15 * (skinTypeData.boost || 1.0);
+                treatmentReasons.push(`${skinType} 피부에 적합한 시술`);
+                recommendationReasons.skinTypeFactors.push(`${skinType} 피부에 효과적인 ${treatmentName}`);
+            }
+            if (skinTypeData.avoid && skinTypeData.avoid.some(a => treatmentName.includes(a))) {
+                const penaltyScore = 30 * (1 - (skinTypeData.penalty || 1.0));
+                score -= penaltyScore;
+                treatmentReasons.push(`⚠️ ${skinType} 피부에 주의 필요`);
+            }
         }
         
         // ===== NEW: 10. 부위별 최적화 점수 =====
@@ -2988,6 +3036,13 @@ function generateRuleBasedRecommendation(userData) {
                     value: age,
                     detail: `${age} 피부 특성에 적합한 시술 선별`,
                     explanation: '연령대별 피부 상태와 고민에 최적화된 시술을 추천합니다.'
+                },
+                {
+                    icon: '💧',
+                    label: '피부 타입',
+                    value: skinType,
+                    detail: skinTypeRecommendations[skinType]?.reason || `${skinType} 피부에 적합한 시술 선별`,
+                    explanation: '피부 타입에 맞는 시술을 우선 추천합니다.'
                 }
             ]
         },
@@ -3049,14 +3104,100 @@ function generateRuleBasedRecommendation(userData) {
             after: ["시술 부위 자외선 차단 철저히", "시술 후 2-3일간 사우나, 격렬한 운동 피하기", "충분한 수분 섭취와 보습"],
             emergency: "심한 붓기, 발적, 통증 시 즉시 시술 병원에 연락하세요."
         },
+        // NEW: 피부 타입 분석
+        skinTypeAnalysis: {
+            skinType: skinType,
+            recommendation: skinTypeRecommendations[skinType] || skinTypeRecommendations['복합성'],
+            matchedTreatments: combinations.flatMap(c => c.treatments || [])
+                .filter(t => {
+                    const skinData = skinTypeRecommendations[skinType];
+                    return skinData?.preferred?.some(p => t.name?.includes(p));
+                })
+                .map(t => t.name)
+                .filter((v, i, a) => a.indexOf(v) === i), // 중복 제거
+            avoidedTreatments: scoredTreatments
+                .filter(t => {
+                    const skinData = skinTypeRecommendations[skinType];
+                    return skinData?.avoid?.some(a => t.name?.includes(a));
+                })
+                .map(t => t.name)
+                .slice(0, 3),
+            careAdvice: getSkinTypeCareAdvice(skinType),
+            // NEW: 점수 영향 분석
+            scoreImpact: {
+                boostFactor: skinTypeRecommendations[skinType]?.boost || 1.0,
+                penaltyFactor: skinTypeRecommendations[skinType]?.penalty || 1.0,
+                boostedCount: combinations.flatMap(c => c.treatments || [])
+                    .filter(t => skinTypeRecommendations[skinType]?.preferred?.some(p => t.name?.includes(p))).length,
+                penalizedCount: scoredTreatments
+                    .filter(t => skinTypeRecommendations[skinType]?.avoid?.some(a => t.name?.includes(a))).length,
+                totalAnalyzed: scoredTreatments.length
+            },
+            // NEW: 피부 타입별 추천 시술 카테고리
+            recommendedCategories: getSkinTypeCategories(skinType)
+        },
         // NEW: 메타 정보
         meta: {
             totalTreatmentsAnalyzed: treatments.length,
             matchedTreatments: scoredTreatments.length,
-            analysisFactors: ['연령대', '부위', '계절', '다운타임', '통증', '예산', '시너지'],
+            analysisFactors: ['연령대', '부위', '계절', '다운타임', '통증', '예산', '시너지', '피부타입'],
             generatedAt: new Date().toISOString()
         }
     };
+}
+
+// 피부 타입별 관리 조언
+function getSkinTypeCareAdvice(skinType) {
+    const advice = {
+        '건성': {
+            daily: ['세안 후 즉시 보습제 도포', '오일 베이스 클렌저 사용', '주 2-3회 수분 마스크팩'],
+            treatment: ['물광주사로 깊은 수분 공급', '리쥬란으로 피부 장벽 강화', '스킨부스터 주기적 시술'],
+            avoid: ['너무 잦은 각질 제거', '알코올 함유 토너', '고농도 필링']
+        },
+        '지성': {
+            daily: ['아침저녁 이중 세안', '가벼운 수분 제형 사용', '주 1회 클레이 마스크'],
+            treatment: ['아쿠아필로 모공 관리', 'PDT로 피지선 조절', '살리실산 필링으로 각질 관리'],
+            avoid: ['유분이 많은 제품', '과도한 보습', '오일 베이스 제품']
+        },
+        '복합성': {
+            daily: ['T존/U존 분리 케어', '부위별 다른 제품 사용', '밸런싱 토너 활용'],
+            treatment: ['아쿠아필로 T존 모공 관리', '물광주사로 U존 수분 공급', 'IPL로 전체적인 피부톤 정리'],
+            avoid: ['전체 얼굴에 동일 제품 사용', '극단적인 제형']
+        },
+        '민감성': {
+            daily: ['저자극 클렌저 사용', '무향료 제품 선택', '테스트 후 신제품 사용'],
+            treatment: ['LED테라피로 진정 관리', '리쥬란으로 피부 재생', '저자극 스킨부스터'],
+            avoid: ['강한 레이저', '고농도 필링', '알코올/향료 함유 제품']
+        }
+    };
+    return advice[skinType] || advice['복합성'];
+}
+
+// 피부 타입별 추천 시술 카테고리
+function getSkinTypeCategories(skinType) {
+    const categories = {
+        '건성': [
+            { name: '수분 공급', icon: '💦', treatments: ['물광주사', '히알루론산'], boost: '+18%' },
+            { name: '피부 장벽', icon: '🛡️', treatments: ['리쥬란', '스킨부스터'], boost: '+15%' },
+            { name: '재생 촉진', icon: '✨', treatments: ['엑소좀', '성장인자'], boost: '+12%' }
+        ],
+        '지성': [
+            { name: '피지 조절', icon: '🧴', treatments: ['PDT', '피지조절'], boost: '+20%' },
+            { name: '모공 관리', icon: '🔬', treatments: ['아쿠아필', '레이저토닝'], boost: '+18%' },
+            { name: '각질 케어', icon: '🧹', treatments: ['살리실산필링', '스케일링'], boost: '+15%' }
+        ],
+        '복합성': [
+            { name: 'T존 케어', icon: '🎯', treatments: ['아쿠아필', '모공관리'], boost: '+15%' },
+            { name: 'U존 보습', icon: '💧', treatments: ['물광주사', '리쥬란'], boost: '+12%' },
+            { name: '밸런스', icon: '⚖️', treatments: ['IPL', '레이저토닝'], boost: '+10%' }
+        ],
+        '민감성': [
+            { name: '진정 케어', icon: '🌿', treatments: ['LED테라피', '진정관리'], boost: '+22%' },
+            { name: '저자극', icon: '🕊️', treatments: ['리쥬란', '저자극필링'], boost: '+18%' },
+            { name: '장벽 강화', icon: '🛡️', treatments: ['스킨부스터', '재생관리'], boost: '+15%' }
+        ]
+    };
+    return categories[skinType] || categories['복합성'];
 }
 
 function getRecommendReason(treatment, primary, secondary) {
@@ -3496,32 +3637,14 @@ function displayResult(response) {
     
     const html = `
         <div class="report-container-v2">
-            <!-- 헤더 -->
-            <div class="report-header-v2">
-                <span class="report-badge">ANALYSIS COMPLETE</span>
-                <h1 class="report-title-v2">맞춤 시술 리포트</h1>
-                <p class="report-desc">${treatments.length}개 시술 DB 분석 · ${getTotalTreatments(response.combinations)}개 시술 추천 · ${response.combinations?.length || 0}개 조합 제안</p>
-            </div>
-            
-            <!-- NEW: AI 연령 적합도 분석 배너 -->
-            ${warningTreatments.length > 0 || avgIntensity >= 3 ? `
-            <div class="age-analysis-banner ${warningTreatments.length > 0 ? 'warning' : 'info'}">
-                <div class="age-banner-icon">${warningTreatments.length > 0 ? '⚠️' : 'ℹ️'}</div>
-                <div class="age-banner-content">
-                    <strong>${userData.age || ''} 연령대 분석</strong>
-                    <p>
-                        ${warningTreatments.length > 0 ? 
-                            `일부 시술(${warningTreatments.map(t => t.name).join(', ')})은 ${userData.age || '해당'} 연령대에 주의가 필요합니다.` : 
-                            avgIntensity >= 3 ? '추천된 조합에 고강도 시술이 포함되어 있습니다. 시술 경험이 있으신 분께 적합합니다.' : 
-                            '추천된 시술들은 연령대에 적합합니다.'}
-                        ${expNeededTreatments.length > 0 ? ` 시술 경험자에게 권장되는 시술: ${expNeededTreatments.map(t => t.name).join(', ')}` : ''}
-                    </p>
+            <!-- 통합 헤더 + 분석 프로세스 -->
+            <div class="report-header-unified">
+                <div class="header-content">
+                    <span class="report-badge">ANALYSIS COMPLETE</span>
+                    <h1 class="report-title-v2">맞춤 시술 리포트</h1>
                 </div>
-            </div>
-            ` : ''}
-            
-            <!-- NEW: 분석 과정 시각화 (깔때기) -->
-            <div class="analysis-funnel">
+                
+                <!-- 분석 과정 시각화 (깔때기) -->
                 <div class="funnel-title">True Korea 피부과 가이드 분석 프로세스</div>
                 <div class="funnel-container">
                     <div class="funnel-step step-1">
@@ -3578,6 +3701,23 @@ function displayResult(response) {
                     </div>
                 </div>
             </div>
+            
+            <!-- NEW: AI 연령 적합도 분석 배너 -->
+            ${warningTreatments.length > 0 || avgIntensity >= 3 ? `
+            <div class="age-analysis-banner ${warningTreatments.length > 0 ? 'warning' : 'info'}">
+                <div class="age-banner-icon">${warningTreatments.length > 0 ? '⚠️' : 'ℹ️'}</div>
+                <div class="age-banner-content">
+                    <strong>${userData.age || ''} 연령대 분석</strong>
+                    <p>
+                        ${warningTreatments.length > 0 ? 
+                            `일부 시술(${warningTreatments.map(t => t.name).join(', ')})은 ${userData.age || '해당'} 연령대에 주의가 필요합니다.` : 
+                            avgIntensity >= 3 ? '추천된 조합에 고강도 시술이 포함되어 있습니다. 시술 경험이 있으신 분께 적합합니다.' : 
+                            '추천된 시술들은 연령대에 적합합니다.'}
+                        ${expNeededTreatments.length > 0 ? ` 시술 경험자에게 권장되는 시술: ${expNeededTreatments.map(t => t.name).join(', ')}` : ''}
+                    </p>
+                </div>
+            </div>
+            ` : ''}
             
             <!-- 분석 요약 3열 -->
             <div class="analysis-summary">
@@ -3660,13 +3800,62 @@ function displayResult(response) {
                     </div>
                     ` : ''}
                     
+                    <!-- 피부 타입 분석 (2개 카드 - 다른 분석 카드와 동일한 형식) -->
+                    ${response.skinTypeAnalysis ? `
+                    <div class="analysis-card">
+                        <div class="analysis-card-header">
+                            <span class="analysis-icon">💧</span>
+                            <h4>${response.skinTypeAnalysis.skinType} 피부 맞춤 분석</h4>
+                            <span class="analysis-badge skin">${response.skinTypeAnalysis.skinType}</span>
+                        </div>
+                        <p class="analysis-content">${response.skinTypeAnalysis.recommendation?.reason || ''}</p>
+                        ${response.skinTypeAnalysis.matchedTreatments?.length > 0 ? `
+                        <div class="analysis-tags-row">
+                            <span class="analysis-tags-label">✓ 이번 추천에 포함된 적합 시술</span>
+                            <div class="analysis-tags">
+                                ${response.skinTypeAnalysis.matchedTreatments.map(t => `<span class="analysis-tag good">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                        ` : ''}
+                        ${(response.skinTypeAnalysis.recommendation?.avoid || []).length > 0 ? `
+                        <div class="analysis-tags-row caution">
+                            <span class="analysis-tags-label">⚠ 주의가 필요한 시술</span>
+                            <div class="analysis-tags">
+                                ${(response.skinTypeAnalysis.recommendation?.avoid || []).map(t => `<span class="analysis-tag caution">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="analysis-card">
+                        <div class="analysis-card-header">
+                            <span class="analysis-icon">📊</span>
+                            <h4>${response.skinTypeAnalysis.skinType} 피부 점수 가중치</h4>
+                            <span class="analysis-badge boost">${response.skinTypeAnalysis.scoreImpact?.boostedCount || 0}개 가산</span>
+                        </div>
+                        <p class="analysis-content">${response.skinTypeAnalysis.scoreImpact?.totalAnalyzed || 0}개 시술 분석 중 ${response.skinTypeAnalysis.scoreImpact?.boostedCount || 0}개 시술에 피부타입 가산점이 적용되었습니다.</p>
+                        <div class="score-boost-grid">
+                            ${(response.skinTypeAnalysis.recommendedCategories || []).map(cat => `
+                            <div class="score-boost-item">
+                                <span class="boost-icon">${cat.icon}</span>
+                                <div class="boost-info">
+                                    <span class="boost-name">${cat.name}</span>
+                                    <span class="boost-treatments">${cat.treatments.join(', ')}</span>
+                                </div>
+                                <span class="boost-percent">${cat.boost}</span>
+                            </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                    
                     <!-- 고민별 시술 매칭 (핵심 + 부가 가로 배치, 바깥 박스 없음) -->
                     ${response.analysisDetails.concernAnalysis?.primary?.length ? `
                     <div class="concern-boxes-horizontal">
                         <!-- 핵심 고민 박스 -->
                         <div class="concern-box-card primary">
                             <div class="concern-box-header-row">
-                                <span class="concern-box-icon">🎯</span>
+                                <span class="concern-box-icon">❗</span>
                                 <span class="concern-box-title">핵심 고민</span>
                             </div>
                             <div class="concern-items-list">
@@ -3796,7 +3985,7 @@ function displayResult(response) {
                     ${response.analysisDetails.seasonAnalysis?.content ? `
                     <div class="analysis-card season-card">
                         <div class="analysis-card-header">
-                            <span class="analysis-icon">🗓</span>
+                            <span class="analysis-icon">📅</span>
                             <h4>시기별 추천</h4>
                             <span class="analysis-badge season">${response.analysisDetails.seasonAnalysis.season}철</span>
                         </div>
@@ -4004,6 +4193,45 @@ function displayResult(response) {
                     <p class="recommendation-main">${response.recommendation}</p>
                     <div class="recommendation-sub">
                         <p>위 추천은 입력하신 정보와 ${treatments.length}개 시술 데이터베이스를 기반으로 분석한 결과입니다. 실제 시술 결정은 반드시 피부과 전문의와 대면 상담 후 개인 피부 상태를 고려하여 결정하시기 바랍니다.</p>
+                    </div>
+                </div>
+            </div>
+            ` : ''}
+            
+            <!-- 피부 타입별 홈케어 가이드 -->
+            ${response.skinTypeAnalysis ? `
+            <div class="section-v2 homecare-section">
+                <div class="section-header">
+                    <h3>🏠 ${response.skinTypeAnalysis.skinType} 피부 홈케어 가이드</h3>
+                    <span class="section-badge">${response.skinTypeAnalysis.skinType}</span>
+                </div>
+                <div class="homecare-grid">
+                    <div class="homecare-card daily">
+                        <div class="homecare-card-header">
+                            <span class="homecare-icon">🌅</span>
+                            <h4>데일리 케어</h4>
+                        </div>
+                        <ul class="homecare-list">
+                            ${(response.skinTypeAnalysis.careAdvice?.daily || []).map(tip => `<li>${tip}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="homecare-card treatment">
+                        <div class="homecare-card-header">
+                            <span class="homecare-icon">✨</span>
+                            <h4>추천 시술</h4>
+                        </div>
+                        <ul class="homecare-list">
+                            ${(response.skinTypeAnalysis.careAdvice?.treatment || []).map(tip => `<li>${tip}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="homecare-card avoid">
+                        <div class="homecare-card-header">
+                            <span class="homecare-icon">🚫</span>
+                            <h4>피해야 할 것</h4>
+                        </div>
+                        <ul class="homecare-list">
+                            ${(response.skinTypeAnalysis.careAdvice?.avoid || []).map(tip => `<li>${tip}</li>`).join('')}
+                        </ul>
                     </div>
                 </div>
             </div>
