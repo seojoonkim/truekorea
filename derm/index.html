@@ -22,19 +22,11 @@
             
             <!-- View Tabs (Center) -->
             <nav class="view-tabs">
-                <button class="view-tab" data-view="consult">✨ AI 상담</button>
+                <button class="view-tab" data-view="consult">AI 상담</button>
                 <button class="view-tab" data-view="concern">고민별 찾기</button>
                 <button class="view-tab" data-view="filter">카드 뷰</button>
                 <button class="view-tab" data-view="table">테이블 뷰</button>
             </nav>
-            
-            <div class="search-box">
-                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                </svg>
-                <input type="text" id="searchInput" placeholder="시술명, 고민, 효과로 검색...">
-            </div>
         </header>
 
         <!-- Main Content -->
@@ -54,7 +46,7 @@
                             알고 가면 상담 결과가 달라집니다.
                         </p>
                         <button class="cta-button-main" onclick="switchToView('consult')">
-                            ✨ AI 맞춤 상담 시작하기
+                            AI 맞춤 상담 시작하기
                         </button>
                         
                         <div class="landing-stats-bar">
@@ -79,7 +71,7 @@
                         <div class="landing-card main" onclick="switchToView('consult')">
                             <div class="card-badge">추천</div>
                             <div class="card-header">
-                                <span class="card-icon">✨</span>
+                                <span class="card-icon">◦</span>
                                 <span class="card-title">AI 맞춤 시술 상담</span>
                             </div>
                             <p class="card-desc">
@@ -87,9 +79,9 @@
                                 <strong>나에게 최적화된 시술 조합 3가지</strong>를 추천받을 수 있어요.
                             </p>
                             <div class="card-features">
-                                <span>✓ 예산 최적화</span>
-                                <span>✓ 시술 순서 안내</span>
-                                <span>✓ 주의사항 체크리스트</span>
+                                <span>예산 최적화</span>
+                                <span>시술 순서 안내</span>
+                                <span>주의사항 체크리스트</span>
                             </div>
                         </div>
                         
@@ -140,21 +132,25 @@
                             <div class="consult-avatar">
                                 <svg viewBox="0 0 48 48" fill="none">
                                     <circle cx="24" cy="24" r="20" fill="url(#avatarGrad)"/>
-                                    <path d="M24 14c-4 0-7 3-7 7 0 2.5 1.2 4.6 3 6v4l4 2 4-2v-4c1.8-1.4 3-3.5 3-6 0-4-3-7-7-7z" fill="white" opacity="0.9"/>
-                                    <circle cx="21" cy="20" r="1.5" fill="#334155"/>
-                                    <circle cx="27" cy="20" r="1.5" fill="#334155"/>
-                                    <path d="M21 24c0 0 1.5 2 3 2s3-2 3-2" stroke="#334155" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                                    <!-- 의료 십자 + AI 회로 패턴 -->
+                                    <rect x="21" y="12" width="6" height="24" rx="1" fill="white" opacity="0.9"/>
+                                    <rect x="12" y="21" width="24" height="6" rx="1" fill="white" opacity="0.9"/>
+                                    <circle cx="24" cy="24" r="3" fill="#c9a227"/>
+                                    <circle cx="14" cy="14" r="1.5" fill="white" opacity="0.5"/>
+                                    <circle cx="34" cy="14" r="1.5" fill="white" opacity="0.5"/>
+                                    <circle cx="14" cy="34" r="1.5" fill="white" opacity="0.5"/>
+                                    <circle cx="34" cy="34" r="1.5" fill="white" opacity="0.5"/>
                                     <defs>
                                         <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#3b82f6"/>
-                                            <stop offset="100%" stop-color="#1d4ed8"/>
+                                            <stop offset="0%" stop-color="#1e3a5f"/>
+                                            <stop offset="100%" stop-color="#2d4a6f"/>
                                         </linearGradient>
                                     </defs>
                                 </svg>
                             </div>
                             <div class="consult-title-area">
                                 <h2 class="consult-title">맞춤 시술 상담</h2>
-                                <p class="consult-subtitle">몇 가지 질문에 답해주시면 딱 맞는 시술을 추천해드릴게요</p>
+                                <p class="consult-subtitle">몇 가지 질문에 답변해 주시면 최적의 시술을 추천해 드리겠습니다</p>
                             </div>
                         </div>
 
@@ -169,8 +165,8 @@
                         <!-- Step 1: 인사 + 연령대 -->
                         <div class="consult-step active" data-step="1">
                             <div class="step-message">
-                                <p>안녕하세요! 😊 피부 고민 해결을 도와드릴 <strong>AI 상담사</strong>예요.</p>
-                                <p>먼저 기본 정보를 알려주시겠어요?</p>
+                                <p>안녕하세요. 피부과 전문 <strong>AI 상담사</strong>입니다.</p>
+                                <p>정확한 시술 추천을 위해 기본 정보가 필요합니다. 연령대와 피부 타입에 따라 적합한 시술이 달라지기 때문입니다.</p>
                             </div>
                             <div class="step-questions">
                                 <div class="question-group">
@@ -212,57 +208,80 @@
                         <!-- Step 2: 고민 선택 -->
                         <div class="consult-step" data-step="2">
                             <div class="step-message">
-                                <p>어떤 피부 고민이 있으신가요? <strong>여러 개</strong> 선택하셔도 돼요!</p>
+                                <p>피부 고민을 선택해 주세요. <strong>핵심 고민</strong>과 <strong>부가 고민</strong>을 구분해주시면 더 정확한 시술 조합을 제안드릴 수 있습니다.</p>
+                                <p>복합적인 고민은 단일 시술보다 조합 치료가 효과적인 경우가 많습니다.</p>
                             </div>
                             <div class="step-questions">
-                                <div class="question-group">
-                                    <label class="question-label">노화 / 리프팅 관련</label>
-                                    <div class="option-grid cols-4 multi-select" data-field="concerns">
-                                        <button class="option-btn" data-value="처진피부">😔 처진 피부</button>
-                                        <button class="option-btn" data-value="주름">👵 주름 전반</button>
-                                        <button class="option-btn" data-value="탄력저하">✨ 탄력 저하</button>
-                                        <button class="option-btn" data-value="볼륨손실">💧 볼륨 손실</button>
-                                        <button class="option-btn" data-value="이중턱">🫠 이중턱</button>
-                                        <button class="option-btn" data-value="팔자주름">😮‍💨 팔자주름</button>
-                                        <button class="option-btn" data-value="목주름">🦒 목주름</button>
-                                        <button class="option-btn" data-value="눈가주름">👁️ 눈가주름</button>
+                                <div class="priority-selector">
+                                    <div class="concern-source">
+                                        <h4 class="source-title">고민 목록 <span class="source-hint">클릭해서 추가하세요</span></h4>
+                                        <div class="concern-categories">
+                                            <div class="concern-category">
+                                                <span class="cat-label">노화/리프팅</span>
+                                                <div class="concern-chips">
+                                                    <button class="concern-chip" data-value="처진피부">처진 피부</button>
+                                                    <button class="concern-chip" data-value="주름">주름</button>
+                                                    <button class="concern-chip" data-value="탄력저하">탄력 저하</button>
+                                                    <button class="concern-chip" data-value="볼륨손실">볼륨 손실</button>
+                                                    <button class="concern-chip" data-value="이중턱">이중턱</button>
+                                                    <button class="concern-chip" data-value="팔자주름">팔자</button>
+                                                </div>
+                                            </div>
+                                            <div class="concern-category">
+                                                <span class="cat-label">피부결/톤</span>
+                                                <div class="concern-chips">
+                                                    <button class="concern-chip" data-value="모공">모공</button>
+                                                    <button class="concern-chip" data-value="기미잡티">기미/잡티</button>
+                                                    <button class="concern-chip" data-value="피부결">피부결</button>
+                                                    <button class="concern-chip" data-value="피부톤">피부톤</button>
+                                                    <button class="concern-chip" data-value="홍조">홍조</button>
+                                                    <button class="concern-chip" data-value="색소침착">색소</button>
+                                                </div>
+                                            </div>
+                                            <div class="concern-category">
+                                                <span class="cat-label">트러블/흉터</span>
+                                                <div class="concern-chips">
+                                                    <button class="concern-chip" data-value="여드름">여드름</button>
+                                                    <button class="concern-chip" data-value="여드름흉터">여드름흉터</button>
+                                                    <button class="concern-chip" data-value="흉터">흉터</button>
+                                                    <button class="concern-chip" data-value="튼살">튼살</button>
+                                                </div>
+                                            </div>
+                                            <div class="concern-category">
+                                                <span class="cat-label">기타</span>
+                                                <div class="concern-chips">
+                                                    <button class="concern-chip" data-value="다크서클">다크서클</button>
+                                                    <button class="concern-chip" data-value="제모">제모</button>
+                                                    <button class="concern-chip" data-value="탈모">탈모</button>
+                                                    <button class="concern-chip" data-value="다한증">다한증</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="question-group">
-                                    <label class="question-label">피부결 / 톤 관련</label>
-                                    <div class="option-grid cols-4 multi-select" data-field="concerns">
-                                        <button class="option-btn" data-value="모공">🔵 모공</button>
-                                        <button class="option-btn" data-value="기미잡티">🎨 기미/잡티</button>
-                                        <button class="option-btn" data-value="피부결">🪞 피부결 개선</button>
-                                        <button class="option-btn" data-value="피부톤">🌟 피부톤 개선</button>
-                                        <button class="option-btn" data-value="홍조">🔴 홍조/붉은기</button>
-                                        <button class="option-btn" data-value="색소침착">🟤 색소침착</button>
-                                        <button class="option-btn" data-value="검버섯">⚫ 검버섯</button>
-                                        <button class="option-btn" data-value="주근깨">🟠 주근깨</button>
+                                    
+                                    <div class="priority-targets">
+                                        <div class="priority-box primary">
+                                            <div class="priority-header">
+                                                <span class="priority-icon">★</span>
+                                                <h4>가장 해결하고 싶은 고민</h4>
+                                            </div>
+                                            <p class="priority-hint">예산의 60% 이상 집중</p>
+                                            <div class="priority-dropzone" id="primaryConcerns">
+                                                <span class="dropzone-placeholder">고민을 클릭하면 여기에 추가됩니다</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="priority-box secondary">
+                                            <div class="priority-header">
+                                                <span class="priority-icon">☆</span>
+                                                <h4>같이 개선되면 좋겠는 고민</h4>
+                                            </div>
+                                            <p class="priority-hint">남은 예산으로 추가 (선택)</p>
+                                            <div class="priority-dropzone" id="secondaryConcerns">
+                                                <span class="dropzone-placeholder">선택 사항</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="question-group">
-                                    <label class="question-label">트러블 / 흉터 관련</label>
-                                    <div class="option-grid cols-4 multi-select" data-field="concerns">
-                                        <button class="option-btn" data-value="여드름">😣 여드름</button>
-                                        <button class="option-btn" data-value="여드름흉터">🕳️ 여드름 흉터</button>
-                                        <button class="option-btn" data-value="흉터">🩹 일반 흉터</button>
-                                        <button class="option-btn" data-value="튼살">📏 튼살</button>
-                                    </div>
-                                </div>
-                                <div class="question-group">
-                                    <label class="question-label">기타</label>
-                                    <div class="option-grid cols-4 multi-select" data-field="concerns">
-                                        <button class="option-btn" data-value="다크서클">👀 다크서클</button>
-                                        <button class="option-btn" data-value="제모">🪒 제모</button>
-                                        <button class="option-btn" data-value="탈모">👨‍🦲 탈모</button>
-                                        <button class="option-btn" data-value="다한증">💦 다한증</button>
-                                        <button class="option-btn" data-value="점제거">⚫ 점/사마귀</button>
-                                    </div>
-                                </div>
-                                <div class="question-group">
-                                    <label class="question-label">그 외 고민이 있다면 (선택)</label>
-                                    <textarea class="text-input" id="concernsExtra" placeholder="예: 문신 제거, 눈밑 꺼짐 등 위에 없는 고민..."></textarea>
                                 </div>
                             </div>
                         </div>
@@ -270,9 +289,19 @@
                         <!-- Step 3: 부위 선택 -->
                         <div class="consult-step" data-step="3">
                             <div class="step-message">
-                                <p>주로 <strong>어느 부위</strong>가 신경 쓰이세요? 여러 개 선택 가능!</p>
+                                <p>시술을 원하시는 <strong>부위</strong>를 선택해 주세요. 같은 고민이라도 부위에 따라 적합한 시술이 다릅니다.</p>
+                                <p>예를 들어, 눈가 주름과 이마 주름은 각각 다른 접근이 필요합니다.</p>
                             </div>
                             <div class="step-questions">
+                                <div class="question-group">
+                                    <label class="question-label">빠른 선택</label>
+                                    <div class="option-grid cols-4 multi-select" data-field="areas">
+                                        <button class="option-btn" data-value="얼굴전체">얼굴 전체</button>
+                                        <button class="option-btn" data-value="얼굴상반부">상반부 (이마~코)</button>
+                                        <button class="option-btn" data-value="얼굴하반부">하반부 (코~턱)</button>
+                                        <button class="option-btn" data-value="전신">전신</button>
+                                    </div>
+                                </div>
                                 <div class="question-group">
                                     <label class="question-label">얼굴 부위</label>
                                     <div class="option-grid cols-5 multi-select" data-field="areas">
@@ -304,23 +333,14 @@
                                         <button class="option-btn" data-value="엉덩이">엉덩이</button>
                                     </div>
                                 </div>
-                                <div class="question-group">
-                                    <label class="question-label">전체 선택</label>
-                                    <div class="option-grid cols-4 multi-select" data-field="areas">
-                                        <button class="option-btn" data-value="얼굴전체">🙂 얼굴 전체</button>
-                                        <button class="option-btn" data-value="얼굴상반부">🔼 상반부 (이마~코)</button>
-                                        <button class="option-btn" data-value="얼굴하반부">🔽 하반부 (코~턱)</button>
-                                        <button class="option-btn" data-value="전신">✨ 전신</button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
                         <!-- Step 4: 예산 -->
                         <div class="consult-step" data-step="4">
                             <div class="step-message">
-                                <p>시술에 사용할 수 있는 <strong>총 예산</strong>은 어느 정도인가요?</p>
-                                <p class="step-hint">여러 시술을 조합해서 추천해드릴게요. 병원마다 가격이 다르니 최소 기준으로 계산해드려요.</p>
+                                <p>시술에 투자할 수 있는 <strong>총 예산</strong>을 알려주세요. 예산에 맞춰 최적의 시술 조합을 설계해 드립니다.</p>
+                                <p>병원마다 가격 차이가 있으니, 최저가 기준으로 계산하여 여유 있게 안내해 드립니다.</p>
                             </div>
                             <div class="step-questions">
                                 <div class="question-group">
@@ -330,12 +350,13 @@
                                         <span class="budget-unit">만원</span>
                                     </div>
                                     <div class="budget-presets">
-                                        <button class="preset-btn" data-amount="30">30만원</button>
                                         <button class="preset-btn" data-amount="50">50만원</button>
                                         <button class="preset-btn" data-amount="100">100만원</button>
                                         <button class="preset-btn" data-amount="200">200만원</button>
                                         <button class="preset-btn" data-amount="300">300만원</button>
-                                        <button class="preset-btn" data-amount="500">500만원+</button>
+                                        <button class="preset-btn" data-amount="500">500만원</button>
+                                        <button class="preset-btn" data-amount="700">700만원</button>
+                                        <button class="preset-btn" data-amount="1000">1000만원+</button>
                                     </div>
                                 </div>
                             </div>
@@ -344,53 +365,96 @@
                         <!-- Step 5: 다운타임 & 통증 -->
                         <div class="consult-step" data-step="5">
                             <div class="step-message">
-                                <p>시술 후 <strong>회복 기간</strong>과 <strong>통증</strong>에 대해 알려주세요.</p>
+                                <p><strong>회복 기간</strong>과 <strong>통증 민감도</strong>를 알려주세요. 일정이나 직업에 따라 다운타임이 중요한 분들이 많습니다.</p>
+                                <p>같은 효과를 내는 시술도 회복 기간과 통증 정도가 다양하니, 맞춤 추천이 가능합니다.</p>
                             </div>
                             <div class="step-questions">
                                 <div class="question-group">
                                     <label class="question-label">다운타임 (회복 기간) 허용 범위</label>
                                     <div class="option-grid cols-3">
-                                        <button class="option-btn" data-field="downtime" data-value="없어야함">❌ 없어야 해요</button>
-                                        <button class="option-btn" data-field="downtime" data-value="당일">📍 당일만 가능</button>
-                                        <button class="option-btn" data-field="downtime" data-value="1-2일">📅 1~2일 OK</button>
-                                        <button class="option-btn" data-field="downtime" data-value="3-4일">📅 3~4일 OK</button>
-                                        <button class="option-btn" data-field="downtime" data-value="일주일">📅 일주일 OK</button>
-                                        <button class="option-btn" data-field="downtime" data-value="상관없음">✅ 상관없어요</button>
+                                        <button class="option-btn" data-field="downtime" data-value="없어야함">없어야 해요</button>
+                                        <button class="option-btn" data-field="downtime" data-value="당일">당일만 가능</button>
+                                        <button class="option-btn" data-field="downtime" data-value="1-2일">1~2일 OK</button>
+                                        <button class="option-btn" data-field="downtime" data-value="3-4일">3~4일 OK</button>
+                                        <button class="option-btn" data-field="downtime" data-value="일주일">일주일 OK</button>
+                                        <button class="option-btn" data-field="downtime" data-value="상관없음">상관없어요</button>
                                     </div>
                                 </div>
                                 <div class="question-group">
                                     <label class="question-label">통증 민감도</label>
                                     <div class="option-grid cols-4">
-                                        <button class="option-btn" data-field="pain" data-value="매우민감">😰 매우 무서워요</button>
-                                        <button class="option-btn" data-field="pain" data-value="민감">😟 좀 무서워요</button>
-                                        <button class="option-btn" data-field="pain" data-value="보통">😐 보통이에요</button>
-                                        <button class="option-btn" data-field="pain" data-value="괜찮음">💪 잘 참아요</button>
-                                    </div>
-                                </div>
-                                <div class="question-group">
-                                    <label class="question-label">마취 선호도</label>
-                                    <div class="option-grid cols-3">
-                                        <button class="option-btn" data-field="anesthesia" data-value="무마취">무마취 선호</button>
-                                        <button class="option-btn" data-field="anesthesia" data-value="연고마취">연고 마취 OK</button>
-                                        <button class="option-btn" data-field="anesthesia" data-value="상관없음">상관없어요</button>
+                                        <button class="option-btn" data-field="pain" data-value="매우민감">매우 무서워요</button>
+                                        <button class="option-btn" data-field="pain" data-value="민감">좀 무서워요</button>
+                                        <button class="option-btn" data-field="pain" data-value="보통">보통이에요</button>
+                                        <button class="option-btn" data-field="pain" data-value="괜찮음">잘 참아요</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Step 6: 추가 정보 -->
+                        <!-- Step 6: 시술 선호도 -->
                         <div class="consult-step" data-step="6">
                             <div class="step-message">
-                                <p>거의 다 왔어요! 마지막으로 <strong>추가 정보</strong>가 있다면 알려주세요.</p>
+                                <p>선호하시는 <strong>시술 방식</strong>이 있으신가요? 주사, 레이저, 리프팅 장비 등 각각 장단점이 다릅니다.</p>
+                                <p>특별히 선호하시는 방식이 없다면 '상관없음'을 선택해 주세요. 고민에 맞는 최적의 방식을 추천해 드립니다.</p>
                             </div>
                             <div class="step-questions">
                                 <div class="question-group">
-                                    <label class="question-label">중요한 일정이 있나요?</label>
-                                    <input type="text" class="text-input" id="eventInput" placeholder="예: 2주 뒤 결혼식, 다음달 면접...">
+                                    <label class="question-label">선호하는 시술 방식</label>
+                                    <div class="option-grid cols-2 multi-select" data-field="treatmentType">
+                                        <button class="option-btn selected" data-value="상관없음">상관없어요 (전문가 추천)</button>
+                                        <button class="option-btn" data-value="주사">주사 시술<span class="opt-hint">보톡스, 필러, 스킨부스터 등</span></button>
+                                        <button class="option-btn" data-value="레이저">레이저/광<span class="opt-hint">토닝, IPL, 프락셀 등</span></button>
+                                        <button class="option-btn" data-value="리프팅">리프팅 장비<span class="opt-hint">울쎄라, 써마지, 실리프팅 등</span></button>
+                                        <button class="option-btn" data-value="스킨케어">스킨케어<span class="opt-hint">필링, 스케일링 등</span></button>
+                                    </div>
                                 </div>
                                 <div class="question-group">
-                                    <label class="question-label">더 궁금하거나 원하는 게 있다면 편하게 말씀해주세요</label>
-                                    <textarea class="text-input tall" id="extraInput" placeholder="예: 자연스러운 결과를 원해요, 유지 비용도 고려해주세요, 주사는 무서워요..."></textarea>
+                                    <label class="question-label">효과 유지 기간 선호</label>
+                                    <div class="option-grid cols-3">
+                                        <button class="option-btn" data-field="duration" data-value="단기">3~6개월<span class="opt-hint">부담 적게 시작</span></button>
+                                        <button class="option-btn" data-field="duration" data-value="중기">6~12개월<span class="opt-hint">적당한 유지</span></button>
+                                        <button class="option-btn" data-field="duration" data-value="장기">1년 이상<span class="opt-hint">오래 가는 시술</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 7: 우선순위 & 빈도 -->
+                        <div class="consult-step" data-step="7">
+                            <div class="step-message">
+                                <p>마지막으로 <strong>우선순위</strong>와 <strong>시술 계획</strong>을 알려주세요. 효과, 편안함, 가성비 중 무엇을 중시하시는지에 따라 추천이 달라집니다.</p>
+                                <p>입력하신 정보를 바탕으로 196개 시술 DB를 분석하여 맞춤 조합을 제안해 드리겠습니다.</p>
+                            </div>
+                            <div class="step-questions">
+                                <div class="question-group">
+                                    <label class="question-label">가장 중요하게 생각하는 것</label>
+                                    <div class="option-grid cols-3">
+                                        <button class="option-btn" data-field="priority" data-value="효과">효과 중시<span class="opt-hint">다소 아파도 OK</span></button>
+                                        <button class="option-btn" data-field="priority" data-value="편안함">편안함 중시<span class="opt-hint">약한 시술 선호</span></button>
+                                        <button class="option-btn" data-field="priority" data-value="가성비">가성비 중시<span class="opt-hint">비용 대비 효과</span></button>
+                                    </div>
+                                </div>
+                                <div class="question-group">
+                                    <label class="question-label">시술 계획</label>
+                                    <div class="option-grid cols-3">
+                                        <button class="option-btn" data-field="frequency" data-value="1회성">1회성<span class="opt-hint">특별 이벤트 전</span></button>
+                                        <button class="option-btn" data-field="frequency" data-value="정기">정기 관리<span class="opt-hint">월 1회 정도</span></button>
+                                        <button class="option-btn" data-field="frequency" data-value="비정기">비정기적<span class="opt-hint">필요할 때만</span></button>
+                                    </div>
+                                </div>
+                                <div class="question-group">
+                                    <label class="question-label">이전에 해본 시술 (선택)</label>
+                                    <div class="option-grid cols-4 multi-select" data-field="pastTreatments">
+                                        <button class="option-btn" data-value="보톡스">보톡스</button>
+                                        <button class="option-btn" data-value="필러">필러</button>
+                                        <button class="option-btn" data-value="리프팅">리프팅</button>
+                                        <button class="option-btn" data-value="레이저토닝">레이저토닝</button>
+                                        <button class="option-btn" data-value="스킨부스터">스킨부스터</button>
+                                        <button class="option-btn" data-value="필링">필링</button>
+                                        <button class="option-btn" data-value="IPL">IPL</button>
+                                        <button class="option-btn" data-value="없음">없어요</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -455,7 +519,7 @@
                                         <span class="step-text">AI 분석 중</span>
                                     </div>
                                     <div class="progress-step" id="loadingStep4">
-                                        <span class="step-icon">✨</span>
+                                        <span class="step-icon">◦</span>
                                         <span class="step-text">결과 생성</span>
                                     </div>
                                 </div>

@@ -31,7 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
     treatments = DB_EXTENDED.treatments;
     
     // Update DB count
-    document.getElementById('dbCount').textContent = `${treatments.length}개 시술`;
+    const dbCountEl = document.getElementById('dbCount');
+    if (dbCountEl) {
+        dbCountEl.textContent = `${treatments.length}개 시술`;
+    }
     
     // Update all tab counts
     updateTabCounts();
@@ -104,6 +107,7 @@ function goToLanding(event) {
 // ===== Search =====
 function setupSearch() {
     const searchInput = document.getElementById('searchInput');
+    if (!searchInput) return;  // 검색창이 없으면 스킵
     
     searchInput.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase().trim();
@@ -142,6 +146,9 @@ function setupConcernView() {
     const backBtn = document.getElementById('backBtn');
     const concernBudgetMin = document.getElementById('concernBudgetMin');
     const concernBudgetMax = document.getElementById('concernBudgetMax');
+    
+    // 필수 요소가 없으면 스킵
+    if (!concernResult || !concernGrid || !backBtn || !concernBudgetMin || !concernBudgetMax) return;
     
     concernCards.forEach(card => {
         card.addEventListener('click', () => {
@@ -217,6 +224,11 @@ function setupFilterView() {
     const painRange = document.getElementById('painRange');
     const checkboxList = document.getElementById('categoryCheckboxList');
     const resetBtn = document.getElementById('resetFilters');
+    const filterSelectAll = document.getElementById('filterSelectAll');
+    const filterDeselectAll = document.getElementById('filterDeselectAll');
+    
+    // 필수 요소가 없으면 스킵
+    if (!budgetMin || !budgetMax || !downtimeRange || !painRange || !checkboxList || !resetBtn) return;
     
     // Populate category checkboxes
     const categories = [...new Set(treatments.map(t => t.category))];
@@ -274,15 +286,19 @@ function setupFilterView() {
     checkboxList.addEventListener('change', applyFilters);
     
     // Select All / Deselect All buttons
-    document.getElementById('filterSelectAll').addEventListener('click', () => {
-        document.querySelectorAll('input[name="filterCategory"]').forEach(cb => cb.checked = true);
-        applyFilters();
-    });
+    if (filterSelectAll) {
+        filterSelectAll.addEventListener('click', () => {
+            document.querySelectorAll('input[name="filterCategory"]').forEach(cb => cb.checked = true);
+            applyFilters();
+        });
+    }
     
-    document.getElementById('filterDeselectAll').addEventListener('click', () => {
-        document.querySelectorAll('input[name="filterCategory"]').forEach(cb => cb.checked = false);
-        applyFilters();
-    });
+    if (filterDeselectAll) {
+        filterDeselectAll.addEventListener('click', () => {
+            document.querySelectorAll('input[name="filterCategory"]').forEach(cb => cb.checked = false);
+            applyFilters();
+        });
+    }
     
     resetBtn.addEventListener('click', () => {
         budgetMin.value = 0;
@@ -341,6 +357,12 @@ function setupTableView() {
     const tableBudgetMax = document.getElementById('tableBudgetMax');
     const tableDowntimeRange = document.getElementById('tableDowntimeRange');
     const tablePainRange = document.getElementById('tablePainRange');
+    const tableSelectAll = document.getElementById('tableSelectAll');
+    const tableDeselectAll = document.getElementById('tableDeselectAll');
+    const resetTableFilters = document.getElementById('resetTableFilters');
+    
+    // 필수 요소가 없으면 스킵
+    if (!categoryList || !tableBudgetMin || !tableBudgetMax || !tableDowntimeRange || !tablePainRange) return;
     
     // Initialize selected categories
     selectedTableCategories = [...categories];
@@ -404,31 +426,37 @@ function setupTableView() {
     });
     
     // Select All / Deselect All buttons
-    document.getElementById('tableSelectAll').addEventListener('click', () => {
-        document.querySelectorAll('input[name="tableCategory"]').forEach(cb => cb.checked = true);
-        selectedTableCategories = [...categories];
-        renderTableView();
-    });
+    if (tableSelectAll) {
+        tableSelectAll.addEventListener('click', () => {
+            document.querySelectorAll('input[name="tableCategory"]').forEach(cb => cb.checked = true);
+            selectedTableCategories = [...categories];
+            renderTableView();
+        });
+    }
     
-    document.getElementById('tableDeselectAll').addEventListener('click', () => {
-        document.querySelectorAll('input[name="tableCategory"]').forEach(cb => cb.checked = false);
-        selectedTableCategories = [];
-        renderTableView();
-    });
+    if (tableDeselectAll) {
+        tableDeselectAll.addEventListener('click', () => {
+            document.querySelectorAll('input[name="tableCategory"]').forEach(cb => cb.checked = false);
+            selectedTableCategories = [];
+            renderTableView();
+        });
+    }
     
     // Reset button
-    document.getElementById('resetTableFilters').addEventListener('click', () => {
-        tableBudgetMin.value = 0;
-        tableBudgetMax.value = 200;
-        tableDowntimeRange.value = 2;
-        tablePainRange.value = 5;
-        document.getElementById('tableBudgetDisplay').textContent = '전체';
-        document.getElementById('tableDowntimeValue').textContent = '전체';
-        document.getElementById('tablePainValue').textContent = '5';
-        document.querySelectorAll('input[name="tableCategory"]').forEach(cb => cb.checked = true);
-        selectedTableCategories = [...categories];
-        renderTableView();
-    });
+    if (resetTableFilters) {
+        resetTableFilters.addEventListener('click', () => {
+            tableBudgetMin.value = 0;
+            tableBudgetMax.value = 200;
+            tableDowntimeRange.value = 2;
+            tablePainRange.value = 5;
+            document.getElementById('tableBudgetDisplay').textContent = '전체';
+            document.getElementById('tableDowntimeValue').textContent = '전체';
+            document.getElementById('tablePainValue').textContent = '5';
+            document.querySelectorAll('input[name="tableCategory"]').forEach(cb => cb.checked = true);
+            selectedTableCategories = [...categories];
+            renderTableView();
+        });
+    }
     
     // Column sort listeners
     document.querySelectorAll('.data-table th.sortable').forEach(th => {
@@ -626,6 +654,9 @@ function renderTreatmentCards(items, containerId) {
 function setupModal() {
     const overlay = document.getElementById('modalOverlay');
     const closeBtn = document.getElementById('modalClose');
+    
+    // 필수 요소가 없으면 스킵
+    if (!overlay || !closeBtn) return;
     
     const closeModal = () => {
         overlay.classList.add('hidden');
@@ -862,41 +893,57 @@ function extractPrice(priceStr) {
 // ===== AI Consultation =====
 let consultState = {
     currentStep: 1,
-    totalSteps: 6,
+    totalSteps: 7,
     data: {
         age: null,
         experience: null,
         skinType: null,
+        primaryConcerns: [],
+        secondaryConcerns: [],
         concerns: [],
-        concernsExtra: '',
         areas: [],
         budget: null,
         downtime: null,
         pain: null,
-        anesthesia: null,
-        event: '',
-        extra: ''
+        // 새로운 필드들
+        treatmentType: ['상관없음'],  // 기본값
+        duration: null,
+        priority: null,
+        frequency: null,
+        pastTreatments: []
     }
 };
 
 function setupConsultation() {
+    // Priority concern chips (클릭으로 추가/제거)
+    setupPriorityConcerns();
+    
     // Option buttons (single select)
     document.querySelectorAll('.option-btn[data-field]').forEach(btn => {
         btn.addEventListener('click', () => {
             const field = btn.dataset.field;
             const value = btn.dataset.value;
             
-            btn.closest('.option-grid').querySelectorAll('.option-btn').forEach(b => {
-                b.classList.remove('selected');
-            });
+            const grid = btn.closest('.option-grid');
+            if (grid) {
+                grid.querySelectorAll('.option-btn').forEach(b => {
+                    b.classList.remove('selected');
+                });
+            }
             btn.classList.add('selected');
             consultState.data[field] = value;
         });
     });
     
-    // Multi-select option buttons
+    // Multi-select option buttons (areas, treatmentType, pastTreatments)
     document.querySelectorAll('.option-grid.multi-select').forEach(grid => {
         const field = grid.dataset.field;
+        if (!field) return;
+        
+        if (!Array.isArray(consultState.data[field])) {
+            consultState.data[field] = [];
+        }
+        
         grid.querySelectorAll('.option-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 btn.classList.toggle('selected');
@@ -914,32 +961,209 @@ function setupConsultation() {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
-            document.getElementById('budgetInput').value = btn.dataset.amount;
+            const budgetInput = document.getElementById('budgetInput');
+            if (budgetInput) {
+                budgetInput.value = btn.dataset.amount;
+            }
             consultState.data.budget = parseInt(btn.dataset.amount);
         });
     });
     
     // Budget input
-    document.getElementById('budgetInput')?.addEventListener('input', (e) => {
-        consultState.data.budget = parseInt(e.target.value) || null;
-        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('selected'));
-    });
+    const budgetInput = document.getElementById('budgetInput');
+    if (budgetInput) {
+        budgetInput.addEventListener('input', (e) => {
+            consultState.data.budget = parseInt(e.target.value) || null;
+            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('selected'));
+        });
+    }
     
     // Navigation
-    document.getElementById('prevBtn').addEventListener('click', () => {
-        if (consultState.currentStep > 1) {
-            goToStep(consultState.currentStep - 1);
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const backToConsult = document.getElementById('backToConsult');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (consultState.currentStep > 1) {
+                goToStep(consultState.currentStep - 1);
+            }
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (consultState.currentStep < consultState.totalSteps) {
+                goToStep(consultState.currentStep + 1);
+            }
+        });
+    }
+    
+    if (submitBtn) {
+        submitBtn.addEventListener('click', submitConsultation);
+    }
+    
+    if (backToConsult) {
+        backToConsult.addEventListener('click', resetConsultation);
+    }
+}
+
+// 우선순위 고민 선택 설정
+function setupPriorityConcerns() {
+    const primaryZone = document.getElementById('primaryConcerns');
+    const secondaryZone = document.getElementById('secondaryConcerns');
+    
+    if (!primaryZone || !secondaryZone) return;
+    
+    // 모든 concern chip에 클릭 이벤트 추가
+    document.querySelectorAll('.concern-source .concern-chip').forEach(chip => {
+        chip.addEventListener('click', () => handleChipClick(chip));
+        
+        // 드래그 설정
+        chip.draggable = true;
+        chip.addEventListener('dragstart', handleDragStart);
+        chip.addEventListener('dragend', handleDragEnd);
+    });
+    
+    // 드롭존 설정
+    [primaryZone, secondaryZone].forEach(zone => {
+        zone.addEventListener('dragover', handleDragOver);
+        zone.addEventListener('dragleave', handleDragLeave);
+        zone.addEventListener('drop', handleDrop);
+    });
+}
+
+let currentClickTarget = 'primary'; // 클릭 시 어디로 갈지
+
+function handleChipClick(chip) {
+    const value = chip.dataset.value;
+    const label = chip.innerHTML;
+    
+    // 이미 선택된 경우 제거
+    if (chip.classList.contains('in-primary') || chip.classList.contains('in-secondary')) {
+        removeFromPriority(value);
+        chip.classList.remove('in-primary', 'in-secondary');
+        return;
+    }
+    
+    // 4개까지는 Primary(핵심 고민)에, 그 이후는 Secondary에 추가
+    if (consultState.data.primaryConcerns.length < 4) {
+        addToPriority('primary', value, label);
+        chip.classList.add('in-primary');
+    } else {
+        addToPriority('secondary', value, label);
+        chip.classList.add('in-secondary');
+    }
+}
+
+function addToPriority(priority, value, label) {
+    const zone = document.getElementById(priority === 'primary' ? 'primaryConcerns' : 'secondaryConcerns');
+    
+    // 이미 있는지 확인
+    if (consultState.data.primaryConcerns.includes(value) || consultState.data.secondaryConcerns.includes(value)) {
+        return;
+    }
+    
+    // placeholder 제거
+    const placeholder = zone.querySelector('.dropzone-placeholder');
+    if (placeholder) placeholder.style.display = 'none';
+    
+    // 칩 생성
+    const newChip = document.createElement('button');
+    newChip.className = 'concern-chip';
+    newChip.dataset.value = value;
+    newChip.innerHTML = label + ' <span class="chip-remove">×</span>';
+    newChip.addEventListener('click', () => {
+        removeFromPriority(value);
+        // 원본 칩 상태 업데이트
+        document.querySelector(`.concern-source .concern-chip[data-value="${value}"]`)?.classList.remove('in-primary', 'in-secondary');
+    });
+    
+    zone.appendChild(newChip);
+    
+    // 상태 업데이트
+    if (priority === 'primary') {
+        consultState.data.primaryConcerns.push(value);
+    } else {
+        consultState.data.secondaryConcerns.push(value);
+    }
+    updateConcernsArray();
+}
+
+function removeFromPriority(value) {
+    // Primary에서 제거
+    const primaryIdx = consultState.data.primaryConcerns.indexOf(value);
+    if (primaryIdx > -1) {
+        consultState.data.primaryConcerns.splice(primaryIdx, 1);
+        const chip = document.querySelector(`#primaryConcerns .concern-chip[data-value="${value}"]`);
+        if (chip) chip.remove();
+    }
+    
+    // Secondary에서 제거
+    const secondaryIdx = consultState.data.secondaryConcerns.indexOf(value);
+    if (secondaryIdx > -1) {
+        consultState.data.secondaryConcerns.splice(secondaryIdx, 1);
+        const chip = document.querySelector(`#secondaryConcerns .concern-chip[data-value="${value}"]`);
+        if (chip) chip.remove();
+    }
+    
+    // placeholder 복원
+    ['primaryConcerns', 'secondaryConcerns'].forEach(id => {
+        const zone = document.getElementById(id);
+        if (zone.querySelectorAll('.concern-chip').length === 0) {
+            const placeholder = zone.querySelector('.dropzone-placeholder');
+            if (placeholder) placeholder.style.display = 'block';
         }
     });
     
-    document.getElementById('nextBtn').addEventListener('click', () => {
-        if (consultState.currentStep < consultState.totalSteps) {
-            goToStep(consultState.currentStep + 1);
-        }
-    });
+    updateConcernsArray();
+}
+
+function updateConcernsArray() {
+    consultState.data.concerns = [...consultState.data.primaryConcerns, ...consultState.data.secondaryConcerns];
+}
+
+// 드래그 앤 드롭 핸들러
+let draggedChip = null;
+
+function handleDragStart(e) {
+    draggedChip = e.target;
+    e.target.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+}
+
+function handleDragEnd(e) {
+    e.target.classList.remove('dragging');
+    draggedChip = null;
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+    e.currentTarget.classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
     
-    document.getElementById('submitBtn').addEventListener('click', submitConsultation);
-    document.getElementById('backToConsult').addEventListener('click', resetConsultation);
+    if (!draggedChip) return;
+    
+    const value = draggedChip.dataset.value;
+    const label = draggedChip.innerHTML;
+    const priority = e.currentTarget.id === 'primaryConcerns' ? 'primary' : 'secondary';
+    
+    // 기존 위치에서 제거
+    removeFromPriority(value);
+    draggedChip.classList.remove('in-primary', 'in-secondary');
+    
+    // 새 위치에 추가
+    addToPriority(priority, value, label);
+    draggedChip.classList.add(priority === 'primary' ? 'in-primary' : 'in-secondary');
 }
 
 function goToStep(step) {
@@ -952,15 +1176,8 @@ function goToStep(step) {
     }
     
     // Save inputs (동기적으로 처리)
-    if (consultState.currentStep === 2) {
-        consultState.data.concernsExtra = document.getElementById('concernsExtra')?.value || '';
-    }
     if (consultState.currentStep === 4) {
         consultState.data.budget = parseInt(document.getElementById('budgetInput')?.value) || null;
-    }
-    if (consultState.currentStep === 6) {
-        consultState.data.event = document.getElementById('eventInput')?.value || '';
-        consultState.data.extra = document.getElementById('extraInput')?.value || '';
     }
     
     consultState.currentStep = step;
@@ -1016,8 +1233,8 @@ function validateCurrentStep() {
             }
             break;
         case 2:
-            if (!consultState.data.concerns || consultState.data.concerns.length === 0) {
-                message = '고민을 최소 1개 이상 선택해주세요.';
+            if (!consultState.data.primaryConcerns || consultState.data.primaryConcerns.length === 0) {
+                message = '가장 해결하고 싶은 고민을 최소 1개 이상 선택해주세요.';
                 isValid = false;
             }
             break;
@@ -1040,6 +1257,24 @@ function validateCurrentStep() {
                 isValid = false;
             } else if (!consultState.data.pain) {
                 message = '통증 민감도를 선택해주세요.';
+                isValid = false;
+            }
+            break;
+        case 6:
+            if (!consultState.data.treatmentType || consultState.data.treatmentType.length === 0) {
+                message = '선호하는 시술 방식을 선택해주세요.';
+                isValid = false;
+            } else if (!consultState.data.duration) {
+                message = '효과 유지 기간을 선택해주세요.';
+                isValid = false;
+            }
+            break;
+        case 7:
+            if (!consultState.data.priority) {
+                message = '가장 중요하게 생각하는 것을 선택해주세요.';
+                isValid = false;
+            } else if (!consultState.data.frequency) {
+                message = '시술 계획을 선택해주세요.';
                 isValid = false;
             }
             break;
@@ -1116,25 +1351,636 @@ function stopProgressTimer() {
 }
 
 async function submitConsultation() {
-    consultState.data.event = document.getElementById('eventInput')?.value || '';
-    consultState.data.extra = document.getElementById('extraInput')?.value || '';
     consultState.data.budget = parseInt(document.getElementById('budgetInput')?.value) || null;
     
     document.getElementById('consultWizard').classList.add('hidden');
     document.getElementById('consultLoading').classList.remove('hidden');
     
     // 프로그레스 초기화 및 시작
-    updateProgress(1, '요청을 준비하고 있어요...', 5);
+    updateProgress(1, '요청을 준비하고 있어요...', 10);
     startProgressTimer();
     
-    try {
-        const response = await callClaudeAPI(consultState.data);
-        stopProgressTimer();
-        displayResult(response);
-    } catch (error) {
-        stopProgressTimer();
-        console.error('API Error:', error);
-        displayError(error);
+    // 룰베이스 추천 (비동기 시뮬레이션)
+    setTimeout(() => {
+        updateProgress(2, '시술 데이터베이스를 검색하고 있어요...', 30);
+        
+        setTimeout(() => {
+            updateProgress(3, '최적의 조합을 분석하고 있어요...', 60);
+            
+            setTimeout(() => {
+                updateProgress(4, '결과를 생성하고 있어요...', 90);
+                
+                setTimeout(() => {
+                    stopProgressTimer();
+                    try {
+                        const response = generateRuleBasedRecommendation(consultState.data);
+                        displayResult(response);
+                    } catch (error) {
+                        console.error('Rule-based Error:', error);
+                        displayError(error);
+                    }
+                }, 300);
+            }, 400);
+        }, 400);
+    }, 300);
+}
+
+// ===== 룰베이스 추천 엔진 =====
+function generateRuleBasedRecommendation(userData) {
+    const budget = userData.budget || 100;
+    const primaryConcerns = userData.primaryConcerns || [];
+    const secondaryConcerns = userData.secondaryConcerns || [];
+    const downtime = userData.downtime || '상관없음';
+    const pain = userData.pain || '보통';
+    
+    // 새로운 인풋들
+    const treatmentType = userData.treatmentType || [];    // 선호 시술 타입
+    const duration = userData.duration || '중기';          // 효과 유지 기간
+    const priority = userData.priority || '효과';          // 우선순위
+    const frequency = userData.frequency || '비정기';      // 시술 빈도
+    const pastTreatments = userData.pastTreatments || [];  // 이전 시술 경험
+    const experience = userData.experience || '처음';       // 피부과 경험
+    
+    // 시술 타입 → 카테고리 매핑
+    const typeToCategory = {
+        '주사': ['보톡스', '필러', '스킨부스터', '리쥬란', '물광', '주사', 'PRP', '엑소좀', '쥬베룩', '볼뉴머'],
+        '레이저': ['레이저', '토닝', 'IPL', '프락셀', '피코', '제네시스', '브이빔', '클라리티'],
+        '리프팅': ['울쎄라', '써마지', '슈링크', '인모드', '실리프팅', '하이푸', 'HIFU', '올리지오', '더블로'],
+        '스킨케어': ['필링', '아쿠아필', '스케일링', 'MTS', '더마펜']
+    };
+    
+    // 유지 기간 → 시술 특성 매핑
+    const durationToTreatments = {
+        '단기': ['보톡스', '필러', '물광주사', '아쿠아필', '스킨부스터', 'MTS'],
+        '중기': ['리쥬란', '쥬베룩', '레이저토닝', 'IPL', '제네시스', '스킨보톡스'],
+        '장기': ['울쎄라', '써마지', '실리프팅', '스컬트라', '엘란쎄', '프락셀', '지방이식']
+    };
+    
+    // 고민 → 시술 매핑 (대폭 확장)
+    const concernToTreatments = {
+        '처진피부': ['울쎄라', '써마지', '실리프팅', '인모드', '슈링크', '올리지오', '텐써마', '유써마', '더블로', '리프테라', '소프웨이브', '하이푸', 'HIFU', '울트라포머', '울트라셀', '실루엣소프트', '민트실', '녹는실', '보톡스', '스킨보톡스'],
+        '주름': ['보톡스', '필러', '써마지', '울쎄라', '리쥬란', '스킨보톡스', '주름보톡스', '이마보톡스', '눈가보톡스', '미간보톡스', '팔자필러', '입술필러', '콜라겐부스터', '쥬베룩', '리즈네', '엑소좀'],
+        '탄력저하': ['써마지', '울쎄라', '인모드', '스킨보톡스', '콜라겐부스터', '리쥬란', '쥬베룩', '볼뉴머', '프로파일로', '엑소좀', '슈링크', '소프웨이브', '올리지오', '폴리뉴클레오타이드'],
+        '볼륨손실': ['필러', '스컬트라', '엘란쎄', '지방이식', '콜라겐부스터', '볼필러', '애교살필러', '이마필러', '관자필러', '쥬베룩', '볼뉴머'],
+        '이중턱': ['지방분해주사', '슈링크', '울쎄라', '실리프팅', '윤곽주사', '턱보톡스', '지방흡입', '인모드', '벨라소닉', '더블로'],
+        '팔자주름': ['필러', '실리프팅', '울쎄라', '보톡스', '팔자필러', '콜라겐부스터', '하이푸', '써마지'],
+        '모공': ['프락셀', '피코슈어', 'CO2레이저', '아쿠아필', '모피어스8', '실펌', '레이저토닝', 'MTS', '마이크로니들', '제네시스', 'IPL', '스킨보톡스', '써마지', '피코토닝'],
+        '기미잡티': ['피코슈어', '레이저토닝', 'IPL', '스타워커', '루비레이저', '큐스위치', '멜라논', '트리플토닝', '클라리티', '엑셀브이', '피코웨이', '피코플러스', '스펙트라', '제네시스'],
+        '피부결': ['아쿠아필', '리쥬란', '엑소좀', '벨벳필', '스킨부스터', '물광주사', 'MTS', '더마펜', '실펌', '제네시스', '레이저토닝', '콜라겐부스터', '연어주사', '쥬베룩'],
+        '피부톤': ['IPL', '레이저토닝', '비타민주사', '글루타치온', '백옥주사', '신데렐라주사', '제네시스', '클라리티', '엑셀브이', '스펙트라'],
+        '홍조': ['브이빔', 'IPL', '엑셀브이', '제네시스', '옐로우레이저', '클라리티', '엑셀브이플러스', '혈관레이저'],
+        '색소침착': ['피코슈어', '레이저토닝', 'IPL', '스타워커', '피코웨이', '루비레이저', '큐스위치', '스펙트라'],
+        '여드름': ['아쿠아필', 'PDT', '압출', '여드름주사', '살리실산필링', '제네시스', 'IPL', '아그네스', '클라리티', '레이저토닝', '스킨스케일링', 'BHA필링'],
+        '여드름흉터': ['프락셀', 'CO2레이저', '모피어스8', '서브시전', '인트라셀', '실펌', 'MTS', '더마펜', '에어젯', 'TCA크로스', '도트필링', '포텐자', '시크릿'],
+        '흉터': ['프락셀', 'CO2레이저', '레이저박피', '실리콘시트', '모피어스8', '인트라셀', '시크릿', '포텐자'],
+        '튼살': ['프락셀', 'CO2레이저', '카복시', '인피니', '실펌', '모피어스8', 'MTS'],
+        '다크서클': ['필러', '리쥬란아이', '지방이식', '카복시', '눈밑필러', '아이리쥬란', '엑소좀', '콜라겐부스터'],
+        '제모': ['의료레이저제모', '소프라노', '젠틀맥스', '클라리티', '다이오드', '알렉산드라이트', 'IPL제모'],
+        '탈모': ['탈모주사', 'PRP', '엑소좀', '두피스케일링', '메조테라피', '미녹시딜', 'HARG', '줄기세포', '두피MTS'],
+        '다한증': ['보톡스', '미라드라이', '다한증보톡스']
+    };
+    
+    // 다운타임 허용에 따른 필터
+    const downtimeFilter = {
+        '없어야함': 0,
+        '당일': 1,
+        '1-2일': 2,
+        '3-4일': 4,
+        '일주일': 7,
+        '상관없음': 30
+    };
+    const maxDowntime = downtimeFilter[downtime] || 30;
+    
+    // 통증 민감도에 따른 필터
+    const painFilter = {
+        '매우민감': 1,
+        '민감': 2,
+        '보통': 3,
+        '괜찮음': 5
+    };
+    const maxPain = painFilter[pain] || 3;
+    
+    // 시술 매칭 및 점수화
+    function scoreTreatment(treatment, isPrimary) {
+        let score = 0;
+        const concerns = isPrimary ? primaryConcerns : secondaryConcerns;
+        const treatmentName = treatment.name || '';
+        
+        // 1. concernToTreatments 매핑 기반 점수 (가장 중요)
+        concerns.forEach(concern => {
+            const mappedTreatments = concernToTreatments[concern] || [];
+            if (mappedTreatments.some(mt => treatmentName.includes(mt) || mt.includes(treatmentName))) {
+                score += isPrimary ? 50 : 25;
+            }
+        });
+        
+        // 2. 효과/타겟 텍스트 매칭 점수
+        concerns.forEach(concern => {
+            const effects = treatment.effects?.primary || [];
+            const targets = treatment.effects?.targets || [];
+            const allEffects = [...effects, ...targets].join(' ').toLowerCase();
+            const concernLower = concern.toLowerCase();
+            
+            if (allEffects.includes(concernLower) || concernLower.includes(treatment.category?.toLowerCase() || '')) {
+                score += isPrimary ? 20 : 10;
+            }
+        });
+        
+        // 3. 카테고리 매칭 (리프팅, 필러 등)
+        const categoryMap = {
+            '처진피부': ['리프팅', 'HIFU', '고주파', '실리프팅'],
+            '주름': ['보톡스', '필러', '리프팅'],
+            '탄력저하': ['리프팅', '고주파', 'HIFU', '스킨부스터'],
+            '볼륨손실': ['필러', '지방이식'],
+            '모공': ['레이저', '필링', '프락셔널'],
+            '기미잡티': ['레이저', '토닝', 'IPL'],
+            '여드름': ['필링', '레이저', 'PDT'],
+            '여드름흉터': ['프락셔널', '레이저', 'MTS']
+        };
+        
+        concerns.forEach(concern => {
+            const categories = categoryMap[concern] || [];
+            if (categories.some(cat => treatment.category?.includes(cat))) {
+                score += isPrimary ? 15 : 8;
+            }
+        });
+        
+        // 4. 시술 타입 선호도 매칭 (새로 추가)
+        if (treatmentType.length > 0 && !treatmentType.includes('상관없음')) {
+            let typeMatch = false;
+            treatmentType.forEach(type => {
+                const matchKeywords = typeToCategory[type] || [];
+                if (matchKeywords.some(kw => treatmentName.includes(kw) || treatment.category?.includes(kw))) {
+                    typeMatch = true;
+                    score += 25;  // 선호 타입 매칭 보너스
+                }
+            });
+            if (!typeMatch) {
+                score -= 15;  // 선호하지 않는 타입 페널티
+            }
+        }
+        
+        // 5. 유지 기간 선호도 매칭 (새로 추가)
+        const durationTreatments = durationToTreatments[duration] || [];
+        if (durationTreatments.some(dt => treatmentName.includes(dt))) {
+            score += 20;  // 선호 유지기간 매칭 보너스
+        }
+        
+        // 6. 우선순위 반영 (새로 추가)
+        if (priority === '효과') {
+            // 고가/강한 시술 선호
+            const minPrice = extractMinPrice(treatment.pricing?.range);
+            if (minPrice >= 50) score += 10;
+        } else if (priority === '편안함') {
+            // 통증 낮은 시술 선호
+            const painLevel = treatment.recovery?.painLevel || 0;
+            if (painLevel <= 2) score += 15;
+            if (painLevel >= 4) score -= 20;
+        } else if (priority === '가성비') {
+            // 가격 대비 효과 좋은 시술
+            const minPrice = extractMinPrice(treatment.pricing?.range);
+            if (minPrice > 0 && minPrice <= 30) score += 15;
+        }
+        
+        // 7. 시술 경험 반영 (새로 추가)
+        if (experience === '처음') {
+            // 초보자에게 쉬운 시술 추천
+            const painLevel = treatment.recovery?.painLevel || 0;
+            if (painLevel <= 2) score += 10;
+            // 복잡한 시술 페널티
+            if (['실리프팅', '지방이식', '지방흡입'].some(t => treatmentName.includes(t))) {
+                score -= 15;
+            }
+        } else if (experience === '자주') {
+            // 경험자에게 다양한 시술 OK
+            score += 5;
+        }
+        
+        // 8. 이전 시술 경험 반영 (새로 추가)
+        if (pastTreatments.length > 0 && !pastTreatments.includes('없음')) {
+            pastTreatments.forEach(past => {
+                // 이전에 해본 시술과 같은 종류면 익숙함 보너스
+                if (treatmentName.includes(past)) {
+                    score += 10;
+                }
+                // 시너지 있는 새로운 시술 추천
+                const synergies = synergyMap[past] || [];
+                if (synergies.some(s => treatmentName.includes(s))) {
+                    score += 15;
+                }
+            });
+        }
+        
+        // 다운타임 체크
+        const downtimeDays = parseDowntime(treatment.recovery?.downtime);
+        if (downtimeDays > maxDowntime) {
+            score -= 50;
+        }
+        
+        // 통증 체크
+        const painLevel = treatment.recovery?.painLevel || 0;
+        if (painLevel > maxPain) {
+            score -= 20;
+        }
+        
+        // 가격 체크
+        const minPrice = extractMinPrice(treatment.pricing?.range);
+        if (minPrice > budget * 0.5) {
+            score -= 10;
+        }
+        
+        return score;
+    }
+    
+    function parseDowntime(str) {
+        if (!str || str === '없음') return 0;
+        const match = str.match(/(\d+)/);
+        return match ? parseInt(match[0]) : 3;
+    }
+    
+    // 시술 시너지 맵 - 함께 받으면 효과적인 조합
+    const synergyMap = {
+        // 리프팅 + 볼륨
+        '울쎄라': ['보톡스', '필러', '스킨보톡스', '리쥬란'],
+        '써마지': ['보톡스', '필러', '스킨보톡스', '인모드'],
+        '슈링크': ['보톡스', '필러', '스킨보톡스'],
+        '실리프팅': ['보톡스', '필러'],
+        '인모드': ['보톡스', '써마지'],
+        
+        // 보톡스/필러 + 피부관리
+        '보톡스': ['필러', '스킨보톡스', '리쥬란', '물광주사'],
+        '필러': ['보톡스', '리쥬란', '스킨보톡스'],
+        '스킨보톡스': ['리쥬란', '물광주사', '아쿠아필'],
+        
+        // 피부결 + 톤
+        '리쥬란': ['물광주사', '레이저토닝', '아쿠아필'],
+        '물광주사': ['리쥬란', '아쿠아필', '레이저토닝'],
+        '아쿠아필': ['리쥬란', '물광주사', '레이저토닝'],
+        
+        // 색소 + 톤
+        '피코슈어': ['레이저토닝', 'IPL', '리쥬란'],
+        '레이저토닝': ['피코슈어', 'IPL', '리쥬란', '아쿠아필'],
+        'IPL': ['레이저토닝', '리쥬란'],
+        
+        // 흉터/모공
+        '프락셀': ['리쥬란', '스킨보톡스', 'CO2레이저'],
+        'CO2레이저': ['리쥬란', '프락셀'],
+        '모피어스8': ['리쥬란', '보톡스'],
+        
+        // 지방/윤곽
+        '지방분해주사': ['고주파', '윤곽주사'],
+        '윤곽주사': ['지방분해주사', '보톡스'],
+        
+        // 홍조
+        '브이빔': ['IPL', '제네시스'],
+        '제네시스': ['리쥬란', '브이빔']
+    };
+    
+    // 모든 시술 점수 계산 (primary + secondary 모두 반영)
+    const scoredTreatments = treatments.map(t => {
+        const primaryScore = scoreTreatment(t, true);
+        const secondaryScore = scoreTreatment(t, false);
+        return {
+            ...t,
+            score: primaryScore + secondaryScore * 0.7,  // secondary 가중치 높임
+            primaryScore,
+            secondaryScore,
+            minPrice: extractMinPrice(t.pricing?.range)
+        };
+    }).filter(t => t.score > 0 && t.minPrice > 0)
+      .sort((a, b) => b.score - a.score);
+    
+    // 부가 고민 전용 시술 (primary=0, secondary>0)
+    const secondaryOnlyTreatments = treatments.map(t => {
+        const secondaryScore = scoreTreatment(t, false);
+        return {
+            ...t,
+            score: secondaryScore,
+            primaryScore: 0,
+            secondaryScore,
+            minPrice: extractMinPrice(t.pricing?.range)
+        };
+    }).filter(t => t.score > 0 && t.minPrice > 0 && !scoredTreatments.some(st => st.name === t.name))
+      .sort((a, b) => b.score - a.score);
+    
+    // 시술에 매칭된 고민 찾기 (더 넓은 매칭)
+    function getMatchedConcerns(treatment) {
+        const matched = [];
+        const treatmentName = treatment.name || '';
+        const category = treatment.category || '';
+        const subcategory = treatment.subcategory || '';
+        const effects = [...(treatment.effects?.primary || []), ...(treatment.effects?.targets || [])].join(' ').toLowerCase();
+        const allText = `${treatmentName} ${category} ${subcategory} ${effects}`.toLowerCase();
+        
+        [...primaryConcerns, ...secondaryConcerns].forEach(concern => {
+            // 1. concernToTreatments 매핑 체크
+            const mappedTreatments = concernToTreatments[concern] || [];
+            if (mappedTreatments.some(mt => treatmentName.includes(mt) || mt.includes(treatmentName))) {
+                matched.push(concern);
+                return;
+            }
+            
+            // 2. 효과/타겟에서 고민 키워드 체크
+            const concernLower = concern.toLowerCase();
+            if (effects.includes(concernLower)) {
+                matched.push(concern);
+                return;
+            }
+            
+            // 3. 카테고리/서브카테고리/시술명 매칭 (확장)
+            const categoryMap = {
+                '처진피부': ['리프팅', 'HIFU', '고주파', '울쎄라', '써마지', '실리프팅', '슈링크', '인모드', '타이트닝'],
+                '주름': ['보톡스', '필러', '리프팅', '주름', '울쎄라', '써마지'],
+                '탄력저하': ['리프팅', '고주파', '스킨부스터', '콜라겐', '탄력', '써마지', '울쎄라', '타이트닝'],
+                '볼륨손실': ['필러', '지방', '볼륨', '스컬트라', '엘란쎄'],
+                '이중턱': ['지방', '윤곽', '턱', '슈링크', '인모드'],
+                '팔자주름': ['필러', '리프팅', '팔자'],
+                '모공': ['레이저', '필링', '프락셔널', '토닝', '모공', '피코'],
+                '기미잡티': ['레이저', '토닝', 'IPL', '피코', '기미', '색소', '멜라닌'],
+                '피부결': ['필링', '스킨부스터', '리쥬란', 'MTS', '레이저', '아쿠아필', '피부결'],
+                '피부톤': ['토닝', 'IPL', '레이저', '백옥', '신데렐라', '글루타치온', '비타민'],
+                '홍조': ['브이빔', 'IPL', '혈관', '홍조', '레이저'],
+                '색소침착': ['토닝', '피코', 'IPL', '색소'],
+                '여드름': ['필링', 'PDT', '레이저', '여드름', '아그네스', '압출'],
+                '여드름흉터': ['프락셀', '프락셔널', 'MTS', 'CO2', '레이저', '흉터', '모피어스', '시크릿'],
+                '흉터': ['프락셀', '프락셔널', 'CO2', '레이저', '흉터', '모피어스'],
+                '튼살': ['프락셀', 'CO2', '카복시', '튼살', 'MTS'],
+                '다크서클': ['필러', '리쥬란', '눈밑', '다크서클', '카복시'],
+                '제모': ['제모', '레이저', '소프라노', '젠틀맥스'],
+                '탈모': ['탈모', 'PRP', '두피', '모발'],
+                '다한증': ['다한증', '미라드라이', '보톡스']
+            };
+            
+            const cats = categoryMap[concern] || [];
+            if (cats.some(c => allText.includes(c.toLowerCase()))) {
+                matched.push(concern);
+            }
+        });
+        
+        return [...new Set(matched)]; // 중복 제거
+    }
+    
+    // 예산 내 조합 생성 (최대 8개, 시너지 고려)
+    function createCombination(name, budgetRatio, strategy, excludeTreatments = new Set()) {
+        const targetBudget = budget * budgetRatio;
+        const combo = { name, treatments: [], totalMin: 0, totalMax: 0 };
+        const usedCategories = new Set();
+        const usedNames = new Set();
+        
+        // 핵심: 고민과 관련있는 시술만 필터링 (score > 20 이상, 제외 목록 제외)
+        const relevantTreatments = scoredTreatments
+            .filter(t => t.score >= 20 && !excludeTreatments.has(t.name));
+        
+        // 전략에 따른 시술 정렬
+        let pool = [...relevantTreatments];
+        
+        if (strategy === 'premium') {
+            // 프리미엄: 가격 높은 순 (단, 점수 30 이상만)
+            pool = pool.filter(t => t.score >= 30);
+            pool.sort((a, b) => b.minPrice - a.minPrice);
+        } else if (strategy === 'value') {
+            // 가성비: 점수/가격 비율
+            pool.sort((a, b) => (b.score / Math.max(b.minPrice, 1)) - (a.score / Math.max(a.minPrice, 1)));
+        } else {
+            // 기본: 점수순
+            pool.sort((a, b) => b.score - a.score);
+        }
+        
+        // 시술 추가 함수
+        function addTreatment(treatment) {
+            combo.treatments.push({
+                ...treatment,
+                matchedConcerns: getMatchedConcerns(treatment)
+            });
+            combo.totalMin += treatment.minPrice;
+            usedCategories.add(treatment.category);
+            usedNames.add(treatment.name);
+            
+            const priceMatch = (treatment.pricing?.range || '').match(/(\d+)/g);
+            if (priceMatch) {
+                combo.totalMax += parseInt(priceMatch[priceMatch.length - 1]) || treatment.minPrice;
+            } else {
+                combo.totalMax += treatment.minPrice;
+            }
+        }
+        
+        // 1단계: 핵심 시술 선택
+        for (const treatment of pool) {
+            if (combo.totalMin >= targetBudget * 0.6) break;
+            if (combo.treatments.length >= 3) break;
+            
+            const newTotal = combo.totalMin + treatment.minPrice;
+            if (newTotal <= targetBudget) {
+                addTreatment(treatment);
+            }
+        }
+        
+        // 2단계: 시너지 시술 추가
+        const addedCore = combo.treatments.map(t => t.name);
+        const synergyPool = relevantTreatments.filter(t => {
+            if (usedNames.has(t.name)) return false;
+            return addedCore.some(coreName => {
+                const synergies = synergyMap[coreName] || [];
+                return synergies.includes(t.name);
+            });
+        });
+        
+        for (const treatment of synergyPool) {
+            if (combo.totalMin >= targetBudget * 0.9) break;
+            if (combo.treatments.length >= 8) break;
+            
+            const newTotal = combo.totalMin + treatment.minPrice;
+            if (newTotal <= targetBudget) {
+                addTreatment(treatment);
+            }
+        }
+        
+        // 3단계: 남은 예산으로 추가 시술 (핵심 고민)
+        const remainingPool = pool.filter(t => !usedNames.has(t.name));
+        for (const treatment of remainingPool) {
+            if (combo.totalMin >= targetBudget * 0.85) break;
+            if (combo.treatments.length >= 6) break;
+            
+            const newTotal = combo.totalMin + treatment.minPrice;
+            if (newTotal <= targetBudget) {
+                addTreatment(treatment);
+            }
+        }
+        
+        // 4단계: 부가 고민 시술 추가 (secondary concerns)
+        if (secondaryConcerns.length > 0) {
+            const secondaryPool = [...secondaryOnlyTreatments, ...scoredTreatments.filter(t => t.secondaryScore > 0)]
+                .filter(t => !usedNames.has(t.name) && !excludeTreatments.has(t.name))
+                .sort((a, b) => b.secondaryScore - a.secondaryScore);
+            
+            for (const treatment of secondaryPool) {
+                if (combo.totalMin >= targetBudget * 0.95) break;
+                if (combo.treatments.length >= 8) break;
+                
+                const newTotal = combo.totalMin + treatment.minPrice;
+                if (newTotal <= targetBudget) {
+                    addTreatment(treatment);
+                }
+            }
+        }
+        
+        return { combo, usedNames };
+    }
+    
+    // 3가지 조합 생성 (중복 최소화)
+    const { combo: comboA, usedNames: usedA } = createCombination('프리미엄 집중 케어', 1.0, 'premium');
+    
+    // B는 A에서 사용한 고가 시술 일부 제외
+    const expensiveFromA = new Set(
+        comboA.treatments
+            .filter(t => t.minPrice >= 30)
+            .slice(0, 2)
+            .map(t => t.name)
+    );
+    const { combo: comboB, usedNames: usedB } = createCombination('스마트 밸런스', 0.7, 'value', expensiveFromA);
+    
+    // C는 A, B의 고가 시술 제외
+    const expensiveFromAB = new Set([
+        ...comboA.treatments.filter(t => t.minPrice >= 40).map(t => t.name),
+        ...comboB.treatments.filter(t => t.minPrice >= 40).map(t => t.name)
+    ]);
+    let { combo: comboC } = createCombination('효율 중심 플랜', 0.5, 'value', expensiveFromAB);
+    
+    // B와 C가 완전히 동일한지 체크 (시술 목록 비교)
+    const getBNames = comboB.treatments.map(t => t.name).sort().join(',');
+    const getCNames = comboC.treatments.map(t => t.name).sort().join(',');
+    
+    if (getBNames === getCNames && comboC.treatments.length > 1) {
+        // C에서 가장 비싼 시술 1개 제거하여 차별화
+        const sorted = [...comboC.treatments].sort((a, b) => b.minPrice - a.minPrice);
+        const toRemove = sorted[0];
+        comboC.treatments = comboC.treatments.filter(t => t.name !== toRemove.name);
+        comboC.totalMin -= toRemove.minPrice;
+        const priceMatch = (toRemove.pricing?.range || '').match(/(\d+)/g);
+        if (priceMatch) {
+            comboC.totalMax -= parseInt(priceMatch[priceMatch.length - 1]) || toRemove.minPrice;
+        } else {
+            comboC.totalMax -= toRemove.minPrice;
+        }
+    }
+    
+    // 가격 차이 보장 (A > B > C)
+    let combos = [comboA, comboB, comboC];
+    
+    // 가격순 정렬
+    combos.sort((a, b) => b.totalMin - a.totalMin);
+    
+    // 이름 재할당
+    const comboLabels = [
+        { name: '프리미엄 집중 케어', tip: '최고의 효과를 원하시는 분께 추천드립니다.' },
+        { name: '스마트 밸런스', tip: '가성비와 효과의 균형을 원하시는 분께 추천드립니다.' },
+        { name: '효율 중심 플랜', tip: '핵심 고민에 집중하고 싶으신 분께 추천드립니다.' }
+    ];
+    
+    // 결과 포맷팅
+    const combinations = combos.map((combo, i) => {
+        return {
+            name: comboLabels[i].name,
+            totalPrice: combo.totalMin === combo.totalMax ? 
+                `약 ${combo.totalMin}만원` : 
+                `약 ${combo.totalMin}~${combo.totalMax}만원`,
+            budgetUsage: Math.round((combo.totalMin / budget) * 100) + '%',
+            tip: comboLabels[i].tip,
+            treatments: combo.treatments.map(t => ({
+                name: t.name,
+                category: t.category,
+                price: t.pricing?.range || '',
+                sessions: t.procedure?.sessions || '',
+                reason: getRecommendReason(t, primaryConcerns, secondaryConcerns),
+                matchedConcerns: t.matchedConcerns || [],
+                painLevel: t.recovery?.painLevel || 0,
+                downtime: t.recovery?.downtime || '없음'
+            }))
+        };
+    });
+    
+    // 모든 추천 시술 상세정보 수집
+    const allTreatmentNames = new Set();
+    combinations.forEach(combo => {
+        combo.treatments.forEach(t => allTreatmentNames.add(t.name));
+    });
+    
+    const treatmentDetails = [];
+    allTreatmentNames.forEach(name => {
+        const t = treatments.find(tr => tr.name === name);
+        if (t) {
+            const review = t.review || {};
+            let mechanismText = '';
+            if (typeof t.mechanism === 'object') {
+                mechanismText = t.mechanism?.detailed || t.mechanism?.summary || '';
+            } else {
+                mechanismText = t.mechanism || '';
+            }
+            
+            treatmentDetails.push({
+                name: t.name,
+                fullName: t.fullName || t.name,
+                brand: t.brand || '',
+                category: t.category || '',
+                priceRange: t.pricing?.range || '',
+                sessions: t.procedure?.sessions || '',
+                anesthesia: t.procedure?.anesthesia || '',
+                description: review.summary || t.description || '',
+                mechanism: mechanismText,
+                expectedEffects: t.effects?.primary || [],
+                secondaryEffects: t.effects?.secondary || [],
+                pros: review.likes || t.pros || [],
+                cons: review.dislikes || t.cons || [],
+                tips: review.tips || [],
+                overall: review.overall || '',
+                painLevel: t.recovery?.painLevel || 0,
+                downtime: t.recovery?.downtime || '없음'
+            });
+        }
+    });
+    
+    // 인사말 생성
+    const concernText = primaryConcerns.slice(0, 2).join(', ');
+    const greeting = `${concernText} 고민을 중심으로 분석해드렸어요. ${budget}만원 예산 내에서 최적의 조합을 찾아봤습니다.`;
+    
+    // 분석 생성
+    const analysis = `주요 고민인 ${primaryConcerns.join(', ')}에 집중하여 ${scoredTreatments.length}개의 시술을 검토했습니다. 다운타임 ${downtime}, 통증 민감도 ${pain} 조건을 고려하여 총 3가지 조합을 추천드립니다.`;
+    
+    return {
+        greeting,
+        analysis,
+        combinations,
+        recommendation: `세 가지 조합 모두 예산 내에서 효과적인 플랜입니다. A는 최대 효과, B는 균형, C는 효율을 중시한 조합이니 상황에 맞게 선택하세요.`,
+        tips: [
+            '첫 상담 시 여러 병원을 비교해보세요.',
+            '패키지 구매 시 10~20% 할인 가능합니다.',
+            '시술 전 2주간 레티놀, 필링 제품을 중단하세요.'
+        ],
+        treatmentDetails,
+        priceGuide: {
+            note: "가격은 병원, 지역, 프로모션에 따라 달라질 수 있습니다.",
+            negotiationTip: "첫 방문 시 상담만 받고 여러 병원 비교 후 결정하세요.",
+            packageTip: "3회 이상 패키지로 구매하면 10-20% 할인받을 수 있습니다."
+        },
+        precautions: {
+            before: ["시술 2주 전부터 레티놀, 필링 제품 중단", "시술 당일 음주 금지", "아스피린 등 혈액 응고제 복용 시 의사에게 알리기"],
+            after: ["시술 부위 자외선 차단 철저히", "시술 후 2-3일간 사우나, 격렬한 운동 피하기", "충분한 수분 섭취와 보습"],
+            emergency: "심한 붓기, 발적, 통증 시 즉시 시술 병원에 연락하세요."
+        }
+    };
+}
+
+function getRecommendReason(treatment, primary, secondary) {
+    const effects = treatment.effects?.primary || [];
+    const matchedPrimary = primary.filter(c => effects.some(e => e.includes(c) || c.includes(e)));
+    const matchedSecondary = secondary.filter(c => effects.some(e => e.includes(c) || c.includes(e)));
+    
+    if (matchedPrimary.length > 0) {
+        return `${matchedPrimary[0]} 개선에 효과적인 ${treatment.category} 시술입니다.`;
+    } else if (matchedSecondary.length > 0) {
+        return `${matchedSecondary[0]} 개선을 함께 기대할 수 있습니다.`;
+    } else {
+        return `${treatment.category} 효과로 전반적인 피부 개선에 도움됩니다.`;
     }
 }
 
@@ -1532,208 +2378,200 @@ function displayResult(response) {
     document.getElementById('consultResult').classList.remove('hidden');
     
     const userData = consultState.data;
-    const analysis = response.analysis || '';
+    const primaryConcerns = userData.primaryConcerns || [];
+    const secondaryConcerns = userData.secondaryConcerns || [];
     const tips = response.tips || [];
-    const priceGuide = response.priceGuide || {};
     const precautions = response.precautions || {};
     
     const html = `
-        <div class="report-container">
-            <div class="report-header">
-                <h2 class="report-title">맞춤 시술 상담 리포트</h2>
-                <p class="report-subtitle">AI 상담사가 분석한 고객님만을 위한 추천</p>
+        <div class="report-container-v2">
+            <!-- 헤더 -->
+            <div class="report-header-v2">
+                <span class="report-badge">ANALYSIS COMPLETE</span>
+                <h1 class="report-title-v2">맞춤 시술 리포트</h1>
+                <p class="report-desc">${treatments.length}개 시술 DB 분석 · ${getTotalTreatments(response.combinations)}개 시술 추천 · ${response.combinations?.length || 0}개 조합 제안</p>
             </div>
             
-            <div class="report-summary-box">
-                <div class="report-summary-title">📊 상담 요약</div>
-                <div class="report-summary-grid">
-                    <div class="summary-item">
-                        <div class="summary-label">연령대</div>
-                        <div class="summary-value">${userData.age || '-'}</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">주요 고민</div>
-                        <div class="summary-value">${userData.concerns?.slice(0,2).join(', ') || '-'}</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">설정 예산</div>
-                        <div class="summary-value">${userData.budget ? userData.budget + '만원' : '-'}</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">총 제안 금액</div>
-                        <div class="summary-value highlight">${getPriceRange(response.combinations)}</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">다운타임</div>
-                        <div class="summary-value">${userData.downtime || '-'}</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">추천 시술</div>
-                        <div class="summary-value">${getTotalTreatments(response.combinations)}종</div>
-                    </div>
+            <!-- 분석 요약 3열 -->
+            <div class="analysis-summary">
+                <div class="summary-card">
+                    <h4>요청 조건</h4>
+                    <div class="summary-row"><span>연령</span><strong>${userData.age || '-'}</strong></div>
+                    <div class="summary-row"><span>예산</span><strong>${userData.budget ? userData.budget + '만원' : '-'}</strong></div>
+                    <div class="summary-row"><span>다운타임</span><strong>${userData.downtime || '-'}</strong></div>
+                    <div class="summary-row"><span>통증</span><strong>${userData.pain || '-'}</strong></div>
                 </div>
-            </div>
-            
-            <div class="report-section">
-                <h3 class="report-section-title">💬 상담사 인사</h3>
-                <div class="report-greeting">
-                    <p>${response.greeting || ''}</p>
-                </div>
-            </div>
-            
-            ${analysis ? `
-            <div class="report-section">
-                <h3 class="report-section-title">🔍 피부 분석</h3>
-                <div class="analysis-box">
-                    <p>${typeof analysis === 'string' ? analysis : analysis.summary || ''}</p>
-                </div>
-            </div>
-            ` : ''}
-            
-            <div class="report-section">
-                <h3 class="report-section-title">
-                    🎯 맞춤 시술 조합 
-                    <span class="badge">${response.combinations?.length || 0}가지 제안</span>
-                </h3>
                 
-                <div class="combo-list">
+                <div class="summary-card highlight">
+                    <h4>우선순위</h4>
+                    ${primaryConcerns.length > 0 ? `
+                    <div class="concern-group">
+                        <span class="concern-label primary">핵심</span>
+                        <div class="concern-tags">${primaryConcerns.map(c => `<span class="ctag primary">${c}</span>`).join('')}</div>
+                    </div>
+                    ` : ''}
+                    ${secondaryConcerns.length > 0 ? `
+                    <div class="concern-group">
+                        <span class="concern-label secondary">부가</span>
+                        <div class="concern-tags">${secondaryConcerns.map(c => `<span class="ctag secondary">${c}</span>`).join('')}</div>
+                    </div>
+                    ` : ''}
+                </div>
+                
+                <div class="summary-card result">
+                    <h4>분석 결과</h4>
+                    <div class="result-big">
+                        <span class="result-price">${getPriceRange(response.combinations)}</span>
+                        <span class="result-label">예상 비용 범위</span>
+                    </div>
+                    <div class="result-meta">
+                        <span>${getTotalTreatments(response.combinations)}개 시술</span>
+                        <span>3개 플랜</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI 코멘트 -->
+            <div class="ai-comment-v2">
+                <div class="comment-content">
+                    <p>${response.greeting || ''}</p>
+                    <p class="sub">${response.analysis || ''}</p>
+                </div>
+            </div>
+            
+            <!-- 3가지 조합 -->
+            <div class="section-v2">
+                <div class="section-header">
+                    <h3>맞춤 시술 조합</h3>
+                    <span class="section-badge">3가지 플랜</span>
+                </div>
+                
+                <div class="combo-grid-v2">
                 ${response.combinations?.map((combo, i) => {
-                    // 시술 목록이 없으면 빈 배열
-                    const treatments = combo.treatments || [];
-                    if (treatments.length === 0) return '';
-                    
-                    const labels = ['A', 'B', 'C', 'D', 'E'];
-                    const label = labels[i] || (i + 1);
-                    const colorClass = ['combo-a', 'combo-b', 'combo-c'][i] || '';
-                    
+                    const txList = combo.treatments || [];
+                    if (txList.length === 0) return '';
+                    const labels = ['A', 'B', 'C'];
+                    const themes = ['gold', 'navy', 'gray'];
                     return `
-                    <div class="combo-card ${colorClass}">
-                        <div class="combo-header">
-                            <div class="combo-left">
-                                <span class="combo-label">${label}</span>
-                                <div class="combo-title-wrap">
-                                    <h4 class="combo-name">${combo.name || '조합 ' + label}</h4>
-                                    ${combo.tip ? `<p class="combo-desc">${combo.tip}</p>` : ''}
-                                </div>
-                            </div>
-                            <div class="combo-right">
-                                <div class="combo-price">${combo.totalPrice || combo.price || ''}</div>
-                                ${combo.budgetUsage ? `<div class="combo-budget">예산의 ${combo.budgetUsage}</div>` : ''}
+                    <div class="combo-card-v2 ${themes[i]}">
+                        <div class="combo-top">
+                            <span class="combo-letter">${labels[i]}</span>
+                            <div class="combo-info-v2">
+                                <h4>${combo.name || '플랜 ' + labels[i]}</h4>
+                                <span class="combo-price-v2">${combo.totalPrice || combo.price || ''}</span>
                             </div>
                         </div>
-                        
-                        <div class="combo-treatments">
-                            ${treatments.map((t, ti) => `
-                                <div class="combo-treatment-item">
-                                    <div class="cti-num">${ti + 1}</div>
-                                    <div class="cti-content">
-                                        <div class="cti-main">
-                                            <span class="cti-name">${t.name || ''}</span>
-                                            ${t.category ? `<span class="cti-category">${t.category}</span>` : ''}
-                                        </div>
-                                        ${t.reason ? `<p class="cti-reason">${t.reason}</p>` : ''}
-                                        <div class="cti-meta">
-                                            <span class="cti-price">${t.price || ''}</span>
-                                            ${t.sessions ? `<span class="cti-sessions">${t.sessions}</span>` : ''}
-                                            ${t.painLevel ? `<span class="cti-pain">통증 ${'●'.repeat(Math.min(t.painLevel, 5))}${'○'.repeat(Math.max(5-t.painLevel, 0))}</span>` : ''}
-                                            ${t.downtime ? `<span class="cti-down">회복 ${t.downtime}</span>` : ''}
-                                        </div>
+                        ${combo.tip ? `<p class="combo-tip-v2">${combo.tip}</p>` : ''}
+                        <ul class="combo-list-v2">
+                            ${txList.map(t => `
+                                <li>
+                                    <div class="tx-info-v2">
+                                        <span class="tx-name-v2">${t.name}</span>
+                                        ${t.matchedConcerns?.length ? `
+                                            <div class="tx-concerns">
+                                                ${t.matchedConcerns.map(c => {
+                                                    const isPrimary = primaryConcerns.includes(c);
+                                                    return `<span class="concern-tag ${isPrimary ? 'primary' : 'secondary'}">${c}</span>`;
+                                                }).join('')}
+                                            </div>
+                                        ` : ''}
                                     </div>
-                                </div>
+                                    <span class="tx-price-v2">${t.price || ''}</span>
+                                </li>
                             `).join('')}
-                        </div>
+                        </ul>
                     </div>
                     `;
-                }).join('') || '<p class="no-data">추천 조합을 불러올 수 없습니다.</p>'}
+                }).join('') || ''}
                 </div>
             </div>
             
+            <!-- 종합 추천 -->
             ${response.recommendation ? `
-            <div class="report-section">
-                <h3 class="report-section-title">🎯 종합 추천</h3>
-                <div class="recommendation-box overall">
-                    <p>${response.recommendation}</p>
-                </div>
+            <div class="recommendation-v2">
+                <strong>종합 추천</strong>
+                <p>${response.recommendation}</p>
             </div>
             ` : ''}
             
+            <!-- 시술 상세 -->
             ${response.treatmentDetails?.length ? `
-            <div class="report-section">
-                <h3 class="report-section-title">📖 추천 시술 상세 가이드 <span class="badge">${response.treatmentDetails.length}개 시술</span></h3>
-                <p class="section-desc">조합 A, B, C에 포함된 모든 시술에 대한 상세 정보입니다.</p>
-                <div class="treatment-details-list">
-                    ${response.treatmentDetails.map((detail, idx) => `
-                        <div class="detail-card-simple">
-                            <div class="detail-header-simple">
-                                <div class="detail-header-left">
-                                    <span class="detail-num">${idx + 1}</span>
-                                    <div class="detail-title-info">
-                                        <h4>${detail.name}</h4>
-                                        <div class="detail-tags">
-                                            ${detail.category ? `<span class="detail-tag">${detail.category}</span>` : ''}
-                                            ${detail.brand ? `<span class="detail-tag brand">${detail.brand}</span>` : ''}
-                                        </div>
+            <div class="section-v2">
+                <div class="section-header">
+                    <h3>시술 상세 정보</h3>
+                    <span class="section-badge">${response.treatmentDetails.length}개</span>
+                </div>
+                
+                <div class="detail-list-v2">
+                    ${response.treatmentDetails.map((d, idx) => `
+                        <div class="detail-card-v3">
+                            <!-- 헤더: 번호, 이름, 카테고리, 가격 -->
+                            <div class="dc-header">
+                                <div class="dc-title-area">
+                                    <span class="dc-number">${idx + 1}</span>
+                                    <div class="dc-title-info">
+                                        <h4 class="dc-name">${d.name}</h4>
+                                        <span class="dc-meta">${d.category || ''}${d.brand ? ' · ' + d.brand : ''}</span>
                                     </div>
                                 </div>
-                                ${detail.priceRange ? `<span class="detail-price-badge">${detail.priceRange}</span>` : ''}
+                                <span class="dc-price">${d.priceRange || ''}</span>
                             </div>
                             
-                            <div class="detail-stats-row">
-                                ${detail.sessions ? `<div class="stat-item"><span class="stat-label">횟수</span><span class="stat-value">${detail.sessions}</span></div>` : ''}
-                                ${detail.downtime ? `<div class="stat-item"><span class="stat-label">회복</span><span class="stat-value">${detail.downtime}</span></div>` : ''}
-                                ${detail.painLevel ? `<div class="stat-item"><span class="stat-label">통증</span><span class="stat-value">${'●'.repeat(detail.painLevel)}${'○'.repeat(5-detail.painLevel)}</span></div>` : ''}
-                                ${detail.anesthesia ? `<div class="stat-item"><span class="stat-label">마취</span><span class="stat-value">${detail.anesthesia}</span></div>` : ''}
+                            <!-- 핵심 정보 바 -->
+                            <div class="dc-quick-stats">
+                                ${d.sessions ? `<span>횟수 <b>${d.sessions}</b></span>` : ''}
+                                ${d.downtime ? `<span>회복 <b>${d.downtime}</b></span>` : ''}
+                                ${d.painLevel ? `<span>통증 <b>${'●'.repeat(d.painLevel)}${'○'.repeat(5-d.painLevel)}</b></span>` : ''}
                             </div>
                             
-                            ${detail.description ? `
-                            <div class="detail-desc-box">
-                                <p>${detail.description}</p>
-                            </div>
-                            ` : ''}
+                            <!-- 한줄 요약 -->
+                            ${d.description ? `<p class="dc-summary">${d.description}</p>` : ''}
                             
-                            ${detail.mechanism ? `
-                            <div class="detail-mechanism-box">
-                                <span class="box-label">작용 원리</span>
-                                <p>${detail.mechanism}</p>
+                            <!-- 작용 원리 -->
+                            ${d.mechanism ? `
+                            <div class="dc-box mechanism">
+                                <span class="dc-box-label">작용 원리</span>
+                                <p>${d.mechanism}</p>
                             </div>
                             ` : ''}
                             
-                            ${detail.expectedEffects?.length ? `
-                            <div class="detail-effects-row">
-                                <span class="effects-label">주요 효과</span>
-                                <div class="effect-tags-simple">
-                                    ${detail.expectedEffects.map(e => `<span class="effect-tag-simple">${e}</span>`).join('')}
-                                </div>
+                            <!-- 기대 효과 태그 -->
+                            ${d.expectedEffects?.length ? `
+                            <div class="dc-effects">
+                                ${d.expectedEffects.map(e => `<span class="dc-effect-tag">${e}</span>`).join('')}
                             </div>
                             ` : ''}
                             
-                            ${detail.pros?.length || detail.cons?.length ? `
-                            <div class="detail-pros-cons-simple">
-                                ${detail.pros?.length ? `
-                                <div class="pros-box">
-                                    <span class="box-title">👍 장점</span>
-                                    <ul>${detail.pros.map(p => `<li>${p}</li>`).join('')}</ul>
+                            <!-- 장단점 (2열) -->
+                            ${d.pros?.length || d.cons?.length ? `
+                            <div class="dc-pros-cons">
+                                ${d.pros?.length ? `
+                                <div class="dc-pc-col pros">
+                                    <strong>장점</strong>
+                                    <ul>${d.pros.map(p => `<li>${p}</li>`).join('')}</ul>
                                 </div>
                                 ` : ''}
-                                ${detail.cons?.length ? `
-                                <div class="cons-box">
-                                    <span class="box-title">👎 단점</span>
-                                    <ul>${detail.cons.map(c => `<li>${c}</li>`).join('')}</ul>
+                                ${d.cons?.length ? `
+                                <div class="dc-pc-col cons">
+                                    <strong>단점</strong>
+                                    <ul>${d.cons.map(c => `<li>${c}</li>`).join('')}</ul>
                                 </div>
                                 ` : ''}
                             </div>
                             ` : ''}
                             
-                            ${detail.tips?.length ? `
-                            <div class="detail-tips-box">
-                                <span class="box-title">💡 시술 팁</span>
-                                <ul>${detail.tips.map(t => `<li>${t}</li>`).join('')}</ul>
+                            <!-- 시술 팁 -->
+                            ${d.tips?.length ? `
+                            <div class="dc-box tips">
+                                <span class="dc-box-label">시술 팁</span>
+                                <ul>${d.tips.map(t => `<li>${t}</li>`).join('')}</ul>
                             </div>
                             ` : ''}
                             
-                            ${detail.overall ? `
-                            <div class="detail-overall-box">
-                                <p>${detail.overall}</p>
+                            <!-- 총평 (하단 강조) -->
+                            ${d.overall ? `
+                            <div class="dc-overall">
+                                <p>${d.overall}</p>
                             </div>
                             ` : ''}
                         </div>
@@ -1742,96 +2580,86 @@ function displayResult(response) {
             </div>
             ` : ''}
             
-            ${priceGuide.note || priceGuide.negotiationTip ? `
-            <div class="report-section">
-                <h3 class="report-section-title">💰 가격 가이드</h3>
-                <div class="price-guide-box">
-                    ${priceGuide.note ? `<p>${priceGuide.note}</p>` : ''}
-                    ${priceGuide.negotiationTip ? `<p>💡 <strong>협상 팁:</strong> ${priceGuide.negotiationTip}</p>` : ''}
-                    ${priceGuide.packageTip ? `<p>🎁 <strong>패키지 팁:</strong> ${priceGuide.packageTip}</p>` : ''}
+            <!-- 팁 -->
+            ${tips.length > 0 ? `
+            <div class="section-v2">
+                <div class="section-header">
+                    <h3>전문가 팁</h3>
+                </div>
+                <div class="tips-v2">
+                    ${tips.map((tip, i) => `<div class="tip-item"><span>${i + 1}</span><p>${tip}</p></div>`).join('')}
                 </div>
             </div>
             ` : ''}
             
+            <!-- 주의사항 -->
             ${precautions.before?.length || precautions.after?.length ? `
-            <div class="report-section">
-                <h3 class="report-section-title">📋 시술 전후 주의사항</h3>
-                <div class="precautions-grid">
-                    ${precautions.before?.length ? `
-                    <div class="precaution-box before">
-                        <h4>시술 전</h4>
-                        <ul>
-                            ${precautions.before.map(p => `<li>${p}</li>`).join('')}
-                        </ul>
-                    </div>
-                    ` : ''}
-                    ${precautions.after?.length ? `
-                    <div class="precaution-box after">
-                        <h4>시술 후</h4>
-                        <ul>
-                            ${precautions.after.map(p => `<li>${p}</li>`).join('')}
-                        </ul>
-                    </div>
-                    ` : ''}
+            <div class="section-v2">
+                <div class="section-header">
+                    <h3>시술 전후 주의사항</h3>
                 </div>
-                ${precautions.emergency ? `
-                <div class="emergency-box">
-                    <strong>🚨 응급 상황:</strong> ${precautions.emergency}
-                </div>
-                ` : ''}
-            </div>
-            ` : ''}
-            
-            ${tips?.length ? `
-            <div class="report-section">
-                <h3 class="report-section-title">💡 전문가 팁</h3>
-                <div class="tips-box">
-                    <ul>
-                        ${tips.map(tip => `<li>${tip}</li>`).join('')}
-                    </ul>
+                <div class="precaution-v2">
+                    ${precautions.before?.length ? `<div class="prec-col"><strong>시술 전</strong><ul>${precautions.before.map(p => `<li>${p}</li>`).join('')}</ul></div>` : ''}
+                    ${precautions.after?.length ? `<div class="prec-col"><strong>시술 후</strong><ul>${precautions.after.map(p => `<li>${p}</li>`).join('')}</ul></div>` : ''}
                 </div>
             </div>
             ` : ''}
             
-            ${response.closing ? `
-            <div class="report-section closing">
-                <p>${response.closing}</p>
+            <!-- 액션 -->
+            <div class="report-actions-v2">
+                <button class="btn-secondary" onclick="resetConsultation()">다시 상담받기</button>
+                <button class="btn-primary" onclick="window.print()">리포트 저장</button>
             </div>
-            ` : ''}
             
-            <div class="report-actions">
-                <button class="btn-retry" onclick="backToConsultWizard()">← 다시 상담받기</button>
-                <button class="btn-print" onclick="window.print()">🖨️ 인쇄하기</button>
+            <!-- 푸터 -->
+            <div class="report-footer-v2">
+                <p>본 리포트는 DB 기반 알고리즘 분석 결과이며, 실제 시술은 전문의 상담 후 결정하세요.</p>
             </div>
         </div>
     `;
     
-    document.getElementById('resultContent').innerHTML = html;
+    document.getElementById('consultResult').innerHTML = html;
 }
-
 function resetConsultation() {
     consultState = {
         currentStep: 1,
-        totalSteps: 6,
+        totalSteps: 7,
         data: {
             age: null,
             experience: null,
             skinType: null,
+            primaryConcerns: [],
+            secondaryConcerns: [],
             concerns: [],
-            concernsExtra: '',
             areas: [],
             budget: null,
             downtime: null,
             pain: null,
-            anesthesia: null,
-            event: '',
-            extra: ''
+            treatmentType: ['상관없음'],  // 기본값
+            duration: null,
+            priority: null,
+            frequency: null,
+            pastTreatments: []
         }
     };
     
     document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
     document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('selected'));
-    document.querySelectorAll('.text-input').forEach(input => input.value = '');
+    document.querySelectorAll('.concern-chip').forEach(chip => chip.classList.remove('in-primary', 'in-secondary'));
+    
+    // "상관없음" 버튼 다시 선택 상태로
+    const defaultTypeBtn = document.querySelector('.option-grid[data-field="treatmentType"] .option-btn[data-value="상관없음"]');
+    if (defaultTypeBtn) defaultTypeBtn.classList.add('selected');
+    
+    // 드롭존 초기화
+    ['primaryConcerns', 'secondaryConcerns'].forEach(id => {
+        const zone = document.getElementById(id);
+        if (zone) {
+            zone.querySelectorAll('.concern-chip').forEach(c => c.remove());
+            const placeholder = zone.querySelector('.dropzone-placeholder');
+            if (placeholder) placeholder.style.display = 'block';
+        }
+    });
     
     goToStep(1);
     
