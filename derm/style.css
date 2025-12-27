@@ -3381,7 +3381,7 @@ textarea.text-input.tall {
 /* Checklist Box */
 .checklist-box {
     background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    border: none;
     border-radius: 10px;
     padding: 16px 20px;
 }
@@ -5334,7 +5334,7 @@ textarea.text-input.tall {
     background: #f9fafb;
     padding: 8px 16px;
     border-radius: 8px;
-    border: 1px solid #e5e7eb;
+    border: none;
 }
 
 /* Stats Row */
@@ -5983,7 +5983,7 @@ textarea.text-input.tall {
 
 .priority-box.secondary {
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    border: 1px solid #e2e8f0;
+    border: none;
 }
 
 .priority-header {
@@ -6780,10 +6780,18 @@ textarea.text-input.tall {
 
 /* Result card */
 .summary-card.result {
-    text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+}
+
+.summary-card.result h4 {
+    text-align: left;
+}
+
+.summary-card.result .result-big,
+.summary-card.result .result-meta {
+    text-align: center;
 }
 
 .result-big {
@@ -8826,7 +8834,7 @@ textarea.text-input.tall {
     background: #f8fafc;
     border-radius: 10px;
     padding: 14px 16px;
-    border: 1px solid #e5e7eb;
+    border: none;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -8908,7 +8916,7 @@ textarea.text-input.tall {
     padding: 16px;
     background: #f8fafc;
     border-radius: 10px;
-    border: 1px solid #e5e7eb;
+    border: none;
 }
 
 .synergy-title-row {
@@ -8984,7 +8992,7 @@ textarea.text-input.tall {
     padding: 16px;
     background: #f8fafc;
     border-radius: 10px;
-    border: 1px solid #e5e7eb;
+    border: none;
 }
 
 .area-detail-header {
