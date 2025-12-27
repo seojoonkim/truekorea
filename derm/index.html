@@ -27,6 +27,9 @@
                 <button class="view-tab" data-view="filter">카드 뷰</button>
                 <button class="view-tab" data-view="table">테이블 뷰</button>
             </nav>
+            
+            <!-- 균형용 빈 공간 -->
+            <div class="header-right"></div>
         </header>
 
         <!-- Main Content -->
@@ -61,7 +64,7 @@
                             </div>
                             <div class="stat-divider"></div>
                             <div class="stat-item">
-                                <span class="stat-num">196</span>
+                                <span class="stat-num" id="treatmentCount">--</span>
                                 <span class="stat-label">검증된 시술 DB</span>
                             </div>
                         </div>
@@ -94,7 +97,7 @@
                             <div class="landing-card" onclick="switchToView('filter')">
                                 <span class="card-icon">📋</span>
                                 <span class="card-title">전체 시술 검색</span>
-                                <p class="card-desc-small">196개 시술 정보를<br>자유롭게 비교하고 검색</p>
+                                <p class="card-desc-small"><span class="dynamic-count"></span>개 시술 정보를<br>자유롭게 비교하고 검색</p>
                             </div>
                         </div>
                         
@@ -112,7 +115,7 @@
                                 추천 엔진과 시술 데이터베이스를 개발했습니다.
                             </p>
                             <p class="trust-closing">
-                                이 데이터를 바탕으로 <strong>196개의 검증된 시술 정보</strong>를 정리했습니다.<br>
+                                이 데이터를 바탕으로 <strong><span class="dynamic-count"></span>개의 검증된 시술 정보</strong>를 정리했습니다.<br>
                                 이제 미리 준비하고, 주도적으로 상담받으세요.
                             </p>
                         </div>
@@ -184,15 +187,6 @@
                                     </div>
                                 </div>
                                 <div class="question-group">
-                                    <label class="question-label">피부과 시술 경험</label>
-                                    <div class="option-grid cols-4">
-                                        <button class="option-btn" data-field="experience" data-value="처음">처음이에요</button>
-                                        <button class="option-btn" data-field="experience" data-value="1-2회">1~2번 해봤어요</button>
-                                        <button class="option-btn" data-field="experience" data-value="3-5회">3~5번 정도</button>
-                                        <button class="option-btn" data-field="experience" data-value="자주">자주 받아요 (6회+)</button>
-                                    </div>
-                                </div>
-                                <div class="question-group">
                                     <label class="question-label">피부 타입</label>
                                     <div class="option-grid cols-5">
                                         <button class="option-btn" data-field="skinType" data-value="건성">건성 (당김)</button>
@@ -209,7 +203,7 @@
                         <div class="consult-step" data-step="2">
                             <div class="step-message">
                                 <p>피부 고민을 선택해 주세요. <strong>핵심 고민</strong>과 <strong>부가 고민</strong>을 구분해주시면 더 정확한 시술 조합을 제안드릴 수 있습니다.</p>
-                                <p>복합적인 고민은 단일 시술보다 조합 치료가 효과적인 경우가 많습니다.</p>
+                                <p class="step-hint-small">💡 처음 3개는 핵심 고민, 이후는 부가 고민으로 자동 분류됩니다. 드래그 앤 드롭으로 자유롭게 이동할 수 있어요.</p>
                             </div>
                             <div class="step-questions">
                                 <div class="priority-selector">
@@ -262,10 +256,9 @@
                                     <div class="priority-targets">
                                         <div class="priority-box primary">
                                             <div class="priority-header">
-                                                <span class="priority-icon">★</span>
-                                                <h4>가장 해결하고 싶은 고민</h4>
+                                                <h4>핵심 <span class="header-badge">최대 3개</span></h4>
                                             </div>
-                                            <p class="priority-hint">예산의 60% 이상 집중</p>
+                                            <p class="priority-hint">예산의 80% 이상 집중 · 드래그로 이동 가능</p>
                                             <div class="priority-dropzone" id="primaryConcerns">
                                                 <span class="dropzone-placeholder">고민을 클릭하면 여기에 추가됩니다</span>
                                             </div>
@@ -273,12 +266,11 @@
                                         
                                         <div class="priority-box secondary">
                                             <div class="priority-header">
-                                                <span class="priority-icon">☆</span>
-                                                <h4>같이 개선되면 좋겠는 고민</h4>
+                                                <h4>부가 <span class="header-badge secondary">선택</span></h4>
                                             </div>
-                                            <p class="priority-hint">남은 예산으로 추가 (선택)</p>
+                                            <p class="priority-hint">남은 예산으로 추가 · 드래그로 이동 가능</p>
                                             <div class="priority-dropzone" id="secondaryConcerns">
-                                                <span class="dropzone-placeholder">선택 사항</span>
+                                                <span class="dropzone-placeholder">4번째부터 자동 추가</span>
                                             </div>
                                         </div>
                                     </div>
@@ -402,19 +394,19 @@
                                 <div class="question-group">
                                     <label class="question-label">선호하는 시술 방식</label>
                                     <div class="option-grid cols-2 multi-select" data-field="treatmentType">
-                                        <button class="option-btn selected" data-value="상관없음">상관없어요 (전문가 추천)</button>
-                                        <button class="option-btn" data-value="주사">주사 시술<span class="opt-hint">보톡스, 필러, 스킨부스터 등</span></button>
-                                        <button class="option-btn" data-value="레이저">레이저/광<span class="opt-hint">토닝, IPL, 프락셀 등</span></button>
-                                        <button class="option-btn" data-value="리프팅">리프팅 장비<span class="opt-hint">울쎄라, 써마지, 실리프팅 등</span></button>
-                                        <button class="option-btn" data-value="스킨케어">스킨케어<span class="opt-hint">필링, 스케일링 등</span></button>
+                                        <button class="option-btn selected" data-value="상관없음"><span class="btn-title">상관없어요 (전문가 추천)<span class="recommend-badge">추천</span></span></button>
+                                        <button class="option-btn" data-value="주사"><span class="btn-title">주사 시술</span><span class="opt-hint">보톡스, 필러, 스킨부스터 등</span></button>
+                                        <button class="option-btn" data-value="레이저"><span class="btn-title">레이저/광</span><span class="opt-hint">토닝, IPL, 프락셀 등</span></button>
+                                        <button class="option-btn" data-value="리프팅"><span class="btn-title">리프팅 장비</span><span class="opt-hint">울쎄라, 써마지, 실리프팅 등</span></button>
+                                        <button class="option-btn" data-value="스킨케어"><span class="btn-title">스킨케어</span><span class="opt-hint">필링, 스케일링 등</span></button>
                                     </div>
                                 </div>
                                 <div class="question-group">
                                     <label class="question-label">효과 유지 기간 선호</label>
                                     <div class="option-grid cols-3">
-                                        <button class="option-btn" data-field="duration" data-value="단기">3~6개월<span class="opt-hint">부담 적게 시작</span></button>
-                                        <button class="option-btn" data-field="duration" data-value="중기">6~12개월<span class="opt-hint">적당한 유지</span></button>
-                                        <button class="option-btn" data-field="duration" data-value="장기">1년 이상<span class="opt-hint">오래 가는 시술</span></button>
+                                        <button class="option-btn" data-field="duration" data-value="단기"><span class="btn-title">3~6개월</span><span class="opt-hint">부담 적게 시작</span></button>
+                                        <button class="option-btn selected" data-field="duration" data-value="중기"><span class="btn-title">6~12개월<span class="recommend-badge">추천</span></span><span class="opt-hint">적당한 유지</span></button>
+                                        <button class="option-btn" data-field="duration" data-value="장기"><span class="btn-title">1년 이상</span><span class="opt-hint">오래 가는 시술</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -424,23 +416,23 @@
                         <div class="consult-step" data-step="7">
                             <div class="step-message">
                                 <p>마지막으로 <strong>우선순위</strong>와 <strong>시술 계획</strong>을 알려주세요. 효과, 편안함, 가성비 중 무엇을 중시하시는지에 따라 추천이 달라집니다.</p>
-                                <p>입력하신 정보를 바탕으로 196개 시술 DB를 분석하여 맞춤 조합을 제안해 드리겠습니다.</p>
+                                <p>입력하신 정보를 바탕으로 <span class="dynamic-count"></span>개 시술 DB를 분석하여 맞춤 조합을 제안해 드리겠습니다.</p>
                             </div>
                             <div class="step-questions">
                                 <div class="question-group">
                                     <label class="question-label">가장 중요하게 생각하는 것</label>
                                     <div class="option-grid cols-3">
-                                        <button class="option-btn" data-field="priority" data-value="효과">효과 중시<span class="opt-hint">다소 아파도 OK</span></button>
-                                        <button class="option-btn" data-field="priority" data-value="편안함">편안함 중시<span class="opt-hint">약한 시술 선호</span></button>
-                                        <button class="option-btn" data-field="priority" data-value="가성비">가성비 중시<span class="opt-hint">비용 대비 효과</span></button>
+                                        <button class="option-btn selected" data-field="priority" data-value="효과"><span class="btn-title">효과 중시<span class="recommend-badge">추천</span></span><span class="opt-hint">다소 아파도 OK</span></button>
+                                        <button class="option-btn" data-field="priority" data-value="편안함"><span class="btn-title">편안함 중시</span><span class="opt-hint">약한 시술 선호</span></button>
+                                        <button class="option-btn" data-field="priority" data-value="가성비"><span class="btn-title">가성비 중시</span><span class="opt-hint">비용 대비 효과</span></button>
                                     </div>
                                 </div>
                                 <div class="question-group">
                                     <label class="question-label">시술 계획</label>
                                     <div class="option-grid cols-3">
-                                        <button class="option-btn" data-field="frequency" data-value="1회성">1회성<span class="opt-hint">특별 이벤트 전</span></button>
-                                        <button class="option-btn" data-field="frequency" data-value="정기">정기 관리<span class="opt-hint">월 1회 정도</span></button>
-                                        <button class="option-btn" data-field="frequency" data-value="비정기">비정기적<span class="opt-hint">필요할 때만</span></button>
+                                        <button class="option-btn" data-field="frequency" data-value="1회성"><span class="btn-title">1회성</span><span class="opt-hint">특별 이벤트 전</span></button>
+                                        <button class="option-btn selected" data-field="frequency" data-value="정기"><span class="btn-title">정기 관리<span class="recommend-badge">추천</span></span><span class="opt-hint">꾸준한 피부 관리</span></button>
+                                        <button class="option-btn" data-field="frequency" data-value="비정기"><span class="btn-title">비정기적</span><span class="opt-hint">필요할 때만</span></button>
                                     </div>
                                 </div>
                                 <div class="question-group">
