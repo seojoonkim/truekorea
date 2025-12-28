@@ -452,12 +452,20 @@ body {
 }
 
 .card-artist {
-    font-size: 13px;
-    color: var(--accent-violet);
+    font-size: 12px;
+    color: #64748b;
     margin-bottom: 8px;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.card-artist::before {
+    content: '🎤';
+    font-size: 10px;
+    margin-right: 4px;
 }
 
 .card-info {
@@ -468,7 +476,7 @@ body {
 
 .card-venue, .card-date {
     font-size: 12px;
-    color: var(--text-tertiary);
+    color: #64748b;
     display: flex;
     align-items: center;
     gap: 4px;
