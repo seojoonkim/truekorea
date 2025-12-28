@@ -13,80 +13,181 @@
         }
 
         :root {
-            --bg-dark: #1a1a2e;
-            --bg-card: #252542;
-            --bg-card-hover: #2d2d4a;
             --accent-violet: #6366f1;
             --accent-pink: #a78bfa;
             --accent-cyan: #22d3ee;
-            --accent-lime: #84cc16;
             --text-white: #ffffff;
-            --text-gray: #c4c4d4;
-            --text-muted: #9090a8;
+            --text-gray: #e2e8f0;
+            --glass-bg: rgba(15, 20, 40, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
         }
 
         body {
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 60px 24px;
+            padding: 40px 24px;
             -webkit-font-smoothing: antialiased;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Animated gradient background */
-        body::before {
-            content: '';
+        /* 배경 이미지 레이어 - 애니메이션 추가 */
+        .bg-image {
             position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.2) 0%, transparent 45%),
-                radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.18) 0%, transparent 45%),
-                radial-gradient(circle at 40% 70%, rgba(34, 211, 238, 0.12) 0%, transparent 40%);
-            animation: gradientMove 20s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            background: url('seoul-bg.jpg') center center / cover no-repeat;
+            z-index: -3;
+            animation: bgPan 30s ease-in-out infinite;
         }
 
-        @keyframes gradientMove {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(2%, 2%) rotate(1deg); }
-            66% { transform: translate(-1%, 1%) rotate(-1deg); }
+        @keyframes bgPan {
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            25% { transform: scale(1.03) translate(-1%, -0.5%); }
+            50% { transform: scale(1.02) translate(0.5%, -1%); }
+            75% { transform: scale(1.03) translate(-0.5%, 0.5%); }
         }
 
-        /* Particle Canvas */
-        #particleCanvas {
+        /* 배경 오버레이 - 더 투명하게 */
+        .bg-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(10, 15, 35, 0.4) 0%,
+                rgba(15, 20, 45, 0.3) 30%,
+                rgba(20, 25, 55, 0.35) 70%,
+                rgba(10, 15, 35, 0.5) 100%
+            );
+            z-index: -2;
         }
 
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 56px;
+        /* 빛 효과 레이어 */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(167, 139, 250, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(34, 211, 238, 0.06) 0%, transparent 60%);
+            z-index: -1;
+            animation: glowPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* 떠다니는 빛 파티클 */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; animation-duration: 25s; }
+        .particle:nth-child(2) { left: 20%; top: 80%; animation-delay: 2s; animation-duration: 20s; }
+        .particle:nth-child(3) { left: 30%; top: 40%; animation-delay: 4s; animation-duration: 28s; }
+        .particle:nth-child(4) { left: 40%; top: 60%; animation-delay: 1s; animation-duration: 22s; }
+        .particle:nth-child(5) { left: 50%; top: 30%; animation-delay: 3s; animation-duration: 26s; }
+        .particle:nth-child(6) { left: 60%; top: 70%; animation-delay: 5s; animation-duration: 24s; }
+        .particle:nth-child(7) { left: 70%; top: 50%; animation-delay: 2s; animation-duration: 21s; }
+        .particle:nth-child(8) { left: 80%; top: 25%; animation-delay: 4s; animation-duration: 27s; }
+        .particle:nth-child(9) { left: 85%; top: 85%; animation-delay: 1s; animation-duration: 23s; }
+        .particle:nth-child(10) { left: 15%; top: 55%; animation-delay: 3s; animation-duration: 29s; }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+            25% { 
+                transform: translate(30px, -40px) scale(1.2);
+                opacity: 0.6;
+            }
+            50% { 
+                transform: translate(-20px, -80px) scale(0.8);
+                opacity: 0.4;
+            }
+            75% { 
+                transform: translate(40px, -40px) scale(1.1);
+                opacity: 0.5;
+            }
+        }
+
+        /* 빛줄기 효과 */
+        .bg-rays {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                linear-gradient(135deg, transparent 40%, rgba(99, 102, 241, 0.03) 50%, transparent 60%),
+                linear-gradient(225deg, transparent 40%, rgba(167, 139, 250, 0.02) 50%, transparent 60%);
+            animation: rayShift 15s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rayShift {
+            0%, 100% { opacity: 0.5; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(5%); }
+        }
+
+        /* 컨텐츠 컨테이너 */
+        .container {
+            max-width: 1000px;
+            width: 100%;
             position: relative;
             z-index: 1;
         }
 
+        /* 헤더 */
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
         .logo {
-            font-size: 52px;
+            font-size: 48px;
             font-weight: 800;
-            letter-spacing: -2px;
+            color: var(--text-white);
             margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--text-white) 0%, var(--accent-violet) 50%, var(--accent-pink) 100%);
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 2px 10px rgba(99, 102, 241, 0.4);
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-pink) 50%, var(--accent-cyan) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -96,274 +197,520 @@
             font-size: 16px;
             color: var(--text-gray);
             font-weight: 400;
-            letter-spacing: 0.5px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* Cards Grid */
+        /* 메인 섹션 - 박스 제거, 투명 */
+        .main-section {
+            margin-bottom: 40px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        /* 섹션 타이틀 */
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 28px;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        /* 카드 그리드 */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            max-width: 960px;
-            width: 100%;
-            position: relative;
-            z-index: 1;
+            gap: 20px;
         }
 
-        /* Card */
+        /* 카드 */
         .card {
-            background: var(--bg-card);
+            background: rgba(15, 20, 40, 0.25);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 32px 20px;
+            padding: 28px 18px;
             text-align: center;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, transparent);
-            transition: all 0.3s ease;
-        }
-
         .card.active {
-            border-color: rgba(99, 102, 241, 0.4);
             cursor: pointer;
-            background: linear-gradient(145deg, #2a2a4a 0%, #252542 100%);
-        }
-
-        .card.active::before {
-            background: linear-gradient(90deg, var(--accent-violet), var(--accent-pink));
+            background: rgba(20, 25, 50, 0.3);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.12);
         }
 
         .card.active:hover {
-            transform: translateY(-4px);
-            border-color: rgba(99, 102, 241, 0.6);
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(30, 35, 60, 0.4);
+            border-color: rgba(99, 102, 241, 0.5);
             box-shadow: 
-                0 20px 40px rgba(99, 102, 241, 0.2),
-                0 0 60px rgba(99, 102, 241, 0.15);
+                0 25px 50px rgba(99, 102, 241, 0.2),
+                0 0 80px rgba(99, 102, 241, 0.1);
         }
 
         .card.disabled {
-            opacity: 0.45;
             cursor: not-allowed;
+            background: rgba(15, 20, 40, 0.35);
+            border-color: rgba(255, 255, 255, 0.06);
         }
 
-        /* Card Icon */
+        /* 카드 아이콘 */
         .card-icon {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 16px;
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
-            border-radius: 16px;
+            font-size: 32px;
+            border-radius: 14px;
             background: rgba(255, 255, 255, 0.05);
         }
 
         .card.active .card-icon {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(167, 139, 250, 0.2) 100%);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(167, 139, 250, 0.15) 100%);
         }
 
-        /* Card Content */
+        /* 카드 컨텐츠 */
         .card-title {
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--text-white);
-            margin-bottom: 6px;
-            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
         }
 
         .card-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 12px;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
         }
 
-        /* Badges */
+        .card.disabled .card-title {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .card.disabled .card-desc {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* 배지 */
         .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 6px 14px;
+            display: inline-block;
+            padding: 4px 10px;
             border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .badge-live {
-            background: linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-pink) 100%);
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-pink));
             color: white;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.85; }
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
         }
 
         .badge-soon {
             background: rgba(255, 255, 255, 0.1);
-            color: var(--text-muted);
+            color: rgba(255, 255, 255, 0.5);
         }
 
-        /* Footer */
-        .footer {
-            margin-top: 56px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
+        /* 하단 정보 패널 */
+        .info-panel {
+            background: rgba(15, 20, 40, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
 
-        .footer p {
+        .info-text {
             font-size: 13px;
-            color: var(--text-muted);
+            color: rgba(255, 255, 255, 0.7);
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
         }
 
-        /* Responsive */
+        .info-text strong {
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        .info-stats {
+            display: flex;
+            gap: 24px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-white);
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 푸터 */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 반응형 */
         @media (max-width: 900px) {
             .cards-grid {
-                grid-template-columns: repeat(2, 1fr);
-                max-width: 480px;
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
-        @media (max-width: 520px) {
+        @media (max-width: 768px) {
+            body {
+                padding: 16px 12px;
+                justify-content: flex-start;
+                min-height: 100vh;
+            }
+
+            .header {
+                margin-bottom: 20px;
+            }
+
             .logo {
-                font-size: 36px;
+                font-size: 32px;
+                margin-bottom: 6px;
             }
 
             .tagline {
-                font-size: 14px;
+                font-size: 12px;
+                letter-spacing: 1px;
+            }
+
+            .main-section {
+                margin-bottom: 16px;
+            }
+
+            .section-title {
+                font-size: 11px;
+                margin-bottom: 14px;
+                letter-spacing: 2px;
             }
 
             .cards-grid {
-                grid-template-columns: 1fr;
-                max-width: 320px;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
             }
 
             .card {
-                display: flex;
-                align-items: center;
-                text-align: left;
-                padding: 20px;
-                gap: 16px;
+                padding: 12px 6px;
+                border-radius: 12px;
             }
 
             .card-icon {
-                width: 52px;
-                height: 52px;
-                margin: 0;
-                font-size: 32px;
-                flex-shrink: 0;
+                width: 36px;
+                height: 36px;
+                font-size: 20px;
+                margin-bottom: 8px;
+                border-radius: 10px;
             }
 
-            .card-content {
-                flex: 1;
+            .card-title {
+                font-size: 11px;
+                margin-bottom: 2px;
             }
 
             .card-desc {
+                font-size: 9px;
+                margin-bottom: 6px;
+                display: none;
+            }
+
+            .badge {
+                padding: 2px 6px;
+                font-size: 8px;
+            }
+
+            .info-panel {
+                padding: 12px 16px;
+                border-radius: 12px;
+            }
+
+            .info-text {
+                font-size: 11px;
+            }
+
+            .info-stats {
+                gap: 16px;
+            }
+
+            .stat-value {
+                font-size: 16px;
+            }
+
+            .stat-label {
+                font-size: 8px;
+            }
+
+            .footer {
+                margin-top: 16px;
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px 10px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+
+            .tagline {
+                font-size: 11px;
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+
+            .card {
+                padding: 10px 4px;
+                border-radius: 10px;
+            }
+
+            .card-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 18px;
+                margin-bottom: 6px;
+            }
+
+            .card-title {
+                font-size: 10px;
+            }
+
+            .badge {
+                padding: 2px 5px;
+                font-size: 7px;
+            }
+
+            .info-panel {
+                flex-direction: row;
+                padding: 10px 14px;
+            }
+
+            .info-text {
+                font-size: 10px;
+            }
+
+            .stat-value {
+                font-size: 14px;
+            }
+
+            .stat-label {
+                font-size: 7px;
+            }
+
+            .footer {
+                margin-top: 12px;
+                font-size: 9px;
+            }
+        }
+
+        /* 아주 작은 화면 (iPhone SE 등) */
+        @media (max-width: 380px) {
+            .header {
+                margin-bottom: 14px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 10px;
                 margin-bottom: 10px;
+            }
+
+            .card {
+                padding: 8px 3px;
+            }
+
+            .card-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
+            }
+
+            .card-title {
+                font-size: 9px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <h1 class="logo">Only In Seoul</h1>
-        <p class="tagline">서울에서만 가능한 경험</p>
-    </header>
-
-    <!-- Cards Grid -->
-    <div class="cards-grid">
-        <!-- 피부과 시술 - Active -->
-        <a href="derm/index.html" class="card active">
-            <div class="card-icon">💉</div>
-            <div class="card-content">
-                <h3 class="card-title">피부과 시술</h3>
-                <p class="card-desc">196개 시술 가이드</p>
-                <span class="badge badge-live">LIVE</span>
-            </div>
-        </a>
-
-        <!-- 맛집 - Active -->
-        <a href="restaurant/index.html" class="card active">
-            <div class="card-icon">🍜</div>
-            <div class="card-content">
-                <h3 class="card-title">맛집</h3>
-                <p class="card-desc" id="restaurantCount">특별 레스토랑</p>
-                <span class="badge badge-live">LIVE</span>
-            </div>
-        </a>
-
-        <!-- K-POP 공연 - Soon -->
-        <div class="card disabled">
-            <div class="card-icon">🎤</div>
-            <div class="card-content">
-                <h3 class="card-title">K-POP 공연</h3>
-                <p class="card-desc">콘서트 · 팬미팅</p>
-                <span class="badge badge-soon">SOON</span>
-            </div>
-        </div>
-
-        <!-- 관광지 -->
-        <div class="card disabled">
-            <div class="card-icon">🏛️</div>
-            <div class="card-content">
-                <h3 class="card-title">관광지</h3>
-                <p class="card-desc">명소 · 액티비티</p>
-                <span class="badge badge-soon">SOON</span>
-            </div>
-        </div>
-
-        <!-- K-뷰티 -->
-        <div class="card disabled">
-            <div class="card-icon">💄</div>
-            <div class="card-content">
-                <h3 class="card-title">K-뷰티</h3>
-                <p class="card-desc">화장품 · 스킨케어</p>
-                <span class="badge badge-soon">SOON</span>
-            </div>
-        </div>
-
-        <!-- K-패션 -->
-        <div class="card disabled">
-            <div class="card-icon">👗</div>
-            <div class="card-content">
-                <h3 class="card-title">K-패션</h3>
-                <p class="card-desc">브랜드 · 쇼핑</p>
-                <span class="badge badge-soon">SOON</span>
-            </div>
-        </div>
-
-        <!-- 성형외과 -->
-        <div class="card disabled">
-            <div class="card-icon">🏥</div>
-            <div class="card-content">
-                <h3 class="card-title">성형외과</h3>
-                <p class="card-desc">수술 · 시술 가이드</p>
-                <span class="badge badge-soon">SOON</span>
-            </div>
-        </div>
+    <!-- 배경 레이어 -->
+    <div class="bg-image"></div>
+    <div class="bg-overlay"></div>
+    <div class="bg-glow"></div>
+    <div class="bg-rays"></div>
+    <div class="bg-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>© 2025 Only In Seoul. All rights reserved.</p>
-    </footer>
+    <!-- 컨텐츠 -->
+    <div class="container">
+        <!-- 헤더 -->
+        <header class="header">
+            <h1 class="logo">Only <span>In Seoul</span></h1>
+            <p class="tagline">서울에서만 가능한 경험</p>
+        </header>
 
-    <!-- Particle Canvas -->
-    <canvas id="particleCanvas"></canvas>
+        <!-- 메인 섹션 -->
+        <div class="main-section">
+            <div class="section-title">Explore Seoul</div>
+            
+            <div class="cards-grid">
+                <!-- 피부과 시술 -->
+                <a href="derm/index.html" class="card active">
+                    <div class="card-icon">💉</div>
+                    <div class="card-content">
+                        <h3 class="card-title">피부과 시술</h3>
+                        <p class="card-desc">196개 시술 가이드</p>
+                        <span class="badge badge-live">Live</span>
+                    </div>
+                </a>
+
+                <!-- 맛집 -->
+                <a href="restaurant/index.html" class="card active">
+                    <div class="card-icon">🍜</div>
+                    <div class="card-content">
+                        <h3 class="card-title">맛집</h3>
+                        <p class="card-desc" id="restaurantCount">75개 특별 레스토랑</p>
+                        <span class="badge badge-live">Live</span>
+                    </div>
+                </a>
+
+                <!-- K-POP 공연 -->
+                <div class="card disabled">
+                    <div class="card-icon">🎤</div>
+                    <div class="card-content">
+                        <h3 class="card-title">K-POP 공연</h3>
+                        <p class="card-desc">콘서트 · 팬미팅</p>
+                        <span class="badge badge-soon">Soon</span>
+                    </div>
+                </div>
+
+                <!-- 관광지 -->
+                <div class="card disabled">
+                    <div class="card-icon">🏛️</div>
+                    <div class="card-content">
+                        <h3 class="card-title">관광지</h3>
+                        <p class="card-desc">명소 · 액티비티</p>
+                        <span class="badge badge-soon">Soon</span>
+                    </div>
+                </div>
+
+                <!-- K-뷰티 -->
+                <div class="card disabled">
+                    <div class="card-icon">💄</div>
+                    <div class="card-content">
+                        <h3 class="card-title">K-뷰티</h3>
+                        <p class="card-desc">화장품 · 스킨케어</p>
+                        <span class="badge badge-soon">Soon</span>
+                    </div>
+                </div>
+
+                <!-- K-패션 -->
+                <div class="card disabled">
+                    <div class="card-icon">👗</div>
+                    <div class="card-content">
+                        <h3 class="card-title">K-패션</h3>
+                        <p class="card-desc">브랜드 · 쇼핑</p>
+                        <span class="badge badge-soon">Soon</span>
+                    </div>
+                </div>
+
+                <!-- 성형외과 -->
+                <div class="card disabled">
+                    <div class="card-icon">🏥</div>
+                    <div class="card-content">
+                        <h3 class="card-title">성형외과</h3>
+                        <p class="card-desc">수술 · 시술 가이드</p>
+                        <span class="badge badge-soon">Soon</span>
+                    </div>
+                </div>
+
+                <!-- 카페 & 바 -->
+                <div class="card disabled">
+                    <div class="card-icon">☕</div>
+                    <div class="card-content">
+                        <h3 class="card-title">카페 & 바</h3>
+                        <p class="card-desc">핫플 · 루프탑</p>
+                        <span class="badge badge-soon">Soon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 하단 정보 패널 -->
+        <div class="info-panel">
+            <div class="info-text">
+                <strong>외국인 관광객</strong>을 위한 서울 가이드
+            </div>
+            <div class="info-stats">
+                <div class="stat">
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">Live Services</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">271+</div>
+                    <div class="stat-label">Curated Items</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 푸터 -->
+        <footer class="footer">
+            <p>© 2025 Only In Seoul. All rights reserved.</p>
+        </footer>
+    </div>
 
     <!-- Restaurant DB for count -->
     <script src="restaurant/db.js"></script>
@@ -373,105 +720,6 @@
                 const count = RESTAURANTS.length;
                 document.getElementById('restaurantCount').textContent = count + '개 특별 레스토랑';
             }
-            
-            // Particle Animation
-            const canvas = document.getElementById('particleCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            resize();
-            window.addEventListener('resize', resize);
-            
-            const particles = [];
-            const particleCount = 60;
-            const colors = [
-                'rgba(99, 102, 241, 0.6)',   // violet
-                'rgba(167, 139, 250, 0.5)',  // purple
-                'rgba(34, 211, 238, 0.4)',   // cyan
-                'rgba(255, 255, 255, 0.3)'   // white
-            ];
-            
-            class Particle {
-                constructor() {
-                    this.reset();
-                }
-                
-                reset() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.size = Math.random() * 3 + 1;
-                    this.speedX = (Math.random() - 0.5) * 0.5;
-                    this.speedY = (Math.random() - 0.5) * 0.5;
-                    this.color = colors[Math.floor(Math.random() * colors.length)];
-                    this.opacity = Math.random() * 0.5 + 0.2;
-                    this.pulse = Math.random() * Math.PI * 2;
-                    this.pulseSpeed = Math.random() * 0.02 + 0.01;
-                }
-                
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    this.pulse += this.pulseSpeed;
-                    
-                    // Wrap around edges
-                    if (this.x < 0) this.x = canvas.width;
-                    if (this.x > canvas.width) this.x = 0;
-                    if (this.y < 0) this.y = canvas.height;
-                    if (this.y > canvas.height) this.y = 0;
-                }
-                
-                draw() {
-                    const currentOpacity = this.opacity * (0.5 + Math.sin(this.pulse) * 0.5);
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color.replace(/[\d.]+\)$/, currentOpacity + ')');
-                    ctx.fill();
-                }
-            }
-            
-            // Create particles
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-            
-            // Draw connections between nearby particles
-            function drawConnections() {
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < 120) {
-                            const opacity = (1 - distance / 120) * 0.15;
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
-                        }
-                    }
-                }
-            }
-            
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                drawConnections();
-                
-                particles.forEach(particle => {
-                    particle.update();
-                    particle.draw();
-                });
-                
-                requestAnimationFrame(animate);
-            }
-            
-            animate();
         });
     </script>
 </body>
