@@ -176,7 +176,16 @@ function filterAndRender() {
     });
     
     document.getElementById('filteredCount').textContent = filteredPerformances.length;
-    renderList();
+    
+    // 현재 활성화된 뷰에 따라 렌더링
+    const activeTab = document.querySelector('.view-tab.active');
+    const currentView = activeTab ? activeTab.dataset.view : 'list';
+    
+    if (currentView === 'list') {
+        renderList();
+    } else if (currentView === 'card') {
+        renderCardView();
+    }
 }
 
 // ===== Render List =====
@@ -248,8 +257,31 @@ function renderList() {
 function extractArtist(p) {
     // 1. prfcast(출연진)가 있으면 전체 사용
     if (p.prfcast && p.prfcast.trim()) {
-        // "등" 제거하고 반환
-        return p.prfcast.replace(/\s*등\s*$/, '').trim();
+        // "등" 제거하고 노이즈 키워드 제거
+        let artist = p.prfcast.replace(/\s*등\s*$/, '').trim();
+        
+        // 노이즈 키워드 제거
+        const noisePatterns = [
+            /\s*전국투어\s*/g,
+            /\s*콘서트\s*/g,
+            /\s*CONCERT\s*/gi,
+            /\s*TOUR\s*/gi,
+            /\s*SHOW\s*/gi,
+            /\s*단독\s*/g,
+            /\s*발매기념\s*/g,
+            /\s*정규\s*\d*집?\s*/g,
+            /\s*앨범\s*/g,
+            /\s*내한\s*/g,
+            /\s*팬미팅\s*/g,
+            /\s*라이브\s*/g,
+            /\s*LIVE\s*/gi,
+        ];
+        
+        for (const pattern of noisePatterns) {
+            artist = artist.replace(pattern, ' ');
+        }
+        
+        return artist.replace(/\s+/g, ' ').trim();
     }
     
     // 2. 공연명에서 아티스트 추출 시도
@@ -292,16 +324,66 @@ function setupViewTabs() {
             document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             
-            if (tab.dataset.view === 'list') {
-                document.getElementById('listView').style.display = 'block';
-                document.getElementById('calendarView').style.display = 'none';
-            } else {
-                document.getElementById('listView').style.display = 'none';
-                document.getElementById('calendarView').style.display = 'block';
+            const view = tab.dataset.view;
+            
+            document.getElementById('listView').style.display = view === 'list' ? 'block' : 'none';
+            document.getElementById('cardView').style.display = view === 'card' ? 'grid' : 'none';
+            document.getElementById('calendarView').style.display = view === 'calendar' ? 'block' : 'none';
+            
+            if (view === 'card') {
+                renderCardView();
+            } else if (view === 'calendar') {
                 renderCalendar();
             }
         });
     });
+}
+
+// ===== Card View =====
+function renderCardView() {
+    const container = document.getElementById('cardView');
+    
+    if (filteredPerformances.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state" style="grid-column: 1/-1;">
+                <div class="empty-state-icon">🎤</div>
+                <div class="empty-state-text">해당 조건의 공연이 없습니다</div>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = filteredPerformances.map(p => {
+        const statusClass = p.prfstate === '공연중' ? 'ongoing' : 
+                           p.prfstate === '공연예정' ? 'upcoming' : 'ended';
+        const statusText = p.prfstate;
+        
+        const dateText = p.prfpdfrom === p.prfpdto 
+            ? p.prfpdfrom 
+            : `${p.prfpdfrom} ~ ${p.prfpdto}`;
+        
+        const artist = extractArtist(p);
+        
+        return `
+            <div class="performance-card" onclick="openModal('${p.mt20id}')">
+                <div class="card-poster">
+                    ${p.poster 
+                        ? `<img src="${p.poster}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'no-image\\'>🎵</div>'">`
+                        : '<div class="no-image">🎵</div>'
+                    }
+                    <span class="card-status ${statusClass}">${statusText}</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-title">${escapeHtml(decodeHtml(p.prfnm))}</div>
+                    ${artist && artist !== '-' ? `<div class="card-artist">${escapeHtml(decodeHtml(artist))}</div>` : ''}
+                    <div class="card-info">
+                        <div class="card-venue">${escapeHtml(decodeHtml(p.fcltynm || '-'))}</div>
+                        <div class="card-date">${dateText}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
 }
 
 // ===== Calendar =====
@@ -338,7 +420,10 @@ function renderCalendar() {
             <div class="calendar-day ${isToday ? 'today' : ''}">
                 <div class="calendar-day-num">${day}</div>
                 ${dayPerformances.slice(0, 3).map(p => 
-                    `<div class="calendar-event" onclick="openModal('${p.mt20id}')" title="${p.prfnm}">${escapeHtml(p.prfnm)}</div>`
+                    `<div class="calendar-event" onclick="openModal('${p.mt20id}')" title="${decodeHtml(p.prfnm)}">
+                        ${p.poster ? `<img src="${p.poster}" class="calendar-event-poster" alt="">` : ''}
+                        <span>${escapeHtml(decodeHtml(p.prfnm))}</span>
+                    </div>`
                 ).join('')}
                 ${dayPerformances.length > 3 ? `<div style="font-size:10px;color:#94a3b8;">+${dayPerformances.length - 3}개</div>` : ''}
             </div>
