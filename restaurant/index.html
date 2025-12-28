@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>맛집 가이드 | Only In Seoul</title>
+    <link href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <a href="../" class="logo-link logo-main">Only In Seoul</a>
+            <a href="./" class="logo-link">
+                <span class="logo-divider">|</span>
+                <span class="logo-sub">맛집 가이드</span>
+            </a>
+            <span class="db-count" id="dbCount">92개 맛집</span>
+        </div>
+        
+        <nav class="view-tabs">
+            <button class="view-tab active" data-view="list">리스트</button>
+            <button class="view-tab" data-view="map">지도</button>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <main class="main-container">
+        <!-- About Section -->
+        <div class="about-section">
+            <div class="about-header">
+                <h2>서울 특별 레스토랑 컬렉션</h2>
+                <span class="about-badge">92개 엄선</span>
+            </div>
+            <p class="about-desc">
+                미슐랭 가이드 서울 2025, 블루리본 서베이 2025, 넷플릭스 흑백요리사 출연 레스토랑을 
+                교차 검증하여 엄선한 데이터베이스입니다. Google Maps 평점·리뷰를 기반으로 정렬됩니다.
+            </p>
+            <div class="about-stats">
+                <div class="about-stat">
+                    <span class="about-stat-icon">⭐</span>
+                    <span class="about-stat-num" id="michelinCount">39</span>
+                    <span class="about-stat-label">미슐랭 스타</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat-icon">🎀</span>
+                    <span class="about-stat-num" id="blueribbonCount">26</span>
+                    <span class="about-stat-label">블루리본 3선</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat-icon">🥄</span>
+                    <span class="about-stat-num" id="ccwCount">30</span>
+                    <span class="about-stat-label">흑백요리사</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Result Count -->
+        <div class="filter-result">
+            <span id="filteredCount">30</span>개 검색결과
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-bar">
+            <!-- Cuisine Filter -->
+            <div class="filter-group" id="cuisineFilters">
+                <button class="filter-btn active" data-cuisine="한식">한식</button>
+                <button class="filter-btn" data-cuisine="프렌치">프렌치</button>
+                <button class="filter-btn" data-cuisine="일식">일식</button>
+                <button class="filter-btn" data-cuisine="이탈리안">이탈리안</button>
+                <button class="filter-btn" data-cuisine="중식">중식</button>
+                <button class="filter-btn" data-cuisine="컨템포러리">컨템포러리</button>
+            </div>
+            
+            <div class="filter-divider"></div>
+            
+            <!-- Award Filter (Checkboxes) -->
+            <div class="filter-group" id="awardFilters">
+                <label class="checkbox-filter">
+                    <input type="checkbox" data-award="Michelin" checked>
+                    <span class="checkbox-label">⭐ 미슐랭</span>
+                </label>
+                <label class="checkbox-filter">
+                    <input type="checkbox" data-award="Blue Ribbon" checked>
+                    <span class="checkbox-label">🎀 블루리본</span>
+                </label>
+                <label class="checkbox-filter">
+                    <input type="checkbox" data-award="Culinary Class Wars" checked>
+                    <span class="checkbox-label">🥄 흑백요리사</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- List View -->
+        <div class="restaurant-table-wrap" id="listView">
+            <table class="restaurant-table">
+                <thead>
+                    <tr>
+                        <th class="col-rank">#</th>
+                        <th class="col-photo">사진</th>
+                        <th class="col-name">이름</th>
+                        <th class="col-cuisine">카테고리</th>
+                        <th class="col-location">위치</th>
+                        <th class="col-awards">수상</th>
+                        <th class="col-rating">Rate</th>
+                        <th class="col-reviews">Reviews</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+        
+        <!-- Map View -->
+        <div class="map-container" id="mapView">
+            <div id="map"></div>
+        </div>
+    </main>
+
+    <!-- Detail Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-header">
+                <h2 class="modal-name" id="modalName"></h2>
+                <div class="modal-tags" id="modalTags"></div>
+                <div class="modal-meta">
+                    <span id="modalRating"></span>
+                    <span id="modalReviews"></span>
+                    <span id="modalCuisine"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>📍 기본 정보</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">주소</div>
+                            <div class="info-value" id="modalAddress">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">지역</div>
+                            <div class="info-value" id="modalDistrict">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">전화</div>
+                            <div class="info-value" id="modalPhone">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">셰프</div>
+                            <div class="info-value" id="modalChef">-</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-section">
+                    <h3>📸 사진</h3>
+                    <div class="photos-placeholder" id="modalPhotos">사진 데이터 준비 중</div>
+                </div>
+                <div class="modal-section">
+                    <h3>💬 리뷰</h3>
+                    <div class="reviews-placeholder" id="modalReviews">리뷰 데이터 준비 중</div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <a class="action-btn primary" id="modalGmaps" href="#" target="_blank">🗺️ Google Maps</a>
+                <a class="action-btn secondary" id="modalWebsite" href="#" target="_blank">🌐 웹사이트</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="db.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
