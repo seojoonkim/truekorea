@@ -299,7 +299,7 @@
             <div class="card-icon">🍜</div>
             <div class="card-content">
                 <h3 class="card-title">맛집</h3>
-                <p class="card-desc">91개 특별 레스토랑</p>
+                <p class="card-desc" id="restaurantCount">특별 레스토랑</p>
                 <span class="badge badge-live">LIVE</span>
             </div>
         </a>
@@ -339,5 +339,16 @@
     <footer class="footer">
         <p>© 2025 Only In Seoul. All rights reserved.</p>
     </footer>
+
+    <!-- Restaurant DB for count -->
+    <script src="restaurant/db.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof RESTAURANTS !== 'undefined') {
+                const count = RESTAURANTS.length;
+                document.getElementById('restaurantCount').textContent = count + '개 특별 레스토랑';
+            }
+        });
+    </script>
 </body>
 </html>
