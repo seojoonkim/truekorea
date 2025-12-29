@@ -39,7 +39,7 @@ const scoreInfo = {
     family: { name: '가족추천', icon: '👨‍👩‍👧' },
     solo: { name: '혼자여행', icon: '🚶' },
     foreigner: { name: '외국인편의', icon: '🌍' },
-    accessibility: { name: '접근성', icon: '♿' }
+    accessibility: { name: '접근성', icon: '🚇' }
 };
 
 // 초기화
@@ -344,19 +344,19 @@ function openModal(id) {
         popularityEl.innerHTML = `
             <div class="popularity-card">
                 <div class="label">전체 순위</div>
-                <div class="value">${overallRank}<span>위</span></div>
+                <div class="value">${overallRank} <span>위</span></div>
             </div>
             <div class="popularity-card">
                 <div class="label">${catInfo.name} 순위</div>
-                <div class="value">${categoryRank}<span>위</span></div>
+                <div class="value">${categoryRank} <span>위</span></div>
             </div>
             <div class="popularity-card">
                 <div class="label">네이버 블로그</div>
-                <div class="value">${blogCount > 0 ? formatBlogCount(blogCount) : '-'}<span>건</span></div>
+                <div class="value">${blogCount > 0 ? formatBlogCount(blogCount) : '-'} <span>건</span></div>
             </div>
             <div class="popularity-card">
                 <div class="label">인기도</div>
-                <div class="value">${popularity}<span>/99</span></div>
+                <div class="value">${popularity} <span>/ 99</span></div>
             </div>
         `;
     }
@@ -477,11 +477,26 @@ document.addEventListener('keydown', (e) => {
 // 점수 상세 항목으로 스크롤 이동
 function scrollToScoreDetail(key) {
     const targetEl = document.getElementById(`score-detail-${key}`);
-    if (targetEl) {
-        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const modalColRight = document.querySelector('.modal-col-right');
+    const scoreSummary = document.getElementById('scoreSummarySection');
+    
+    if (targetEl && modalColRight && scoreSummary) {
+        // sticky 섹션 높이 계산
+        const stickyHeight = scoreSummary.offsetHeight;
+        const targetRect = targetEl.getBoundingClientRect();
+        const containerRect = modalColRight.getBoundingClientRect();
+        
+        // 현재 스크롤 위치 + 타겟까지의 거리 - sticky 높이 - 여유 공간(상세 평가 제목 보이도록)
+        const scrollTop = modalColRight.scrollTop + (targetRect.top - containerRect.top) - stickyHeight - 60;
+        
+        modalColRight.scrollTo({
+            top: scrollTop,
+            behavior: 'smooth'
+        });
+        
         // 하이라이트 효과
         targetEl.classList.add('highlight');
-        setTimeout(() => targetEl.classList.remove('highlight'), 1500);
+        setTimeout(() => targetEl.classList.remove('highlight'), 6000);
     }
 }
 
