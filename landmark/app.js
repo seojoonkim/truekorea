@@ -7,7 +7,7 @@
 let allData = [];
 let filteredData = [];
 let currentCategory = 'all';
-let activeScoreFilters = ['couple', 'photo', 'culture'];
+let activeScoreFilters = [];
 let map = null;
 let markers = [];
 
@@ -28,19 +28,18 @@ const categoryInfo = {
     museum: { name: '박물관/미술관', icon: '🏛️', color: '#3b82f6' }
 };
 
-// 점수 정보
+// 점수 정보 - 10개 항목 (순서대로)
 const scoreInfo = {
-    crowdedness: { name: '한적함', icon: '👥' },
-    photo: { name: '사진촬영', icon: '📸' },
-    foreigner: { name: '외국인편의', icon: '🌏' },
-    accessibility: { name: '접근성', icon: '🚇' },
-    family: { name: '가족추천', icon: '👨‍👩‍👧‍👦' },
-    couple: { name: '커플추천', icon: '💑' },
-    solo: { name: '혼자여행', icon: '🚶' },
-    food: { name: '먹거리', icon: '🍽️' },
-    activity: { name: '활동', icon: '🎯' },
+    photo: { name: '사진촬영', icon: '📷' },
+    culture: { name: '문화체험', icon: '🎭' },
+    activity: { name: '액티비티', icon: '🎯' },
     relaxation: { name: '힐링', icon: '🧘' },
-    culture: { name: '문화체험', icon: '🎭' }
+    crowdedness: { name: '한적함', icon: '🌿' },
+    couple: { name: '커플추천', icon: '💑' },
+    family: { name: '가족추천', icon: '👨‍👩‍👧' },
+    solo: { name: '혼자여행', icon: '🚶' },
+    foreigner: { name: '외국인편의', icon: '🌍' },
+    accessibility: { name: '접근성', icon: '♿' }
 };
 
 // 초기화
@@ -83,11 +82,13 @@ function setupEventListeners() {
         });
     });
     
-    // 점수 필터 체크박스
-    document.querySelectorAll('#scoreFilters input[type="checkbox"]').forEach(cb => {
-        cb.addEventListener('change', () => {
-            activeScoreFilters = Array.from(document.querySelectorAll('#scoreFilters input:checked'))
-                .map(c => c.dataset.score);
+    // 점수 필터 버튼 (라디오 방식 - 하나만 선택)
+    document.querySelectorAll('#scoreFilters .score-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('#scoreFilters .score-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const score = btn.dataset.score;
+            activeScoreFilters = score === 'all' ? [] : [score];
             applyFilters();
         });
     });
@@ -360,9 +361,9 @@ function openModal(id) {
         `;
     }
     
-    // 점수별 평가 근거 (리스트 형태 + 별점) - 8개 항목
+    // 점수별 평가 근거 (리스트 형태 + 별점) - 10개 항목
     const scoresListEl = document.getElementById('modalScoresList');
-    const displayScores = ['photo', 'couple', 'culture', 'family', 'solo', 'crowdedness', 'foreigner', 'accessibility'];
+    const displayScores = ['photo', 'culture', 'activity', 'relaxation', 'crowdedness', 'couple', 'family', 'solo', 'foreigner', 'accessibility'];
     
     if (scoresListEl) {
         scoresListEl.innerHTML = displayScores.map(key => {

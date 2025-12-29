@@ -1377,3 +1377,19 @@ body {
         font-size: 18px;
     }
 }
+
+/* 점수 필터 버튼 (카테고리 필터와 동일한 스타일) */
+.score-filter-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.score-filter-btn:hover { border-color: var(--accent-violet); }
+.score-filter-btn.active { background: var(--accent-gradient); color: #fff; border-color: transparent; }
