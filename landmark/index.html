@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서울 명소 가이드 | Only In Seoul</title>
+    <link href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <a href="../" class="logo-link logo-main">Only In Seoul</a>
+            <a href="./" class="logo-link">
+                <span class="logo-divider">|</span>
+                <span class="logo-sub">서울 명소 가이드</span>
+            </a>
+            <span class="db-count" id="dbCount">137개 명소</span>
+        </div>
+        
+        <div class="header-center">
+            <nav class="view-tabs">
+                <button class="view-tab active" data-view="list">리스트</button>
+                <button class="view-tab" data-view="map">지도</button>
+            </nav>
+        </div>
+        
+        <div class="header-right"></div>
+    </header>
+
+    <!-- Main -->
+    <main class="main-container">
+        <!-- About Section -->
+        <div class="about-section">
+            <div class="about-header">
+                <h2>Only In Seoul 명소 컬렉션</h2>
+            </div>
+            <p class="about-desc">
+                네이버 블로그 13,700개 분석을 통해 선별한 서울 대표 명소 137곳. 
+                실제 방문자들의 경험을 바탕으로 한 신뢰도 높은 점수를 제공합니다.
+            </p>
+            <div class="about-stats">
+                <div class="about-stat">
+                    <span class="about-stat-icon">🏯</span>
+                    <span class="about-stat-num" id="palaceCount">22</span>
+                    <span class="about-stat-label">고궁/역사</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat-icon">🌆</span>
+                    <span class="about-stat-num" id="viewpointCount">21</span>
+                    <span class="about-stat-label">전망/야경</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat-icon">🛍️</span>
+                    <span class="about-stat-num" id="shoppingCount">24</span>
+                    <span class="about-stat-label">쇼핑</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat-icon">🎨</span>
+                    <span class="about-stat-num" id="hipplaceCount">25</span>
+                    <span class="about-stat-label">힙플레이스</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat-icon">🌳</span>
+                    <span class="about-stat-num" id="natureCount">23</span>
+                    <span class="about-stat-label">공원/자연</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat-icon">🏛️</span>
+                    <span class="about-stat-num" id="museumCount">22</span>
+                    <span class="about-stat-label">박물관/미술관</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-bar">
+            <div class="filter-group" id="categoryFilters">
+                <button class="filter-btn active" data-category="all">전체</button>
+                <button class="filter-btn" data-category="palace">🏯 고궁/역사</button>
+                <button class="filter-btn" data-category="viewpoint">🌆 전망/야경</button>
+                <button class="filter-btn" data-category="shopping">🛍️ 쇼핑</button>
+                <button class="filter-btn" data-category="hipplace">🎨 힙플레이스</button>
+                <button class="filter-btn" data-category="nature">🌳 공원/자연</button>
+                <button class="filter-btn" data-category="museum">🏛️ 박물관/미술관</button>
+            </div>
+            
+            <div class="filter-divider"></div>
+            
+            <div class="filter-group" id="scoreFilters">
+                <label class="checkbox-filter">
+                    <input type="checkbox" data-score="couple" checked>
+                    <span class="checkbox-label">💑 커플추천</span>
+                </label>
+                <label class="checkbox-filter">
+                    <input type="checkbox" data-score="photo" checked>
+                    <span class="checkbox-label">📸 포토스팟</span>
+                </label>
+                <label class="checkbox-filter">
+                    <input type="checkbox" data-score="culture" checked>
+                    <span class="checkbox-label">🎭 문화체험</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Filter Result Count -->
+        <div class="filter-result">
+            <span id="filteredCount">137</span>개 검색결과
+        </div>
+
+        <!-- List View -->
+        <div class="landmark-table-wrap" id="listView">
+            <table class="landmark-table">
+                <thead>
+                    <tr>
+                        <th class="col-rank">#</th>
+                        <th class="col-photo">사진</th>
+                        <th class="col-name">이름</th>
+                        <th class="col-category">카테고리</th>
+                        <th class="col-location">위치</th>
+                        <th class="col-duration">소요시간</th>
+                        <th class="col-popularity">인기도</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+        
+        <!-- Map View -->
+        <div class="map-container" id="mapView" style="display: none;">
+            <div id="map"></div>
+        </div>
+    </main>
+
+    <!-- Detail Modal - 2컬럼 레이아웃 -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal modal-wide">
+            
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <h2 class="modal-name" id="modalName"></h2>
+                    <div class="modal-tags" id="modalTags"></div>
+                </div>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            
+            <!-- Modal Body: 2 Column -->
+            <div class="modal-body-two-col">
+                
+                <!-- Left Column: 소개 + 갤러리 + 방문 팁 + 운영 정보 -->
+                <div class="modal-col-left">
+                    <div class="modal-section">
+                        <h3>📝 소개</h3>
+                        <div class="intro-box">
+                            <p class="intro-summary" id="modalSummary"></p>
+                        </div>
+                    </div>
+                    
+                    <!-- 이미지 갤러리 -->
+                    <div class="modal-section">
+                        <h3>📷 사진</h3>
+                        <div class="gallery-grid" id="modalGallery"></div>
+                    </div>
+                    
+                    <!-- 방문 팁 -->
+                    <div class="modal-section">
+                        <h3>💡 방문 팁</h3>
+                        <ul class="tips-list" id="modalTips"></ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>🕐 운영 정보</h3>
+                        <div class="info-grid">
+                            <div class="info-item"><span class="info-label">입장료</span><span class="info-value" id="modalAdmission">-</span></div>
+                            <div class="info-item"><span class="info-label">운영시간</span><span class="info-value" id="modalHours">-</span></div>
+                            <div class="info-item"><span class="info-label">휴무일</span><span class="info-value" id="modalClosed">-</span></div>
+                            <div class="info-item"><span class="info-label">소요시간</span><span class="info-value" id="modalDuration">-</span></div>
+                            <div class="info-item"><span class="info-label">위치</span><span class="info-value" id="modalDistrict">-</span></div>
+                            <div class="info-item"><span class="info-label">가까운역</span><span class="info-value" id="modalStation">-</span></div>
+                        </div>
+                        <div class="modal-actions">
+                            <a class="action-btn google" id="modalGoogleMap" href="#" target="_blank">
+                                <img src="https://www.google.com/favicon.ico" alt="" class="btn-favicon"> 구글맵
+                            </a>
+                            <a class="action-btn naver" id="modalNaverMap" href="#" target="_blank">
+                                <img src="https://www.naver.com/favicon.ico" alt="" class="btn-favicon"> 네이버지도
+                            </a>
+                            <a class="action-btn kakao" id="modalKakaoMap" href="#" target="_blank">
+                                <img src="https://www.kakaocorp.com/page/favicon.ico" alt="" class="btn-favicon"> 카카오맵
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column: 상세 설명 + 인기도 + 블로그 분석 평가 -->
+                <div class="modal-col-right">
+                    <!-- 상세 설명 -->
+                    <div class="modal-section">
+                        <h3>📖 상세 설명</h3>
+                        <p class="detail-description" id="modalDescription"></p>
+                    </div>
+                    
+                    <!-- 인기도 -->
+                    <div class="modal-section">
+                        <h3>🔥 인기도</h3>
+                        <div class="popularity-section" id="modalPopularity"></div>
+                    </div>
+                    
+                    <!-- 블로그 분석 평가 -->
+                    <div class="modal-section">
+                        <h3>📊 네이버 블로그 빅데이터 기반 상세 평가</h3>
+                        <div class="scores-grid-2col" id="modalScoresList"></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- 이미지 뷰어 (맛집과 동일) -->
+    <div class="image-viewer-overlay" id="imageViewer">
+        <div class="image-viewer">
+            <button class="viewer-close" onclick="closeImageViewer()">&times;</button>
+            <button class="viewer-nav viewer-prev" onclick="changeImage(-1)">&#10094;</button>
+            <div class="viewer-content">
+                <img id="viewerImage" src="" alt="">
+                <div class="viewer-caption" id="viewerCaption"></div>
+            </div>
+            <button class="viewer-nav viewer-next" onclick="changeImage(1)">&#10095;</button>
+            <div class="viewer-counter" id="viewerCounter"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="db.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
