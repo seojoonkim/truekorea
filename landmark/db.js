@@ -7,6 +7,7 @@
 const landmarkData = [
   {
     "id": "gyeongbokgung",
+    "coordinates": { "lat": 37.5796, "lng": 126.977 },
     "name_ko": "경복궁",
     "name_en": "Gyeongbokgung Palace",
     "category": "palace",
@@ -124,6 +125,7 @@ const landmarkData = [
   },
   {
     "id": "changdeokgung",
+    "coordinates": { "lat": 37.5794, "lng": 126.991 },
     "name_ko": "창덕궁",
     "name_en": "Changdeokgung Palace",
     "category": "palace",
@@ -241,6 +243,7 @@ const landmarkData = [
   },
   {
     "id": "changgyeonggung",
+    "coordinates": { "lat": 37.5787, "lng": 126.9948 },
     "name_ko": "창경궁",
     "name_en": "Changgyeonggung Palace",
     "category": "palace",
@@ -358,6 +361,7 @@ const landmarkData = [
   },
   {
     "id": "deoksugung",
+    "coordinates": { "lat": 37.5658, "lng": 126.9751 },
     "name_ko": "덕수궁",
     "name_en": "Deoksugung Palace",
     "category": "palace",
@@ -475,6 +479,7 @@ const landmarkData = [
   },
   {
     "id": "gyeonghuigung",
+    "coordinates": { "lat": 37.5711, "lng": 126.9683 },
     "name_ko": "경희궁",
     "name_en": "Gyeonghuigung Palace",
     "category": "palace",
@@ -591,6 +596,7 @@ const landmarkData = [
   },
   {
     "id": "jongmyo",
+    "coordinates": { "lat": 37.5742, "lng": 126.994 },
     "name_ko": "종묘",
     "name_en": "Jongmyo Shrine",
     "category": "palace",
@@ -705,6 +711,7 @@ const landmarkData = [
   },
   {
     "id": "bukchon",
+    "coordinates": { "lat": 37.5826, "lng": 126.9831 },
     "name_ko": "북촌한옥마을",
     "name_en": "Bukchon Hanok Village",
     "category": "palace",
@@ -822,6 +829,7 @@ const landmarkData = [
   },
   {
     "id": "seochon",
+    "coordinates": { "lat": 37.5795, "lng": 126.9691 },
     "name_ko": "서촌",
     "name_en": "Seochon",
     "category": "palace",
@@ -939,6 +947,7 @@ const landmarkData = [
   },
   {
     "id": "ikseon",
+    "coordinates": { "lat": 37.5743, "lng": 126.988 },
     "name_ko": "익선동",
     "name_en": "Ikseon-dong",
     "category": "palace",
@@ -1056,6 +1065,7 @@ const landmarkData = [
   },
   {
     "id": "unhyeongung",
+    "coordinates": { "lat": 37.5763, "lng": 126.9873 },
     "name_ko": "운현궁",
     "name_en": "Unhyeongung Palace",
     "category": "palace",
@@ -1172,6 +1182,7 @@ const landmarkData = [
   },
   {
     "id": "namsangol",
+    "coordinates": { "lat": 37.559, "lng": 126.9942 },
     "name_ko": "남산골한옥마을",
     "name_en": "Namsangol Hanok Village",
     "category": "palace",
@@ -1289,6 +1300,7 @@ const landmarkData = [
   },
   {
     "id": "jongno",
+    "coordinates": { "lat": 37.5704, "lng": 126.9833 },
     "name_ko": "종로",
     "name_en": "Jongno",
     "category": "palace",
@@ -1407,6 +1419,7 @@ const landmarkData = [
   },
   {
     "id": "gwanghwamun",
+    "coordinates": { "lat": 37.5758, "lng": 126.9768 },
     "name_ko": "광화문광장",
     "name_en": "Gwanghwamun Square",
     "category": "palace",
@@ -1524,6 +1537,7 @@ const landmarkData = [
   },
   {
     "id": "sungnyemun",
+    "coordinates": { "lat": 37.5599, "lng": 126.9753 },
     "name_ko": "숭례문",
     "name_en": "Sungnyemun Gate",
     "category": "palace",
@@ -1641,6 +1655,7 @@ const landmarkData = [
   },
   {
     "id": "heunginjimun",
+    "coordinates": { "lat": 37.571, "lng": 127.0098 },
     "name_ko": "흥인지문",
     "name_en": "Heunginjimun Gate",
     "category": "palace",
@@ -1755,6 +1770,7 @@ const landmarkData = [
   },
   {
     "id": "hanyangdoseong",
+    "coordinates": { "lat": 37.588, "lng": 126.9816 },
     "name_ko": "서울한양도성",
     "name_en": "Seoul City Wall",
     "category": "palace",
@@ -1871,6 +1887,7 @@ const landmarkData = [
   },
   {
     "id": "changuimun",
+    "coordinates": { "lat": 37.5929, "lng": 126.9664 },
     "name_ko": "창의문",
     "name_en": "Changuimun Gate",
     "category": "palace",
@@ -1985,6 +2002,7 @@ const landmarkData = [
   },
   {
     "id": "seolleung",
+    "coordinates": { "lat": 37.5085, "lng": 127.0467 },
     "name_ko": "선릉과정릉",
     "name_en": "Seolleung Royal Tombs",
     "category": "palace",
@@ -2099,6 +2117,7 @@ const landmarkData = [
   },
   {
     "id": "jeongdong",
+    "coordinates": { "lat": 37.566, "lng": 126.973 },
     "name_ko": "정동길",
     "name_en": "Jeongdong-gil",
     "category": "palace",
@@ -2215,6 +2234,7 @@ const landmarkData = [
   },
   {
     "id": "chilgung",
+    "coordinates": { "lat": 37.5877, "lng": 126.9637 },
     "name_ko": "칠궁",
     "name_en": "Chilgung",
     "category": "palace",
@@ -2331,6 +2351,7 @@ const landmarkData = [
   },
   {
     "id": "seoul_history_museum",
+    "coordinates": { "lat": 37.5704, "lng": 126.9695 },
     "name_ko": "서울역사박물관",
     "name_en": "Seoul Museum of History",
     "category": "palace",
@@ -2447,6 +2468,7 @@ const landmarkData = [
   },
   {
     "id": "korean_history_museum",
+    "coordinates": { "lat": 37.5756, "lng": 126.9778 },
     "name_ko": "대한민국역사박물관",
     "name_en": "National Museum of Korean Contemporary History",
     "category": "palace",
@@ -2561,6 +2583,7 @@ const landmarkData = [
   },
   {
     "id": "namsan_tower",
+    "coordinates": { "lat": 37.5512, "lng": 126.9882 },
     "name_ko": "N서울타워",
     "name_en": "N Seoul Tower",
     "category": "viewpoint",
@@ -2678,6 +2701,7 @@ const landmarkData = [
   },
   {
     "id": "lotte_tower",
+    "coordinates": { "lat": 37.5126, "lng": 127.1025 },
     "name_ko": "롯데월드타워",
     "name_en": "Lotte World Tower Seoul Sky",
     "category": "viewpoint",
@@ -2794,6 +2818,7 @@ const landmarkData = [
   },
   {
     "id": "63_building",
+    "coordinates": { "lat": 37.5197, "lng": 126.9402 },
     "name_ko": "63빌딩",
     "name_en": "63 Square",
     "category": "viewpoint",
@@ -2910,6 +2935,7 @@ const landmarkData = [
   },
   {
     "id": "bugak_skyway",
+    "coordinates": { "lat": 37.5955, "lng": 126.9803 },
     "name_ko": "북악스카이웨이",
     "name_en": "Bugak Skyway",
     "category": "viewpoint",
@@ -3027,6 +3053,7 @@ const landmarkData = [
   },
   {
     "id": "naksan",
+    "coordinates": { "lat": 37.5802, "lng": 127.0067 },
     "name_ko": "낙산공원",
     "name_en": "Naksan Park",
     "category": "viewpoint",
@@ -3144,6 +3171,7 @@ const landmarkData = [
   },
   {
     "id": "eungbongsan",
+    "coordinates": { "lat": 37.5479, "lng": 127.033 },
     "name_ko": "응봉산",
     "name_en": "Eungbongsan",
     "category": "viewpoint",
@@ -3260,6 +3288,7 @@ const landmarkData = [
   },
   {
     "id": "haneul_park",
+    "coordinates": { "lat": 37.5672, "lng": 126.885 },
     "name_ko": "하늘공원",
     "name_en": "Haneul Park",
     "category": "viewpoint",
@@ -3375,6 +3404,7 @@ const landmarkData = [
   },
   {
     "id": "namsan_trail",
+    "coordinates": { "lat": 37.553, "lng": 126.985 },
     "name_ko": "남산둘레길",
     "name_en": "Namsan Dulle-gil",
     "category": "viewpoint",
@@ -3491,6 +3521,7 @@ const landmarkData = [
   },
   {
     "id": "yeouido_hangang",
+    "coordinates": { "lat": 37.5283, "lng": 126.9346 },
     "name_ko": "여의도한강공원",
     "name_en": "Yeouido Hangang Park",
     "category": "viewpoint",
@@ -3606,6 +3637,7 @@ const landmarkData = [
   },
   {
     "id": "banpo_hangang",
+    "coordinates": { "lat": 37.5103, "lng": 126.9957 },
     "name_ko": "반포한강공원",
     "name_en": "Banpo Hangang Park",
     "category": "viewpoint",
@@ -3721,6 +3753,7 @@ const landmarkData = [
   },
   {
     "id": "jeongdong_observatory",
+    "coordinates": { "lat": 37.5655, "lng": 126.9718 },
     "name_ko": "정동전망대",
     "name_en": "Jeongdong Observatory",
     "category": "viewpoint",
@@ -3836,6 +3869,7 @@ const landmarkData = [
   },
   {
     "id": "maebongsan",
+    "coordinates": { "lat": 37.5017, "lng": 127.06 },
     "name_ko": "매봉산",
     "name_en": "Maebongsan",
     "category": "viewpoint",
@@ -3950,6 +3984,7 @@ const landmarkData = [
   },
   {
     "id": "achasan",
+    "coordinates": { "lat": 37.5619, "lng": 127.072 },
     "name_ko": "아차산",
     "name_en": "Achasan",
     "category": "viewpoint",
@@ -4066,6 +4101,7 @@ const landmarkData = [
   },
   {
     "id": "dream_forest",
+    "coordinates": { "lat": 37.62, "lng": 127.04 },
     "name_ko": "북서울꿈의숲",
     "name_en": "Dream Forest",
     "category": "viewpoint",
@@ -4183,6 +4219,7 @@ const landmarkData = [
   },
   {
     "id": "cheongwadae",
+    "coordinates": { "lat": 37.5866, "lng": 126.9748 },
     "name_ko": "청와대",
     "name_en": "Cheong Wa Dae",
     "category": "viewpoint",
@@ -4299,6 +4336,7 @@ const landmarkData = [
   },
   {
     "id": "inwangsan",
+    "coordinates": { "lat": 37.5833, "lng": 126.9583 },
     "name_ko": "인왕산",
     "name_en": "Inwangsan",
     "category": "viewpoint",
@@ -4415,6 +4453,7 @@ const landmarkData = [
   },
   {
     "id": "bukhansan",
+    "coordinates": { "lat": 37.66, "lng": 126.9933 },
     "name_ko": "북한산",
     "name_en": "Bukhansan",
     "category": "viewpoint",
@@ -4534,6 +4573,7 @@ const landmarkData = [
   },
   {
     "id": "namsan_cable_car",
+    "coordinates": { "lat": 37.5568, "lng": 126.9817 },
     "name_ko": "남산케이블카",
     "name_en": "Namsan Cable Car",
     "category": "viewpoint",
@@ -4650,6 +4690,7 @@ const landmarkData = [
   },
   {
     "id": "sebitseom",
+    "coordinates": { "lat": 37.5123, "lng": 126.9963 },
     "name_ko": "세빛섬",
     "name_en": "Sebitseom",
     "category": "viewpoint",
@@ -4766,6 +4807,7 @@ const landmarkData = [
   },
   {
     "id": "seoullo_7017",
+    "coordinates": { "lat": 37.556, "lng": 126.9727 },
     "name_ko": "서울로7017",
     "name_en": "Seoullo 7017",
     "category": "viewpoint",
@@ -4882,6 +4924,7 @@ const landmarkData = [
   },
   {
     "id": "ddp",
+    "coordinates": { "lat": 37.5673, "lng": 127.0095 },
     "name_ko": "DDP",
     "name_en": "Dongdaemun Design Plaza",
     "category": "viewpoint",
@@ -4999,6 +5042,7 @@ const landmarkData = [
   },
   {
     "id": "myeongdong",
+    "coordinates": { "lat": 37.5636, "lng": 126.985 },
     "name_ko": "명동",
     "name_en": "Myeongdong",
     "category": "shopping",
@@ -5115,6 +5159,7 @@ const landmarkData = [
   },
   {
     "id": "dongdaemun",
+    "coordinates": { "lat": 37.571, "lng": 127.0095 },
     "name_ko": "동대문시장",
     "name_en": "Dongdaemun Market",
     "category": "shopping",
@@ -5230,6 +5275,7 @@ const landmarkData = [
   },
   {
     "id": "namdaemun",
+    "coordinates": { "lat": 37.5592, "lng": 126.9778 },
     "name_ko": "남대문시장",
     "name_en": "Namdaemun Market",
     "category": "shopping",
@@ -5347,6 +5393,7 @@ const landmarkData = [
   },
   {
     "id": "gwangjang",
+    "coordinates": { "lat": 37.57, "lng": 126.999 },
     "name_ko": "광장시장",
     "name_en": "Gwangjang Market",
     "category": "shopping",
@@ -5463,6 +5510,7 @@ const landmarkData = [
   },
   {
     "id": "hongdae",
+    "coordinates": { "lat": 37.5563, "lng": 126.9237 },
     "name_ko": "홍대거리",
     "name_en": "Hongdae Street",
     "category": "shopping",
@@ -5581,6 +5629,7 @@ const landmarkData = [
   },
   {
     "id": "gangnam",
+    "coordinates": { "lat": 37.4979, "lng": 127.0276 },
     "name_ko": "강남역",
     "name_en": "Gangnam Station",
     "category": "shopping",
@@ -5700,6 +5749,7 @@ const landmarkData = [
   },
   {
     "id": "garosu",
+    "coordinates": { "lat": 37.52, "lng": 127.023 },
     "name_ko": "가로수길",
     "name_en": "Garosu-gil",
     "category": "shopping",
@@ -5818,6 +5868,7 @@ const landmarkData = [
   },
   {
     "id": "apgujeong_rodeo",
+    "coordinates": { "lat": 37.527, "lng": 127.04 },
     "name_ko": "압구정로데오",
     "name_en": "Apgujeong Rodeo Street",
     "category": "shopping",
@@ -5933,6 +5984,7 @@ const landmarkData = [
   },
   {
     "id": "itaewon",
+    "coordinates": { "lat": 37.5345, "lng": 126.9945 },
     "name_ko": "이태원",
     "name_en": "Itaewon",
     "category": "shopping",
@@ -6049,6 +6101,7 @@ const landmarkData = [
   },
   {
     "id": "insadong",
+    "coordinates": { "lat": 37.574, "lng": 126.985 },
     "name_ko": "인사동",
     "name_en": "Insadong",
     "category": "shopping",
@@ -6165,6 +6218,7 @@ const landmarkData = [
   },
   {
     "id": "coex",
+    "coordinates": { "lat": 37.5116, "lng": 127.0592 },
     "name_ko": "코엑스몰",
     "name_en": "COEX Mall",
     "category": "shopping",
@@ -6283,6 +6337,7 @@ const landmarkData = [
   },
   {
     "id": "samcheong",
+    "coordinates": { "lat": 37.583, "lng": 126.982 },
     "name_ko": "삼청동길",
     "name_en": "Samcheong-dong-gil",
     "category": "shopping",
@@ -6401,6 +6456,7 @@ const landmarkData = [
   },
   {
     "id": "sinsa",
+    "coordinates": { "lat": 37.5168, "lng": 127.02 },
     "name_ko": "신사동",
     "name_en": "Sinsa-dong",
     "category": "shopping",
@@ -6519,6 +6575,7 @@ const landmarkData = [
   },
   {
     "id": "cheongdam",
+    "coordinates": { "lat": 37.5246, "lng": 127.052 },
     "name_ko": "청담동",
     "name_en": "Cheongdam-dong",
     "category": "shopping",
@@ -6636,6 +6693,7 @@ const landmarkData = [
   },
   {
     "id": "lotte_world_mall",
+    "coordinates": { "lat": 37.5126, "lng": 127.1025 },
     "name_ko": "롯데월드몰",
     "name_en": "Lotte World Mall",
     "category": "shopping",
@@ -6751,6 +6809,7 @@ const landmarkData = [
   },
   {
     "id": "ifc_mall",
+    "coordinates": { "lat": 37.5255, "lng": 126.9259 },
     "name_ko": "IFC몰",
     "name_en": "IFC Mall",
     "category": "shopping",
@@ -6868,6 +6927,7 @@ const landmarkData = [
   },
   {
     "id": "times_square",
+    "coordinates": { "lat": 37.5172, "lng": 126.904 },
     "name_ko": "타임스퀘어",
     "name_en": "Times Square",
     "category": "shopping",
@@ -6989,6 +7049,7 @@ const landmarkData = [
   },
   {
     "id": "the_hyundai",
+    "coordinates": { "lat": 37.5255, "lng": 126.928 },
     "name_ko": "더현대서울",
     "name_en": "The Hyundai Seoul",
     "category": "shopping",
@@ -7107,6 +7168,7 @@ const landmarkData = [
   },
   {
     "id": "starfield_coex",
+    "coordinates": { "lat": 37.5116, "lng": 127.0592 },
     "name_ko": "스타필드코엑스몰",
     "name_en": "Starfield COEX Mall",
     "category": "shopping",
@@ -7223,6 +7285,7 @@ const landmarkData = [
   },
   {
     "id": "yongsan_electronics",
+    "coordinates": { "lat": 37.5295, "lng": 126.965 },
     "name_ko": "용산전자상가",
     "name_en": "Yongsan Electronics Market",
     "category": "shopping",
@@ -7338,6 +7401,7 @@ const landmarkData = [
   },
   {
     "id": "noryangjin",
+    "coordinates": { "lat": 37.5133, "lng": 126.9428 },
     "name_ko": "노량진수산시장",
     "name_en": "Noryangjin Fish Market",
     "category": "shopping",
@@ -7453,6 +7517,7 @@ const landmarkData = [
   },
   {
     "id": "gyeongdong",
+    "coordinates": { "lat": 37.58, "lng": 127.0367 },
     "name_ko": "경동시장",
     "name_en": "Gyeongdong Market",
     "category": "shopping",
@@ -7563,6 +7628,7 @@ const landmarkData = [
   },
   {
     "id": "mangwon_market",
+    "coordinates": { "lat": 37.556, "lng": 126.91 },
     "name_ko": "망원시장",
     "name_en": "Mangwon Market",
     "category": "shopping",
@@ -7674,6 +7740,7 @@ const landmarkData = [
   },
   {
     "id": "tongin",
+    "coordinates": { "lat": 37.5792, "lng": 126.9688 },
     "name_ko": "통인시장",
     "name_en": "Tongin Market",
     "category": "shopping",
@@ -7790,6 +7857,7 @@ const landmarkData = [
   },
   {
     "id": "seongsu",
+    "coordinates": { "lat": 37.5445, "lng": 127.0557 },
     "name_ko": "성수동",
     "name_en": "Seongsu-dong",
     "category": "hipplace",
@@ -7902,6 +7970,7 @@ const landmarkData = [
   },
   {
     "id": "euljiro",
+    "coordinates": { "lat": 37.566, "lng": 126.992 },
     "name_ko": "을지로",
     "name_en": "Euljiro",
     "category": "hipplace",
@@ -8014,6 +8083,7 @@ const landmarkData = [
   },
   {
     "id": "yeonnam",
+    "coordinates": { "lat": 37.566, "lng": 126.9237 },
     "name_ko": "연남동",
     "name_en": "Yeonnam-dong",
     "category": "hipplace",
@@ -8130,6 +8200,7 @@ const landmarkData = [
   },
   {
     "id": "yeonhui",
+    "coordinates": { "lat": 37.568, "lng": 126.928 },
     "name_ko": "연희동",
     "name_en": "Yeonhui-dong",
     "category": "hipplace",
@@ -8247,6 +8318,7 @@ const landmarkData = [
   },
   {
     "id": "mangwon",
+    "coordinates": { "lat": 37.556, "lng": 126.91 },
     "name_ko": "망원동",
     "name_en": "Mangwon-dong",
     "category": "hipplace",
@@ -8364,6 +8436,7 @@ const landmarkData = [
   },
   {
     "id": "hapjeong",
+    "coordinates": { "lat": 37.5495, "lng": 126.9137 },
     "name_ko": "합정동",
     "name_en": "Hapjeong-dong",
     "category": "hipplace",
@@ -8480,6 +8553,7 @@ const landmarkData = [
   },
   {
     "id": "sangsu",
+    "coordinates": { "lat": 37.548, "lng": 126.9217 },
     "name_ko": "상수동",
     "name_en": "Sangsu-dong",
     "category": "hipplace",
@@ -8596,6 +8670,7 @@ const landmarkData = [
   },
   {
     "id": "hannam",
+    "coordinates": { "lat": 37.535, "lng": 127.001 },
     "name_ko": "한남동",
     "name_en": "Hannam-dong",
     "category": "hipplace",
@@ -8711,6 +8786,7 @@ const landmarkData = [
   },
   {
     "id": "gyeongridan",
+    "coordinates": { "lat": 37.539, "lng": 126.992 },
     "name_ko": "경리단길",
     "name_en": "Gyeongridan-gil",
     "category": "hipplace",
@@ -8826,6 +8902,7 @@ const landmarkData = [
   },
   {
     "id": "haebangchon",
+    "coordinates": { "lat": 37.54, "lng": 126.987 },
     "name_ko": "해방촌",
     "name_en": "Haebangchon",
     "category": "hipplace",
@@ -8938,6 +9015,7 @@ const landmarkData = [
   },
   {
     "id": "mullae",
+    "coordinates": { "lat": 37.517, "lng": 126.897 },
     "name_ko": "문래동",
     "name_en": "Mullae-dong",
     "category": "hipplace",
@@ -9051,6 +9129,7 @@ const landmarkData = [
   },
   {
     "id": "sindang",
+    "coordinates": { "lat": 37.565, "lng": 127.01 },
     "name_ko": "신당동",
     "name_en": "Sindang-dong",
     "category": "hipplace",
@@ -9165,6 +9244,7 @@ const landmarkData = [
   },
   {
     "id": "samgakji",
+    "coordinates": { "lat": 37.535, "lng": 126.974 },
     "name_ko": "삼각지",
     "name_en": "Samgakji",
     "category": "hipplace",
@@ -9279,6 +9359,7 @@ const landmarkData = [
   },
   {
     "id": "euljiro3ga",
+    "coordinates": { "lat": 37.566, "lng": 126.992 },
     "name_ko": "을지로3가",
     "name_en": "Euljiro 3-ga",
     "category": "hipplace",
@@ -9393,6 +9474,7 @@ const landmarkData = [
   },
   {
     "id": "seongbuk",
+    "coordinates": { "lat": 37.589, "lng": 127.005 },
     "name_ko": "성북동",
     "name_en": "Seongbuk-dong",
     "category": "hipplace",
@@ -9507,6 +9589,7 @@ const landmarkData = [
   },
   {
     "id": "buam",
+    "coordinates": { "lat": 37.592, "lng": 126.965 },
     "name_ko": "부암동",
     "name_en": "Buam-dong",
     "category": "hipplace",
@@ -9622,6 +9705,7 @@ const landmarkData = [
   },
   {
     "id": "cheongpa",
+    "coordinates": { "lat": 37.541, "lng": 126.967 },
     "name_ko": "청파동",
     "name_en": "Cheongpa-dong",
     "category": "hipplace",
@@ -9736,6 +9820,7 @@ const landmarkData = [
   },
   {
     "id": "ikseon_hip",
+    "coordinates": { "lat": 37.5743, "lng": 126.988 },
     "name_ko": "익선동 한옥골목",
     "name_en": "Ikseon-dong Hanok Alley",
     "category": "hipplace",
@@ -9853,6 +9938,7 @@ const landmarkData = [
   },
   {
     "id": "anguk",
+    "coordinates": { "lat": 37.5765, "lng": 126.985 },
     "name_ko": "안국동",
     "name_en": "Anguk-dong",
     "category": "hipplace",
@@ -9969,6 +10055,7 @@ const landmarkData = [
   },
   {
     "id": "seogyo",
+    "coordinates": { "lat": 37.552, "lng": 126.922 },
     "name_ko": "서교동",
     "name_en": "Seogyo-dong",
     "category": "hipplace",
@@ -10084,6 +10171,7 @@ const landmarkData = [
   },
   {
     "id": "songni",
+    "coordinates": { "lat": 37.507, "lng": 127.045 },
     "name_ko": "송리단길",
     "name_en": "Songni-dan-gil",
     "category": "hipplace",
@@ -10201,6 +10289,7 @@ const landmarkData = [
   },
   {
     "id": "apgujeong",
+    "coordinates": { "lat": 37.527, "lng": 127.028 },
     "name_ko": "압구정",
     "name_en": "Apgujeong",
     "category": "hipplace",
@@ -10319,6 +10408,7 @@ const landmarkData = [
   },
   {
     "id": "ttukseom",
+    "coordinates": { "lat": 37.547, "lng": 127.066 },
     "name_ko": "뚝섬",
     "name_en": "Ttukseom",
     "category": "hipplace",
@@ -10435,6 +10525,7 @@ const landmarkData = [
   },
   {
     "id": "gahoe",
+    "coordinates": { "lat": 37.583, "lng": 126.985 },
     "name_ko": "가회동",
     "name_en": "Gahoe-dong",
     "category": "hipplace",
@@ -10552,6 +10643,7 @@ const landmarkData = [
   },
   {
     "id": "gye",
+    "coordinates": { "lat": 37.561, "lng": 127.006 },
     "name_ko": "계동",
     "name_en": "Gye-dong",
     "category": "hipplace",
@@ -10668,6 +10760,7 @@ const landmarkData = [
   },
   {
     "id": "seoul_forest",
+    "coordinates": { "lat": 37.5443, "lng": 127.0374 },
     "name_ko": "서울숲",
     "name_en": "Seoul Forest",
     "category": "nature",
@@ -10784,6 +10877,7 @@ const landmarkData = [
   },
   {
     "id": "yeouido_park",
+    "coordinates": { "lat": 37.526, "lng": 126.922 },
     "name_ko": "여의도공원",
     "name_en": "Yeouido Park",
     "category": "nature",
@@ -10891,6 +10985,7 @@ const landmarkData = [
   },
   {
     "id": "olympic_park",
+    "coordinates": { "lat": 37.5212, "lng": 127.1212 },
     "name_ko": "올림픽공원",
     "name_en": "Olympic Park",
     "category": "nature",
@@ -10999,6 +11094,7 @@ const landmarkData = [
   },
   {
     "id": "worldcup_park",
+    "coordinates": { "lat": 37.5672, "lng": 126.885 },
     "name_ko": "월드컵공원",
     "name_en": "World Cup Park",
     "category": "nature",
@@ -11108,6 +11204,7 @@ const landmarkData = [
   },
   {
     "id": "namsan_park",
+    "coordinates": { "lat": 37.5512, "lng": 126.9882 },
     "name_ko": "남산공원",
     "name_en": "Namsan Park",
     "category": "nature",
@@ -11218,6 +11315,7 @@ const landmarkData = [
   },
   {
     "id": "bukhansan_national",
+    "coordinates": { "lat": 37.66, "lng": 126.9933 },
     "name_ko": "북한산국립공원",
     "name_en": "Bukhansan National Park",
     "category": "nature",
@@ -11337,6 +11435,7 @@ const landmarkData = [
   },
   {
     "id": "gwanaksan",
+    "coordinates": { "lat": 37.4428, "lng": 126.964 },
     "name_ko": "관악산",
     "name_en": "Gwanaksan",
     "category": "nature",
@@ -11453,6 +11552,7 @@ const landmarkData = [
   },
   {
     "id": "dobongsan",
+    "coordinates": { "lat": 37.698, "lng": 127.017 },
     "name_ko": "도봉산",
     "name_en": "Dobongsan",
     "category": "nature",
@@ -11567,6 +11667,7 @@ const landmarkData = [
   },
   {
     "id": "suraksan",
+    "coordinates": { "lat": 37.683, "lng": 127.056 },
     "name_ko": "수락산",
     "name_en": "Suraksan",
     "category": "nature",
@@ -11681,6 +11782,7 @@ const landmarkData = [
   },
   {
     "id": "cheonggyecheon",
+    "coordinates": { "lat": 37.5696, "lng": 126.9784 },
     "name_ko": "청계천",
     "name_en": "Cheonggyecheon Stream",
     "category": "nature",
@@ -11796,6 +11898,7 @@ const landmarkData = [
   },
   {
     "id": "seonyudo",
+    "coordinates": { "lat": 37.545, "lng": 126.898 },
     "name_ko": "선유도공원",
     "name_en": "Seonyudo Park",
     "category": "nature",
@@ -11911,6 +12014,7 @@ const landmarkData = [
   },
   {
     "id": "yangjae",
+    "coordinates": { "lat": 37.4695, "lng": 127.034 },
     "name_ko": "양재천",
     "name_en": "Yangjae Stream",
     "category": "nature",
@@ -12025,6 +12129,7 @@ const landmarkData = [
   },
   {
     "id": "boramae",
+    "coordinates": { "lat": 37.491, "lng": 126.919 },
     "name_ko": "보라매공원",
     "name_en": "Boramae Park",
     "category": "nature",
@@ -12136,6 +12241,7 @@ const landmarkData = [
   },
   {
     "id": "yongsan_family",
+    "coordinates": { "lat": 37.524, "lng": 126.972 },
     "name_ko": "용산가족공원",
     "name_en": "Yongsan Family Park",
     "category": "nature",
@@ -12246,6 +12352,7 @@ const landmarkData = [
   },
   {
     "id": "children_grand",
+    "coordinates": { "lat": 37.55, "lng": 127.08 },
     "name_ko": "어린이대공원",
     "name_en": "Seoul Children's Grand Park",
     "category": "nature",
@@ -12359,6 +12466,7 @@ const landmarkData = [
   },
   {
     "id": "yanghwa_hangang",
+    "coordinates": { "lat": 37.546, "lng": 126.901 },
     "name_ko": "양화한강공원",
     "name_en": "Yanghwa Hangang Park",
     "category": "nature",
@@ -12473,6 +12581,7 @@ const landmarkData = [
   },
   {
     "id": "jungnangcheon",
+    "coordinates": { "lat": 37.558, "lng": 127.065 },
     "name_ko": "중랑천",
     "name_en": "Jungnangcheon Stream",
     "category": "nature",
@@ -12587,6 +12696,7 @@ const landmarkData = [
   },
   {
     "id": "ansan_jarak",
+    "coordinates": { "lat": 37.581, "lng": 126.946 },
     "name_ko": "안산자락길",
     "name_en": "Ansan Jarak-gil",
     "category": "nature",
@@ -12700,6 +12810,7 @@ const landmarkData = [
   },
   {
     "id": "ttukseom_hangang",
+    "coordinates": { "lat": 37.531, "lng": 127.069 },
     "name_ko": "뚝섬한강공원",
     "name_en": "Ttukseom Hangang Park",
     "category": "nature",
@@ -12815,6 +12926,7 @@ const landmarkData = [
   },
   {
     "id": "jamwon_hangang",
+    "coordinates": { "lat": 37.518, "lng": 127.015 },
     "name_ko": "잠원한강공원",
     "name_en": "Jamwon Hangang Park",
     "category": "nature",
@@ -12930,6 +13042,7 @@ const landmarkData = [
   },
   {
     "id": "mangwon_hangang",
+    "coordinates": { "lat": 37.554, "lng": 126.896 },
     "name_ko": "망원한강공원",
     "name_en": "Mangwon Hangang Park",
     "category": "nature",
@@ -13043,6 +13156,7 @@ const landmarkData = [
   },
   {
     "id": "dream_forest_park",
+    "coordinates": { "lat": 37.62, "lng": 127.04 },
     "name_ko": "북서울꿈의숲공원",
     "name_en": "Dream Forest Park",
     "category": "nature",
@@ -13152,6 +13266,7 @@ const landmarkData = [
   },
   {
     "id": "seoul_botanic",
+    "coordinates": { "lat": 37.57, "lng": 126.835 },
     "name_ko": "서울식물원",
     "name_en": "Seoul Botanic Park",
     "category": "nature",
@@ -13266,6 +13381,7 @@ const landmarkData = [
   },
   {
     "id": "national_museum",
+    "coordinates": { "lat": 37.524, "lng": 126.9802 },
     "name_ko": "국립중앙박물관",
     "name_en": "National Museum of Korea",
     "category": "museum",
@@ -13382,6 +13498,7 @@ const landmarkData = [
   },
   {
     "id": "leeum",
+    "coordinates": { "lat": 37.538, "lng": 126.999 },
     "name_ko": "리움미술관",
     "name_en": "Leeum Museum of Art",
     "category": "museum",
@@ -13497,6 +13614,7 @@ const landmarkData = [
   },
   {
     "id": "apma",
+    "coordinates": { "lat": 37.524, "lng": 126.9802 },
     "name_ko": "아모레퍼시픽미술관",
     "name_en": "Amorepacific Museum of Art",
     "category": "museum",
@@ -13609,6 +13727,7 @@ const landmarkData = [
   },
   {
     "id": "mmca_seoul",
+    "coordinates": { "lat": 37.5788, "lng": 126.98 },
     "name_ko": "국립현대미술관 서울",
     "name_en": "MMCA Seoul",
     "category": "museum",
@@ -13723,6 +13842,7 @@ const landmarkData = [
   },
   {
     "id": "mmca_deoksugung",
+    "coordinates": { "lat": 37.5658, "lng": 126.9751 },
     "name_ko": "국립현대미술관 덕수궁",
     "name_en": "MMCA Deoksugung",
     "category": "museum",
@@ -13833,6 +13953,7 @@ const landmarkData = [
   },
   {
     "id": "folk_museum",
+    "coordinates": { "lat": 37.5816, "lng": 126.979 },
     "name_ko": "국립민속박물관",
     "name_en": "National Folk Museum of Korea",
     "category": "museum",
@@ -13946,6 +14067,7 @@ const landmarkData = [
   },
   {
     "id": "war_memorial",
+    "coordinates": { "lat": 37.5367, "lng": 126.977 },
     "name_ko": "전쟁기념관",
     "name_en": "War Memorial of Korea",
     "category": "museum",
@@ -14062,6 +14184,7 @@ const landmarkData = [
   },
   {
     "id": "hangeul_museum",
+    "coordinates": { "lat": 37.524, "lng": 126.9802 },
     "name_ko": "국립한글박물관",
     "name_en": "National Hangeul Museum",
     "category": "museum",
@@ -14171,6 +14294,7 @@ const landmarkData = [
   },
   {
     "id": "hoam",
+    "coordinates": { "lat": 37.566, "lng": 127.01 },
     "name_ko": "호암아트홀",
     "name_en": "Hoam Art Hall",
     "category": "museum",
@@ -14284,6 +14408,7 @@ const landmarkData = [
   },
   {
     "id": "daelim",
+    "coordinates": { "lat": 37.5792, "lng": 126.9688 },
     "name_ko": "대림미술관",
     "name_en": "Daelim Museum",
     "category": "museum",
@@ -14393,6 +14518,7 @@ const landmarkData = [
   },
   {
     "id": "sema",
+    "coordinates": { "lat": 37.5658, "lng": 126.9751 },
     "name_ko": "서울시립미술관",
     "name_en": "Seoul Museum of Art",
     "category": "museum",
@@ -14507,6 +14633,7 @@ const landmarkData = [
   },
   {
     "id": "hangaram",
+    "coordinates": { "lat": 37.481, "lng": 127.0055 },
     "name_ko": "한가람미술관",
     "name_en": "Hangaram Art Museum",
     "category": "museum",
@@ -14621,6 +14748,7 @@ const landmarkData = [
   },
   {
     "id": "d_museum",
+    "coordinates": { "lat": 37.538, "lng": 127.001 },
     "name_ko": "디뮤지엄",
     "name_en": "D Museum",
     "category": "museum",
@@ -14730,6 +14858,7 @@ const landmarkData = [
   },
   {
     "id": "pikaso",
+    "coordinates": { "lat": 37.54, "lng": 126.994 },
     "name_ko": "피카소미술관",
     "name_en": "Picasso Museum",
     "category": "museum",
@@ -14841,6 +14970,7 @@ const landmarkData = [
   },
   {
     "id": "savina",
+    "coordinates": { "lat": 37.583, "lng": 126.989 },
     "name_ko": "사비나미술관",
     "name_en": "Savina Museum",
     "category": "museum",
@@ -14947,6 +15077,7 @@ const landmarkData = [
   },
   {
     "id": "arario",
+    "coordinates": { "lat": 37.57, "lng": 126.988 },
     "name_ko": "아라리오뮤지엄",
     "name_en": "Arario Museum in Space",
     "category": "museum",
@@ -15054,6 +15185,7 @@ const landmarkData = [
   },
   {
     "id": "bukchon_museum",
+    "coordinates": { "lat": 37.5826, "lng": 126.9831 },
     "name_ko": "북촌미술관",
     "name_en": "Bukchon Museum",
     "category": "museum",
@@ -15159,6 +15291,7 @@ const landmarkData = [
   },
   {
     "id": "ilmin",
+    "coordinates": { "lat": 37.571, "lng": 126.976 },
     "name_ko": "일민미술관",
     "name_en": "Ilmin Museum of Art",
     "category": "museum",
@@ -15272,6 +15405,7 @@ const landmarkData = [
   },
   {
     "id": "kansong",
+    "coordinates": { "lat": 37.573, "lng": 127.008 },
     "name_ko": "간송미술관",
     "name_en": "Kansong Art Museum",
     "category": "museum",
@@ -15382,6 +15516,7 @@ const landmarkData = [
   },
   {
     "id": "sejong_story",
+    "coordinates": { "lat": 37.572, "lng": 126.977 },
     "name_ko": "세종이야기",
     "name_en": "Story of King Sejong",
     "category": "museum",
@@ -15488,6 +15623,7 @@ const landmarkData = [
   },
   {
     "id": "palace_museum",
+    "coordinates": { "lat": 37.579, "lng": 126.977 },
     "name_ko": "국립고궁박물관",
     "name_en": "National Palace Museum of Korea",
     "category": "museum",
@@ -15599,6 +15735,7 @@ const landmarkData = [
   },
   {
     "id": "craft_museum",
+    "coordinates": { "lat": 37.5763, "lng": 126.9873 },
     "name_ko": "서울공예박물관",
     "name_en": "Seoul Museum of Craft Art",
     "category": "museum",

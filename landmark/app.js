@@ -217,43 +217,167 @@ function getPopularityClass(score) {
 }
 
 // 지도 렌더링
+// 현재 열린 InfoWindow 추적
+let currentInfoWindow = null;
+
 function renderMap() {
+    // 구글 지도가 아직 초기화되지 않았으면 대기
     if (!map) {
-        map = L.map('map').setView([37.5665, 126.9780], 12);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
+        setTimeout(renderMap, 100);
+        return;
     }
     
-    markers.forEach(m => map.removeLayer(m));
+    // 기존 마커 및 라벨 제거
+    markers.forEach(m => {
+        if (m.marker) m.marker.setMap(null);
+        if (m.label) m.label.setMap(null);
+    });
     markers = [];
+    
+    // 현재 InfoWindow 닫기
+    if (currentInfoWindow) {
+        currentInfoWindow.close();
+        currentInfoWindow = null;
+    }
     
     filteredData.forEach(item => {
         if (item.coordinates?.lat && item.coordinates?.lng) {
             const cat = categoryInfo[item.category] || {};
-            const marker = L.marker([item.coordinates.lat, item.coordinates.lng])
-                .bindPopup(`
-                    <div style="min-width:200px;">
-                        <strong style="font-size:15px;">${cat.icon} ${item.name_ko}</strong>
-                        <p style="font-size:12px;color:#64748b;margin:6px 0;">${item.summary || ''}</p>
+            const position = { lat: item.coordinates.lat, lng: item.coordinates.lng };
+            
+            // 마커 생성
+            const marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: item.name_ko,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 10,
+                    fillColor: getCategoryColor(item.category),
+                    fillOpacity: 0.9,
+                    strokeColor: '#ffffff',
+                    strokeWeight: 2
+                }
+            });
+            
+            // 라벨 생성 (마커 위에 이름 표시)
+            const label = new google.maps.Marker({
+                position: position,
+                map: map,
+                icon: {
+                    path: 'M 0,0 L 0,0',
+                    fillOpacity: 0,
+                    strokeOpacity: 0
+                },
+                label: {
+                    text: item.name_ko,
+                    color: '#1e1b4b',
+                    fontSize: '11px',
+                    fontWeight: '600',
+                    className: 'map-label'
+                }
+            });
+            
+            // InfoWindow 내용 (아이콘 + 설명 + 링크) - 이미지 필드 없으므로 아이콘 사용
+            const infoContent = `
+                <div style="display:flex;width:300px;background:#fff;">
+                    <div style="width:90px;height:130px;flex-shrink:0;background:linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                        <span style="font-size:40px;">${cat.icon || '📍'}</span>
+                    </div>
+                    <div style="width:210px;padding:12px;display:flex;flex-direction:column;box-sizing:border-box;">
+                        <strong style="font-size:15px;color:#1e1b4b;margin-bottom:8px;line-height:1.3;">${item.name_ko}</strong>
+                        <p style="font-size:13px;color:#475569;margin:0;line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;flex:1;">${item.summary || ''}</p>
                         <button onclick="openModal('${item.id}')" style="
                             width:100%;
-                            padding:8px;
+                            padding:8px 0;
+                            margin-top:10px;
                             background:linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
                             color:white;
                             border:none;
                             border-radius:6px;
                             cursor:pointer;
                             font-weight:600;
+                            font-size:12px;
+                            flex-shrink:0;
                         ">자세히 보기</button>
                     </div>
-                `)
-                .addTo(map);
-            markers.push(marker);
+                </div>
+            `;
+            
+            const infoWindow = new google.maps.InfoWindow({
+                content: infoContent,
+                maxWidth: 300
+            });
+            
+            // 마커 클릭 이벤트
+            const handleClick = () => {
+                // 이전 InfoWindow 닫기
+                if (currentInfoWindow) {
+                    currentInfoWindow.close();
+                }
+                
+                // 새 InfoWindow 열기
+                infoWindow.open(map, marker);
+                currentInfoWindow = infoWindow;
+                
+                // 해당 위치로 부드럽게 이동 및 확대
+                map.panTo(position);
+                if (map.getZoom() < 15) {
+                    map.setZoom(15);
+                }
+            };
+            
+            marker.addListener('click', handleClick);
+            label.addListener('click', handleClick);
+            
+            markers.push({ marker, label, infoWindow });
+        }
+    });
+}
+
+// 카테고리별 색상 반환
+function getCategoryColor(category) {
+    const colors = {
+        palace: '#ef5350',
+        viewpoint: '#7c4dff',
+        shopping: '#ec407a',
+        hipplace: '#ff7043',
+        nature: '#66bb6a',
+        museum: '#42a5f5'
+    };
+    return colors[category] || '#4338ca';
+}
+
+// 구글 지도 초기화 (콜백)
+function initGoogleMap() {
+    const mapEl = document.getElementById('map');
+    if (!mapEl) return;
+    
+    map = new google.maps.Map(mapEl, {
+        center: { lat: 37.5665, lng: 126.9780 },
+        zoom: 12,
+        styles: [
+            {
+                featureType: 'poi',
+                elementType: 'labels',
+                stylers: [{ visibility: 'off' }]
+            }
+        ]
+    });
+    
+    // 지도 클릭 시 InfoWindow 닫기
+    map.addListener('click', () => {
+        if (currentInfoWindow) {
+            currentInfoWindow.close();
+            currentInfoWindow = null;
         }
     });
     
-    setTimeout(() => map.invalidateSize(), 100);
+    // 지도 탭이 활성화된 상태면 마커 렌더링
+    const mapView = document.getElementById('mapView');
+    if (mapView && mapView.style.display !== 'none') {
+        renderMap();
+    }
 }
 
 // 모달 열기

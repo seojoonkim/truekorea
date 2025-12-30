@@ -66,19 +66,19 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    flex-shrink: 0;
+    flex: 1;
 }
 
 .header-center {
     display: flex;
     justify-content: center;
-    flex-shrink: 0;
+    flex: 1;
 }
 
 .header-right {
     display: flex;
     justify-content: flex-end;
-    flex-shrink: 0;
+    flex: 1;
 }
 
 .logo-link { 
@@ -1664,3 +1664,48 @@ body {
         font-size: 10px;
     }
 }
+
+/* 지도 마커 라벨 스타일 */
+.map-label {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2px 6px;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    margin-top: -30px;
+    white-space: nowrap;
+}
+
+/* InfoWindow 스타일 커스텀 */
+.gm-style-iw-c {
+    padding: 0 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+}
+
+.gm-style-iw-d {
+    overflow: hidden !important;
+    padding: 0 !important;
+}
+
+.gm-style-iw-tc {
+    display: none !important;
+}
+
+/* X 버튼 숨기기 - 바깥 클릭으로 닫힘 */
+.gm-ui-hover-effect {
+    display: none !important;
+}
+
+/* InfoWindow 상단 여백 제거 */
+.gm-style-iw {
+    padding: 0 !important;
+}
+
+.gm-style-iw-chr {
+    padding-top: 0 !important;
+    height: auto !important;
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+}
+
