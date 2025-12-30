@@ -5400,7 +5400,7 @@ const RESTAURANTS = [
       "Blue Ribbon"
     ],
     "tier": "3-Ribbon",
-    "cuisine": "한식",
+    "cuisine": "숯불구이",
     "chef": "이선종",
     "district": "강남구",
     "rating": 4.5,
@@ -9725,7 +9725,7 @@ const RESTAURANTS = [
       "Blue Ribbon"
     ],
     "tier": "3-Ribbon",
-    "cuisine": "한식",
+    "cuisine": "숯불구이",
     "chef": "황원식",
     "district": "강남구",
     "rating": 4.1,

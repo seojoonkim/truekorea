@@ -52,12 +52,21 @@ function updateStats() {
 // ===== Cuisine Grouping =====
 function getCuisineGroup(cuisine) {
     if (!cuisine) return '기타';
-    if (cuisine.includes('한식') || cuisine === '모던 한식') return '한식';
+    // 고기/치킨
+    if (cuisine.includes('숯불구이') || cuisine === '야키토리' || cuisine === '베이커리' || 
+        cuisine === '치킨') return '고기/치킨';
+    // 한식 (술안주 포함)
+    if (cuisine.includes('한식') || cuisine === '모던 한식' || cuisine === '면요리' || cuisine === '술안주') return '한식';
+    // 프렌치
     if (cuisine.includes('프렌치') || cuisine.includes('프랑스')) return '프렌치';
-    if (cuisine.includes('일식') || cuisine === '스시' || cuisine === '야키토리') return '일식';
+    // 일식
+    if (cuisine.includes('일식') || cuisine === '스시') return '일식';
+    // 이탈리안
     if (cuisine.includes('이탈리안')) return '이탈리안';
+    // 중식
     if (cuisine.includes('중식')) return '중식';
-    if (cuisine.includes('컨템포러리')) return '컨템포러리';
+    // 컨템포러리 (비건, 지중해, 퓨전 포함)
+    if (cuisine.includes('컨템포러리') || cuisine === '비건' || cuisine === '지중해' || cuisine === '퓨전') return '컨템포러리';
     return '기타';
 }
 
@@ -379,45 +388,44 @@ function updateMapMarkers() {
             }
         });
         
-        // 수상 배지 HTML (리스트와 동일한 스타일)
-        const badgesHtml = r.tags.map(t => 
-            `<span style="
-                display:inline-block;
-                padding:2px 5px;
-                border-radius:4px;
-                font-size:9px;
-                font-weight:600;
-                white-space:nowrap;
-                margin-left:6px;
-                vertical-align:middle;
-                ${t.class === 'tag-michelin' ? 'background:#fef3c7;color:#92400e;' : ''}
-                ${t.class === 'tag-blueribbon' ? 'background:#dbeafe;color:#1e40af;' : ''}
-                ${t.class === 'tag-ccw-baek' ? 'background:#f3f4f6;color:#374151;border:1px solid #e5e7eb;' : ''}
-                ${t.class === 'tag-ccw-heuk' ? 'background:#1f2937;color:#fff;' : ''}
-            ">${t.label}</span>`
-        ).join('');
+        // 수상 배지 HTML (아이콘 포함, 모달과 동일한 스타일)
+        const badgesHtml = r.tags.map(t => {
+            if (t.class === 'tag-michelin') {
+                const stars = t.label.split('★').length - 1 || 1;
+                const flowers = Array(stars).fill('<span style="display:inline-block;width:10px;height:10px;background-image:url(michelin-white.svg);background-size:contain;background-repeat:no-repeat;"></span>').join('');
+                return `<span style="display:inline-flex;align-items:center;gap:1px;padding:2px 5px;border-radius:4px;font-size:9px;font-weight:600;margin-left:4px;background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;">${flowers}</span>`;
+            } else if (t.class === 'tag-blueribbon') {
+                const ribbonCount = (t.label.match(/✕/g) || []).length || t.label.replace(/[^0-9]/g, '') || 1;
+                const ribbons = Array(Number(ribbonCount) || 1).fill('<span style="display:inline-block;width:12px;height:12px;background-image:url(blueribbon.svg);background-size:contain;background-repeat:no-repeat;"></span>').join('');
+                return `<span style="display:inline-flex;align-items:center;gap:0;padding:2px 5px;border-radius:4px;font-size:9px;font-weight:600;margin-left:4px;background:linear-gradient(135deg,#e0f2fe,#bae6fd);color:#0369a1;">${ribbons}</span>`;
+            } else if (t.class === 'tag-ccw-baek' || t.class === 'tag-ccw-heuk') {
+                return `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600;margin-left:4px;background:linear-gradient(135deg,#f8fafc,#e2e8f0);color:#374151;"><span style="display:inline-block;width:10px;height:10px;background-image:url(ccw.svg);background-size:contain;background-repeat:no-repeat;"></span>흑백요리사</span>`;
+            }
+            return '';
+        }).join('');
         
         // 첫 번째 사진 URL
         const photoUrl = r.photos && r.photos.length > 0 ? r.photos[0] : '';
         
-        // InfoWindow 내용 (실제 사진 + 배지 + 정보 + 한줄 설명)
+        // InfoWindow 내용 (실제 사진 + 배지 + 정보 + 한줄 설명) - 15% 크기 증가
         const summaryText = r.summary ? `<p style="font-size:10px;color:#64748b;margin:6px 0 0 0;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${r.summary}</p>` : '';
         
         const infoContent = `
-            <div style="display:flex;width:320px;min-height:150px;background:#fff;overflow:hidden;">
-                <div style="width:110px;min-height:150px;flex-shrink:0;background:#f1f5f9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <div style="display:flex;width:368px;min-height:170px;background:#fff;overflow:hidden;border-radius:8px;">
+                <div style="width:126px;min-height:170px;flex-shrink:0;background:#f1f5f9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
                     ${photoUrl 
                         ? `<img src="${photoUrl}" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.parentElement.innerHTML='<span style=font-size:32px>${cuisineIcon}</span>';">` 
                         : `<span style="font-size:32px;">${cuisineIcon}</span>`
                     }
                 </div>
-                <div style="width:210px;padding:12px;display:flex;flex-direction:column;box-sizing:border-box;">
-                    <strong style="font-size:14px;color:#1e1b4b;margin-bottom:6px;line-height:1.3;">${r.name}</strong>
-                    <p style="font-size:11px;color:#475569;margin:0;line-height:1.5;">
-                        ${r.cuisine || ''} · ${extractDistrict(r.address)}${badgesHtml}
+                <div style="width:242px;padding:14px;display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden;">
+                    <strong style="font-size:14px;color:#1e1b4b;margin-bottom:6px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r.name}</strong>
+                    <p style="font-size:11px;color:#475569;margin:0;line-height:1.8;overflow:hidden;">
+                        ${r.cuisine || ''} · ${extractDistrict(r.address)}
                     </p>
-                    <p style="font-size:11px;color:#475569;margin:4px 0 0 0;line-height:1.5;">
-                        ${r.rating ? '⭐ ' + r.rating.toFixed(1) + ' (' + (r.reviews || 0).toLocaleString() + ')' : ''}
+                    <p style="font-size:11px;color:#475569;margin:4px 0 0 0;line-height:1.5;display:flex;align-items:center;flex-wrap:wrap;gap:4px;">
+                        ${badgesHtml}
+                        ${r.rating ? '<span style="margin-left:4px;">⭐ ' + r.rating.toFixed(1) + ' (' + (r.reviews || 0).toLocaleString() + ')</span>' : ''}
                     </p>
                     ${summaryText}
                     <button onclick="openModal('${r.id}')" style="
@@ -431,6 +439,7 @@ function updateMapMarkers() {
                         cursor:pointer;
                         font-weight:600;
                         font-size:11px;
+                        flex-shrink:0;
                     ">자세히 보기</button>
                 </div>
             </div>
@@ -438,7 +447,7 @@ function updateMapMarkers() {
         
         const infoWindow = new google.maps.InfoWindow({
             content: infoContent,
-            maxWidth: 300
+            maxWidth: 380
         });
         
         // 마커 클릭 이벤트
