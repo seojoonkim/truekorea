@@ -1009,12 +1009,11 @@ body {
 }
 
 .review-card {
-    background: linear-gradient(135deg, #fdfbfb 0%, #f7f4fc 50%, #f0f4ff 100%);
+    background: linear-gradient(135deg, #fefefe 0%, #fbfafd 50%, #f8faff 100%);
     padding: 14px;
     border-radius: var(--radius-sm);
     text-align: left;
-    border: 1px solid rgba(139, 92, 246, 0.08);
-    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.04);
+    border: none;
 }
 
 .review-header {
