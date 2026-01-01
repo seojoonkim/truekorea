@@ -47,6 +47,7 @@ const i18n = {
         colLocation: "위치",
         colDuration: "소요시간",
         colPopularity: "인기도",
+        colPopularityShort: "인기",
         
         // Filter Results
         searchResults: "개 검색결과",
@@ -128,6 +129,7 @@ const i18n = {
         colLocation: "Location",
         colDuration: "Duration",
         colPopularity: "Popularity",
+        colPopularityShort: "Pop",
         
         // Filter Results
         searchResults: " Results",
@@ -209,6 +211,7 @@ const i18n = {
         colLocation: "位置",
         colDuration: "时长",
         colPopularity: "人气",
+        colPopularityShort: "人气",
         
         // Filter Results
         searchResults: "个结果",
@@ -290,6 +293,7 @@ const i18n = {
         colLocation: "場所",
         colDuration: "所要時間",
         colPopularity: "人気度",
+        colPopularityShort: "人気",
         
         // Filter Results
         searchResults: "件",
