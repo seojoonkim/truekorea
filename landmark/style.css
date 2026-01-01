@@ -300,6 +300,7 @@ body[data-lang="en"] {
     font-weight: 600;
     color: var(--text-tertiary);
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .landmark-table tbody tr {
@@ -315,6 +316,7 @@ body[data-lang="en"] {
     padding: 8px;
     vertical-align: middle;
     font-size: 13px;
+    white-space: nowrap;
 }
 
 .col-rank { width: 36px; text-align: center; }
