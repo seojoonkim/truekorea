@@ -300,6 +300,11 @@ body[data-lang="en"] {
     font-weight: 600;
     color: var(--text-tertiary);
     text-transform: uppercase;
+}
+
+.landmark-table th.col-duration,
+.landmark-table th.col-rank,
+.landmark-table th.col-popularity {
     white-space: nowrap;
 }
 
@@ -316,7 +321,6 @@ body[data-lang="en"] {
     padding: 8px;
     vertical-align: middle;
     font-size: 13px;
-    white-space: nowrap;
 }
 
 .col-rank { width: 36px; text-align: center; }
@@ -366,11 +370,20 @@ body[data-lang="en"] {
     font-size: 16px;
     font-weight: 600;
     color: var(--text-primary);
+    word-break: keep-all;
 }
 
 .cell-duration {
     font-size: 12px;
     color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.cell-rank {
+    white-space: nowrap;
+}
+
+.cell-popularity {
     white-space: nowrap;
 }
 
