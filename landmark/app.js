@@ -1,6 +1,8 @@
 /**
  * Seoul Landmark Guide - Application
  * Multi-language support (Korean/English/Chinese/Japanese)
+ * 
+ * 데이터 구조: db_ko.js, db_en.js, db_zh.js, db_ja.js
  */
 
 // 전역 변수
@@ -18,19 +20,14 @@ let currentGallery = [];
 let currentGalleryIndex = 0;
 let currentGalleryCaption = '';
 
-// 번역 데이터 저장
-let translationsBasic = { en: {}, zh: {}, ja: {} };
-let translationsReasons = { en: {}, zh: {}, ja: {} };
-
-// 번역 파일 로드 (JS 변수에서)
-function loadTranslations() {
-    if (typeof translationsBasicData !== 'undefined') {
-        translationsBasic = translationsBasicData;
-        console.log('번역 로드 완료 (basic):', Object.keys(translationsBasic.en || {}).length, '개');
-    }
-    if (typeof translationsReasonsData !== 'undefined') {
-        translationsReasons = translationsReasonsData;
-        console.log('번역 로드 완료 (reasons):', Object.keys(translationsReasons.en || {}).length, '개');
+// 현재 언어의 데이터 가져오기
+function getLandmarkData() {
+    const lang = getLang();
+    switch(lang) {
+        case 'en': return typeof landmarkData_en !== 'undefined' ? landmarkData_en : [];
+        case 'zh': return typeof landmarkData_zh !== 'undefined' ? landmarkData_zh : [];
+        case 'ja': return typeof landmarkData_ja !== 'undefined' ? landmarkData_ja : [];
+        default: return typeof landmarkData_ko !== 'undefined' ? landmarkData_ko : [];
     }
 }
 
@@ -78,40 +75,25 @@ function getScoreName(key) {
     return info['name_' + lang] || info.name_en || info.name_ko;
 }
 
+// 데이터가 이미 해당 언어로 되어 있으므로 직접 반환
 function getItemName(item) {
-    if (!item) return '';
-    const lang = getLang();
-    if (lang !== 'ko' && translationsBasic[lang]?.[item.id]?.name) {
-        return translationsBasic[lang][item.id].name;
-    }
-    return item.name_ko;
+    return item?.name || '';
 }
 
 function getItemSummary(item) {
-    if (!item) return '';
-    const lang = getLang();
-    if (lang !== 'ko' && translationsBasic[lang]?.[item.id]?.summary) {
-        return translationsBasic[lang][item.id].summary;
-    }
-    return item.summary || '';
+    return item?.summary || '';
 }
 
 function getItemDescription(item) {
-    if (!item) return '';
-    const lang = getLang();
-    if (lang !== 'ko' && translationsBasic[lang]?.[item.id]?.description) {
-        return translationsBasic[lang][item.id].description;
-    }
-    return item.description;
+    return item?.description || '';
 }
 
 function getItemTips(item) {
-    if (!item) return [];
-    const lang = getLang();
-    if (lang !== 'ko' && translationsBasic[lang]?.[item.id]?.tips) {
-        return translationsBasic[lang][item.id].tips;
-    }
-    return item.tips || [];
+    return item?.tips || [];
+}
+
+function getItemScoreReasons(item, scoreKey) {
+    return item?.score_reasons?.[scoreKey] || [];
 }
 
 function getItemAdmission(item) {
@@ -139,7 +121,7 @@ function getItemAdmission(item) {
             '무료': '無料', '원': 'ウォン', '한복 착용 시 무료': '韓服着用で無料',
             '한복 착용 시': '韓服着用時', '착용 시': '着用時',
             '어른': '大人', '청소년': '青少年', '어린이': '子供',
-            '외국인': '外国人', '내국인': '韓国人'
+            '외국인': '外国人', '内国人': '韓国人'
         }
     };
     
@@ -153,31 +135,214 @@ function getItemAdmission(item) {
     return result;
 }
 
-function getItemLocation(item) {
-    if (!item) return '';
+function getItemHours(item) {
+    if (!item) return '-';
     const lang = getLang();
-    if (lang !== 'ko' && translationsBasic[lang]?.[item.id]?.location) {
-        return translationsBasic[lang][item.id].location;
+    const hours = item.hours || '-';
+    
+    if (lang === 'ko') return hours;
+    
+    // 운영시간 패턴 번역
+    const patterns = {
+        en: {
+            '24시간': '24 hours',
+            '24시간 (매장별 상이)': '24 hours (varies by store)',
+            '상점별 상이': 'Varies by store',
+            '매장별 상이': 'Varies by store',
+            '(해설 시간)': '(guided tour hours)',
+            '시간': 'hours'
+        },
+        zh: {
+            '24시간': '24小时',
+            '24시간 (매장별 상이)': '24小时（各店不同）',
+            '상점별 상이': '各店铺不同',
+            '매장별 상이': '各店铺不同',
+            '(해설 시간)': '（解说时间）',
+            '시간': '小时'
+        },
+        ja: {
+            '24시간': '24時間',
+            '24시간 (매장별 상이)': '24時間（店舗により異なる）',
+            '상점별 상이': '店舗により異なる',
+            '매장별 상이': '店舗により異なる',
+            '(해설 시간)': '（ガイドツアー時間）',
+            '시간': '時間'
+        }
+    };
+    
+    let result = hours;
+    const p = patterns[lang] || patterns.en;
+    // 긴 패턴부터 먼저 매칭
+    const sortedKeys = Object.keys(p).sort((a, b) => b.length - a.length);
+    for (const ko of sortedKeys) {
+        result = result.replace(new RegExp(ko, 'g'), p[ko]);
     }
-    return item.district + ' ' + (item.neighborhood || '');
+    return result;
+}
+
+function getItemLocation(item) {
+    if (!item || !item.district) return '';
+    const lang = getLang();
+    const districtValue = item.district;
+    
+    // 한국어: 원본 그대로
+    if (lang === 'ko') {
+        return districtValue;
+    }
+    
+    // 구 번역 맵
+    const guMap = {
+        '종로구': { en: 'Jongno-gu', zh: '钟路区', ja: '鍾路区' },
+        '중구': { en: 'Jung-gu', zh: '中区', ja: '中区' },
+        '용산구': { en: 'Yongsan-gu', zh: '龙山区', ja: '龍山区' },
+        '성동구': { en: 'Seongdong-gu', zh: '城东区', ja: '城東区' },
+        '광진구': { en: 'Gwangjin-gu', zh: '广津区', ja: '広津区' },
+        '동대문구': { en: 'Dongdaemun-gu', zh: '东大门区', ja: '東大門区' },
+        '중랑구': { en: 'Jungnang-gu', zh: '中浪区', ja: '中浪区' },
+        '성북구': { en: 'Seongbuk-gu', zh: '城北区', ja: '城北区' },
+        '강북구': { en: 'Gangbuk-gu', zh: '江北区', ja: '江北区' },
+        '도봉구': { en: 'Dobong-gu', zh: '道峰区', ja: '道峰区' },
+        '노원구': { en: 'Nowon-gu', zh: '芦原区', ja: '蘆原区' },
+        '은평구': { en: 'Eunpyeong-gu', zh: '恩平区', ja: '恩平区' },
+        '서대문구': { en: 'Seodaemun-gu', zh: '西大门区', ja: '西大門区' },
+        '마포구': { en: 'Mapo-gu', zh: '麻浦区', ja: '麻浦区' },
+        '양천구': { en: 'Yangcheon-gu', zh: '阳川区', ja: '陽川区' },
+        '강서구': { en: 'Gangseo-gu', zh: '江西区', ja: '江西区' },
+        '구로구': { en: 'Guro-gu', zh: '九老区', ja: '九老区' },
+        '금천구': { en: 'Geumcheon-gu', zh: '衿川区', ja: '衿川区' },
+        '영등포구': { en: 'Yeongdeungpo-gu', zh: '永登浦区', ja: '永登浦区' },
+        '동작구': { en: 'Dongjak-gu', zh: '铜雀区', ja: '銅雀区' },
+        '관악구': { en: 'Gwanak-gu', zh: '冠岳区', ja: '冠岳区' },
+        '서초구': { en: 'Seocho-gu', zh: '瑞草区', ja: '瑞草区' },
+        '강남구': { en: 'Gangnam-gu', zh: '江南区', ja: '江南区' },
+        '송파구': { en: 'Songpa-gu', zh: '松坡区', ja: '松坡区' },
+        '강동구': { en: 'Gangdong-gu', zh: '江东区', ja: '江東区' }
+    };
+    
+    // 동/장소 로마자 맵 (영어용, 중국어/일본어도 동일하게 사용)
+    const placeMap = {
+        // 동 이름
+        '명동': 'Myeongdong', '서교동': 'Seogyo-dong', '남산동': 'Namsan-dong',
+        '역삼동': 'Yeoksam-dong', '성수동': 'Seongsu-dong', '삼청동': 'Samcheong-dong',
+        '가회동': 'Gahoe-dong', '익선동': 'Ikseon-dong', '연남동': 'Yeonnam-dong',
+        '한남동': 'Hannam-dong', '이태원동': 'Itaewon-dong', '신사동': 'Sinsa-dong',
+        '청담동': 'Cheongdam-dong', '압구정동': 'Apgujeong-dong', '잠실동': 'Jamsil-dong',
+        '여의도동': 'Yeouido-dong', '망원동': 'Mangwon-dong', '연희동': 'Yeonhui-dong',
+        '부암동': 'Buam-dong', '평창동': 'Pyeongchang-dong', '상암동': 'Sangam-dong',
+        '문래동': 'Mullae-dong', '신당동': 'Sindang-dong', '창신동': 'Changsin-dong',
+        '혜화동': 'Hyehwa-dong', '광장동': 'Gwangjang-dong', '송파동': 'Songpa-dong',
+        '반포동': 'Banpo-dong', '서빙고동': 'Seobinggo-dong', '이촌동': 'Ichon-dong',
+        '삼성동': 'Samsung-dong', '논현동': 'Nonhyeon-dong', '방배동': 'Bangbae-dong',
+        '양재동': 'Yangjae-dong', '도곡동': 'Dogok-dong', '개포동': 'Gaepo-dong',
+        '대치동': 'Daechi-dong', '수서동': 'Suseo-dong', '잠원동': 'Jamwon-dong',
+        '신림동': 'Sillim-dong', '봉천동': 'Bongcheon-dong', '노량진동': 'Noryangjin-dong',
+        '흑석동': 'Heukseok-dong', '상도동': 'Sangdo-dong', '신대방동': 'Sindaebang-dong',
+        '당산동': 'Dangsan-dong', '영등포동': 'Yeongdeungpo-dong', '마곡동': 'Magok-dong',
+        '응암동': 'Eungam-dong', '불광동': 'Bulgwang-dong', '합정동': 'Hapjeong-dong',
+        '상수동': 'Sangsu-dong', '공덕동': 'Gongdeok-dong', '용산동': 'Yongsan-dong',
+        '후암동': 'Huam-dong', '청파동': 'Cheongpa-dong', '옥수동': 'Oksu-dong',
+        '금호동': 'Geumho-dong', '행당동': 'Haengdang-dong', '능동': 'Neung-dong',
+        '군자동': 'Gunja-dong', '화양동': 'Hwayang-dong', '자양동': 'Jayang-dong',
+        '구의동': 'Guui-dong', '면목동': 'Myeonmok-dong', '장안동': 'Jangan-dong',
+        '답십리동': 'Dapsimni-dong', '전농동': 'Jeonnong-dong', '제기동': 'Jegi-dong',
+        '회기동': 'Hoegi-dong', '돈암동': 'Donam-dong', '안암동': 'Anam-dong',
+        '보문동': 'Bomun-dong', '정릉동': 'Jeongneung-dong', '길음동': 'Gireum-dong',
+        '상계동': 'Sanggye-dong', '중계동': 'Junggye-dong', '공릉동': 'Gongneung-dong',
+        '수유동': 'Suyu-dong', '미아동': 'Mia-dong', '쌍문동': 'Ssangmun-dong',
+        '창동': 'Chang-dong', '도봉동': 'Dobong-dong', '방학동': 'Banghak-dong',
+        '통의동': 'Tongui-dong', '효자동': 'Hyoja-dong', '사직동': 'Sajik-dong',
+        '소격동': 'Sogyeok-dong', '안국동': 'Anguk-dong', '계동': 'Gye-dong',
+        '원서동': 'Wonseo-dong', '관훈동': 'Gwanhun-dong', '인의동': 'Inui-dong',
+        '숭인동': 'Sungin-dong', '소공동': 'Sogong-dong', '회현동': 'Hoehyeon-dong',
+        '필동': 'Pil-dong', '장충동': 'Jangchung-dong', '광희동': 'Gwanghui-dong',
+        '무교동': 'Mugyo-dong', '정동': 'Jeong-dong', '서소문동': 'Seosomun-dong',
+        '만리동': 'Malli-dong', '중림동': 'Jungnim-dong', '황학동': 'Hwanghak-dong',
+        '서초동': 'Seocho-dong', '번동': 'Beon-dong', '응봉동': 'Eungbong-dong',
+        '성북동': 'Seongbuk-dong', '방이동': 'Bangi-dong', '잠실본동': 'Jamsil-dong',
+        '통인동': 'Tongin-dong', '무악동': 'Muak-dong', '흥인동': 'Heungin-dong',
+        '궁정동': 'Gungjeong-dong',
+        // 도로명/특수 지명
+        '을지로': 'Euljiro', '을지로3가': 'Euljiro 3-ga', '을지로7가': 'Euljiro 7-ga',
+        '세종로': 'Sejongno', '세종대로': 'Sejong-daero', '충무로': 'Chungmuro',
+        '태평로': 'Taepyeongno', '삼청로': 'Samcheong-ro', '율곡로': 'Yulgok-ro',
+        '창경궁로': 'Changgyeonggung-ro', '새문안로': 'Saemunan-ro',
+        '남대문로': 'Namdaemun-ro', '남대문시장길': 'Namdaemun Market',
+        '인사동길': 'Insadong-gil', '원효로': 'Wonhyo-ro', '의주로': 'Uiju-ro',
+        // 특수 표현
+        '일대': 'area', '대학로': 'Daehangno', '북촌': 'Bukchon', '서촌': 'Seochon',
+        '인사동': 'Insadong', '신촌': 'Sinchon', '홍대': 'Hongdae', '왕십리': 'Wangsimni',
+        '연신내': 'Yeonsinnae', '충정로': 'Chungjeongno'
+    };
+    
+    // 구 번역 함수
+    function translateGu(gu) {
+        return guMap[gu]?.[lang] || guMap[gu]?.en || gu;
+    }
+    
+    // 장소 번역 함수 (로마자 변환)
+    function translatePlace(place) {
+        return placeMap[place] || place;
+    }
+    
+    // 케이스 1: 슬래시로 구분된 복수 구 (예: "강북구/은평구", "종로구/중구")
+    if (districtValue.includes('/')) {
+        const parts = districtValue.split('/');
+        return parts.map(p => translateGu(p.trim())).join(' & ');
+    }
+    
+    // 케이스 2: 공백으로 구분 (예: "강남구 삼성동", "종로구 세종로")
+    const parts = districtValue.split(' ');
+    if (parts.length === 1) {
+        // 구만 있는 경우
+        return translateGu(parts[0]);
+    }
+    
+    // 구 + 나머지
+    const guPart = parts[0];
+    const restPart = parts.slice(1).join(' ');
+    
+    const translatedGu = translateGu(guPart);
+    const translatedRest = translatePlace(restPart);
+    
+    return `${translatedGu} ${translatedRest}`;
 }
 
 function getItemRoadAddress(item) {
     if (!item) return '';
-    const lang = getLang();
-    if (lang !== 'ko' && translationsBasic[lang]?.[item.id]?.road_address) {
-        return translationsBasic[lang][item.id].road_address;
+    
+    // 현재 언어 DB에 주소가 있으면 사용
+    if (item.road_address) {
+        return item.road_address;
     }
-    return item.road_address || '';
+    
+    // 없으면 영어 DB에서 fallback
+    if (typeof landmarkData_en !== 'undefined') {
+        const enItem = landmarkData_en.find(e => e.id === item.id);
+        if (enItem?.road_address) {
+            return enItem.road_address;
+        }
+    }
+    
+    return '';
 }
 
-function getItemScoreReasons(item, key) {
-    if (!item) return [];
-    const lang = getLang();
-    if (lang !== 'ko' && translationsReasons[lang]?.[item.id]?.[key]) {
-        return translationsReasons[lang][item.id][key];
+function getItemJibunAddress(item) {
+    if (!item) return '';
+    
+    // 현재 언어 DB에 주소가 있으면 사용
+    if (item.jibun_address) {
+        return item.jibun_address;
     }
-    return item.score_reasons?.[key] || [];
+    
+    // 없으면 영어 DB에서 fallback
+    if (typeof landmarkData_en !== 'undefined') {
+        const enItem = landmarkData_en.find(e => e.id === item.id);
+        if (enItem?.jibun_address) {
+            return enItem.jibun_address;
+        }
+    }
+    
+    return '';
 }
 
 function translateDistrict(district) {
@@ -223,7 +388,9 @@ function translateDistrict(district) {
         if (district.startsWith(ko)) {
             const dongPart = district.replace(ko, '').trim();
             if (dongPart) {
-                return `${trans} ${dongPart}`;
+                // 동 이름을 로마자로 변환
+                const romanized = romanizeDong(dongPart);
+                return `${trans} ${romanized}`;
             }
             return trans;
         }
@@ -372,20 +539,15 @@ function initGoogleMap() {
 
 // ===== 초기화 =====
 document.addEventListener('DOMContentLoaded', () => {
-    if (typeof landmarkData !== 'undefined') {
-        allData = landmarkData.map(item => {
-            if (typeof englishTranslations !== 'undefined' && englishTranslations[item.id]) {
-                return { ...item, ...englishTranslations[item.id] };
-            }
-            return item;
-        });
-    } else {
+    // 현재 언어에 맞는 데이터 로드
+    allData = getLandmarkData();
+    
+    if (!allData || allData.length === 0) {
         console.error('landmarkData not found!');
         return;
     }
     
-    // 번역 파일 로드
-    loadTranslations();
+    console.log(`✅ 데이터 로드 완료: ${allData.length}개 (${getLang()})`);
     
     // 초기 언어에 따른 폰트 설정
     document.body.setAttribute('data-lang', getLang());
@@ -404,6 +566,12 @@ function setLanguage(lang) {
     
     // body에 언어 속성 설정 (폰트 변경용)
     document.body.setAttribute('data-lang', lang);
+    
+    // 언어별 데이터 다시 로드
+    allData = getLandmarkData();
+    
+    // 현재 필터 상태 유지하면서 데이터 재정렬
+    applyFilters();
     
     updateUITexts();
     renderTable();
@@ -669,7 +837,13 @@ function renderTable() {
     if (!tbody) return;
     
     if (filteredData.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px;color:#94a3b8;">${lang === 'en' ? 'No results found.' : '검색 결과가 없습니다.'}</td></tr>`;
+        const noResultsMsg = {
+            ko: '검색 결과가 없습니다.',
+            en: 'No results found.',
+            zh: '没有搜索结果。',
+            ja: '検索結果がありません。'
+        };
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px;color:#94a3b8;">${noResultsMsg[lang] || noResultsMsg.en}</td></tr>`;
         updateFilteredCount();
         return;
     }
@@ -680,7 +854,7 @@ function renderTable() {
         const popularity = item.popularity || 50;
         const displayName = getItemName(item);
         const catName = getCatName(cat);
-        const district = translateDistrict(item.district);
+        const district = getItemLocation(item);
         const duration = translateDuration(item.duration);
         
         return `
@@ -803,7 +977,7 @@ function openModal(id) {
     updateModalTitles(lang);
     
     document.getElementById('modalAdmission').textContent = getItemAdmission(item) || '-';
-    document.getElementById('modalHours').textContent = item.hours || '-';
+    document.getElementById('modalHours').textContent = getItemHours(item) || '-';
     document.getElementById('modalClosed').textContent = translateClosed(item.closed) || '-';
     document.getElementById('modalDuration').textContent = translateDuration(item.duration) || '-';
     document.getElementById('modalDistrict').textContent = translateDistrict(item.district) || '-';

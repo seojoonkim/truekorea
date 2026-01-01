@@ -72,14 +72,13 @@ body[data-lang="en"] {
     top: 0;
     z-index: 100;
     gap: 12px;
-    flex-wrap: wrap;
 }
 
 .header-left {
     display: flex;
     align-items: center;
     gap: 12px;
-    flex: 1;
+    flex-shrink: 0;
 }
 
 .header-center {
@@ -318,7 +317,7 @@ body[data-lang="en"] {
 }
 
 .col-rank { width: 36px; text-align: center; }
-.col-photo { width: 80px; }
+.col-photo { width: 1%; white-space: nowrap; } /* 콘텐츠(사진) 크기만큼만 */
 .col-name { width: 160px; }
 .col-category { width: 100px; }
 .col-location { width: 80px; }
@@ -346,6 +345,7 @@ body[data-lang="en"] {
     font-size: 24px;
     overflow: hidden;
     flex-shrink: 0;
+    margin: 0px 6px 0px 0px;
 }
 
 .cell-photo img {
@@ -1241,6 +1241,11 @@ body[data-lang="en"] {
 }
 
 @media (max-width: 600px) {
+    /* 테이블 셀 패딩 축소 */
+    .landmark-table td {
+        padding: 7px 4px;
+    }
+    
     /* 카테고리 컬럼 숨기기 */
     .landmark-table th.col-category,
     .landmark-table td:nth-child(4) { display: none; }
@@ -1249,8 +1254,8 @@ body[data-lang="en"] {
     .cell-category-mobile { display: inline-flex; }
     .cell-name { display: inline; }
     
-    /* 소요시간 축소 */
-    .cell-duration { font-size: 11px; }
+    /* 소요시간 축소 + 줄바꿈 방지 */
+    .cell-duration { font-size: 11px; white-space: nowrap; }
     .col-duration { width: 60px; }
     
     /* 인기도 더 축소 */
@@ -1261,8 +1266,8 @@ body[data-lang="en"] {
 @media (max-width: 480px) {
     .score-grid { grid-template-columns: 1fr; }
     
-    /* 소요시간 더 축소 */
-    .cell-duration { font-size: 10px; }
+    /* 소요시간 더 축소 + 줄바꿈 방지 */
+    .cell-duration { font-size: 10px; white-space: nowrap; }
     .col-duration { width: 50px; }
     
     /* 인기도 숫자만 표시 */
@@ -1314,7 +1319,7 @@ body[data-lang="en"] {
 /* 상세 설명 */
 .detail-description {
     font-size: 14px;
-    line-height: 1.8;
+    line-height: 1.6;
     color: var(--text-secondary);
 }
 
@@ -1834,4 +1839,45 @@ body[data-lang="en"] {
 .lang-btn.active {
     background: var(--accent-gradient);
     color: #ffffff;
+}
+
+/* ===== 다국어 폰트 굵기 안정화 ===== */
+/* 일본어 */
+:lang(ja) {
+    font-family: 'Noto Sans JP', 'Pretendard', sans-serif;
+}
+
+:lang(ja) body,
+:lang(ja) .about-desc,
+:lang(ja) .filter-btn,
+:lang(ja) .cell-name,
+:lang(ja) .detail-description {
+    font-weight: 500;
+}
+
+:lang(ja) h2,
+:lang(ja) h3,
+:lang(ja) .about-header h2,
+:lang(ja) .modal-name {
+    font-weight: 700;
+}
+
+/* 중국어 */
+:lang(zh) {
+    font-family: 'Noto Sans SC', 'Pretendard', sans-serif;
+}
+
+:lang(zh) body,
+:lang(zh) .about-desc,
+:lang(zh) .filter-btn,
+:lang(zh) .cell-name,
+:lang(zh) .detail-description {
+    font-weight: 500;
+}
+
+:lang(zh) h2,
+:lang(zh) h3,
+:lang(zh) .about-header h2,
+:lang(zh) .modal-name {
+    font-weight: 700;
 }

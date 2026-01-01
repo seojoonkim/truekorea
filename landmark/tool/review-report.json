@@ -1,0 +1,1567 @@
+{
+  "timestamp": "2026-01-01T20:30:30.299Z",
+  "total_landmarks": 108,
+  "issues_found": 93,
+  "issues": [
+    {
+      "id": "gyeongbokgung",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing translation of '법궁' (main palace) - important status information",
+          "suggestion": "Add 'main palace' to establish the palace's significance"
+        }
+      ]
+    },
+    {
+      "id": "changdeokgung",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing translation of '이궁' (secondary palace) - important palace classification",
+          "suggestion": "Add 'secondary palace' to explain the palace's role"
+        },
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing translation of '약다방 체험' (traditional tea house experience)",
+          "suggestion": "Add 'The traditional tea house experience offers...' instead of vague 'Visitors can also experience'"
+        }
+      ]
+    },
+    {
+      "id": "changgyeonggung",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing translation that night tours don't require reservation ('예약 없이')",
+          "suggestion": "Clarify 'Night tours are available via on-site ticket purchase without advance reservation'"
+        },
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing reference to stroller accessibility mentioned in Korean tips",
+          "suggestion": "The Korean tips mention strollers but this context is lost in description"
+        }
+      ]
+    },
+    {
+      "id": "gyeonghuigung",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Low tourist traffic allows for peaceful palace exploration' sounds unnatural",
+          "suggestion": "Change to 'fewer crowds allow visitors to enjoy a peaceful palace experience'"
+        }
+      ]
+    },
+    {
+      "id": "jongmyo",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing information about guided tours being closed on Saturdays - Korean says '토요일 제외' (except Saturday) but English says 'closed Saturdays'",
+          "suggestion": "Should clarify that guided tours are not available on Saturdays, but free viewing is available"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "First tip incorrectly translates the Saturday information - Korean says Saturday is the ONLY day for free viewing, English says Saturday is closed",
+          "suggestion": "Should read 'Must visit during scheduled guided tour times (Saturdays offer free viewing only)'"
+        }
+      ]
+    },
+    {
+      "id": "seochon",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'TV cooking shows' is too generic - the Korean specifically mentions '흑백요리사' (Black and White Chef), a popular Korean cooking competition show",
+          "suggestion": "Should specify 'after restaurants were featured on popular Korean cooking shows' or mention the show name"
+        },
+        {
+          "field": "description",
+          "type": "cultural context lost",
+          "problem": "'MZ generation' is a specific Korean cultural term referring to Millennials and Gen Z combined, but this context is lost",
+          "suggestion": "Could explain as 'younger generations (MZ generation)' or 'millennials and Gen Z'"
+        }
+      ]
+    },
+    {
+      "id": "ikseon",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "cultural context lost",
+          "problem": "Same issue with 'MZ generation' - Korean cultural term not explained for international readers"
+        },
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'Hottest retro district' sounds awkward - 'hottest' in this context may not translate well culturally",
+          "suggestion": "Consider 'Trendy retro district' or 'Popular retro neighborhood'"
+        }
+      ]
+    },
+    {
+      "id": "namsangol",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "omission",
+          "problem": "Missing 'free attraction' (무료 명소) which is important tourism information",
+          "suggestion": "Add 'free attraction' to emphasize no admission cost"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'makes it an ideal visit' is incomplete - missing object",
+          "suggestion": "Change to 'makes it an ideal complementary visit' or 'makes it perfect to visit together'"
+        }
+      ]
+    },
+    {
+      "id": "gwanghwamun",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'A symbolic civic plaza and main gate of Gyeongbokgung Palace' incorrectly describes the square as the gate itself",
+          "suggestion": "Change to 'A symbolic civic plaza in front of Gyeongbokgung Palace's main gate'"
+        }
+      ]
+    },
+    {
+      "id": "sungnyemun",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'Korea's Treasure No. 1' should be 'National Treasure No. 1' to match the Korean '국보 제1호'",
+          "suggestion": "Change to 'National Treasure No. 1' for accuracy"
+        }
+      ]
+    },
+    {
+      "id": "hanyangdoseong",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'Bukhansan' should be 'Bugaksan' - these are different mountains",
+          "suggestion": "Change 'Bukhansan' to 'Bugaksan' to correctly identify the mountain"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "Same error - 'Bukhansan section' should be 'Bugaksan section'",
+          "suggestion": "Change to 'Bugaksan section' for consistency and accuracy"
+        }
+      ]
+    },
+    {
+      "id": "changuimun",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "omission",
+          "problem": "Missing translation of '성곽길' (fortress wall trail) - translated as just 'trail'",
+          "suggestion": "Change 'Inwangsan trail' to 'Inwangsan fortress wall trail'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Hanyang City Wall' is awkward - should be 'Hanyang Fortress Wall' or 'Seoul City Wall'",
+          "suggestion": "Use 'Seoul City Wall' as it's the commonly used English term"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Blue House backstreet walking trail' is awkward phrasing",
+          "suggestion": "Change to 'walking trail behind the Blue House' or 'Blue House rear trail'"
+        }
+      ]
+    },
+    {
+      "id": "seolleung",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'계비 정현왕후' should be 'Queen Consort Junghyeon' not 'Queen Junghyeon'",
+          "suggestion": "Use 'Queen Consort Junghyeon' to clarify her status"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'healing experience' is too literal translation of Korean wellness concept",
+          "suggestion": "Change to 'relaxation and rejuvenation' or 'peaceful retreat'"
+        }
+      ]
+    },
+    {
+      "id": "jeongdong",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'An emotional street where you can feel the essence' is awkward phrasing",
+          "suggestion": "Change to 'A nostalgic street where visitors can experience Seoul's modern historical atmosphere'"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'구한말' refers specifically to the end of the Korean Empire period, not just 'late Joseon period'",
+          "suggestion": "Use 'late Korean Empire period' or 'early 20th century'"
+        }
+      ]
+    },
+    {
+      "id": "chilgung",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "omission",
+          "problem": "Missing '신위' (memorial tablets/ancestral tablets) concept in summary",
+          "suggestion": "Add 'memorial tablets' to clarify what is enshrined"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'bore sons to Joseon Dynasty kings' is awkward phrasing",
+          "suggestion": "Change to 'who gave birth to future kings' or 'mothers of Joseon kings'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Conveniently close to the Blue House' - Blue House is no longer the presidential residence",
+          "suggestion": "Update to reflect current status or remove reference"
+        }
+      ]
+    },
+    {
+      "id": "seoul_history_museum",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'without financial barriers' is unnecessarily formal and awkward",
+          "suggestion": "Simply end with 'Free admission makes Seoul's history accessible to all visitors'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'abundant viewing opportunities' is awkward phrasing",
+          "suggestion": "Change to 'plenty to see and explore'"
+        }
+      ]
+    },
+    {
+      "id": "korean_history_museum",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'essential stop near Gwanghwamun' sounds awkward - missing article",
+          "suggestion": "an essential stop near Gwanghwamun Square"
+        }
+      ]
+    },
+    {
+      "id": "namsan_tower",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'night view sanctuary' is awkward and overly poetic for tourism content",
+          "suggestion": "spectacular 360-degree panoramic night views"
+        }
+      ]
+    },
+    {
+      "id": "lotte_tower",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "'Day trip package with Lotte World Mall' is unclear - sounds like a product offering rather than a tip",
+          "suggestion": "Combine with Lotte World Mall for a full day experience"
+        }
+      ]
+    },
+    {
+      "id": "bukak_skyway",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "'Recommended by private car or taxi' is grammatically awkward",
+          "suggestion": "Best accessed by private car or taxi"
+        }
+      ]
+    },
+    {
+      "id": "naksan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "Bukhansan Mountain should be Bukaksan Mountain - these are different mountains",
+          "suggestion": "Change 'Bukhansan Mountain' to 'Bukaksan Mountain'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'offering breathtaking Seoul city views' - awkward phrasing for opening sentence",
+          "suggestion": "A low mountain famous for Seoul night views"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'you can panoramically view' - unnatural adverb usage",
+          "suggestion": "you can enjoy panoramic views of"
+        }
+      ]
+    },
+    {
+      "id": "eungbongsan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'magnificent forsythia and cherry blossoms' - 'magnificent' doesn't naturally pair with these flowers",
+          "suggestion": "beautiful forsythia and cherry blossoms in full bloom"
+        },
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing information about it being a popular photography spot (출사 명소)",
+          "suggestion": "Add 'It's also a favorite spot among photographers.'"
+        }
+      ]
+    },
+    {
+      "id": "haneul_park",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing specific mention that it was Nanji Island landfill (난지도 쓰레기매립지)",
+          "suggestion": "Add 'the former Nanji Island landfill' for cultural context"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'silver grass fields create a stunning landscape with a festival' - unclear phrasing",
+          "suggestion": "the silver grass fields create a spectacular sight, leading to an annual festival"
+        }
+      ]
+    },
+    {
+      "id": "jeongdong_observatory",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Its relatively lower elevation provides an intimate view' - awkward phrasing",
+          "suggestion": "The moderate height allows for closer, more detailed views"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'creating a cafe-like comfortable viewing experience' - unnatural phrasing",
+          "suggestion": "You can enjoy the views in a comfortable, cafe-like atmosphere"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "Location given as Seoul City Hall Seosomun Annex, but original says Seoul Museum of Art",
+          "suggestion": "Correct the location information to match the museum mentioned in description"
+        }
+      ]
+    },
+    {
+      "id": "maebongsan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "omission",
+          "problem": "Missing '도심 속' (urban/downtown) context which is important for tourists to understand this is an urban forest",
+          "suggestion": "Easy night view spot in downtown Gangnam, just 30 minutes to the observation point"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'정상까지 15분' contradicts summary's '30분' - original says 15 minutes to summit but summary says 30 minutes to observation point",
+          "suggestion": "Clarify whether it's 15 minutes to summit or 30 minutes total"
+        }
+      ]
+    },
+    {
+      "id": "achasan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing '고구려 유적이 남아있는 역사적인 명산' - the historical significance as a famous mountain with Goguryeo remains is not clearly conveyed",
+          "suggestion": "Add 'historic famous mountain' context"
+        },
+        {
+          "field": "description",
+          "type": "awkward phrasing",
+          "problem": "'with significant Goguryeo historical remains' is awkward",
+          "suggestion": "'where important Goguryeo ruins remain' or 'home to significant Goguryeo archaeological sites'"
+        }
+      ]
+    },
+    {
+      "id": "inwangsan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing '기우제' (rain ritual) cultural context - this is an important Korean traditional concept that needs explanation",
+          "suggestion": "Explain that rain rituals were ceremonies to pray for rain during droughts"
+        },
+        {
+          "field": "tips",
+          "type": "awkward phrasing",
+          "problem": "'city wall hiking trail' sounds awkward",
+          "suggestion": "'fortress wall trail' or 'city wall path'"
+        }
+      ]
+    },
+    {
+      "id": "namsan_cable_car",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward phrasing",
+          "problem": "'the most picturesque way' doesn't match the Korean '가장 낭만적인' (most romantic)",
+          "suggestion": "'the most romantic way to visit N Seoul Tower'"
+        },
+        {
+          "field": "tips",
+          "type": "awkward phrasing",
+          "problem": "'Cable car ascent only, descend on foot' is too abbreviated and unclear",
+          "suggestion": "'Take cable car up, walk down for a pleasant descent'"
+        }
+      ]
+    },
+    {
+      "id": "sebitseom",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward phrasing",
+          "problem": "'are illuminated by dazzling LED lights after dark' sounds unnatural",
+          "suggestion": "'light up with brilliant LED displays at night'"
+        },
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing the poetic expression '화려한 LED 조명이 한강을 수놓아' which describes the lights 'embroidering' the Han River",
+          "suggestion": "Include the visual imagery of lights adorning/decorating the Han River"
+        }
+      ]
+    },
+    {
+      "id": "seoullo_7017",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Scattered with charming cafes' is awkward phrasing",
+          "suggestion": "Change to 'Features charming cafes and flower shops scattered throughout'"
+        },
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "'Used as a connecting route' sounds unnatural - missing subject",
+          "suggestion": "Change to 'Use as a connecting route between Seoul Station and Namdaemun Market'"
+        }
+      ]
+    },
+    {
+      "id": "myeongdong",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'where fashion, beauty, and culinary delights converge' is overly formal for tourism content",
+          "suggestion": "Change to 'packed with fashion, beauty stores, and great food'"
+        },
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "'Can be combined with a walking route to' is passive and awkward",
+          "suggestion": "Change to 'Combine with a walk to Myeongdong Cathedral'"
+        }
+      ]
+    },
+    {
+      "id": "dongdaemun",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'The pulsing heart' doesn't match the original meaning of '중심' (center)",
+          "suggestion": "Change to 'The center of Dongdaemun Fashion Town that never sleeps'"
+        },
+        {
+          "field": "description",
+          "type": "over-translation",
+          "problem": "'The ultimate pilgrimage site' adds dramatic language not in Korean original",
+          "suggestion": "Change to 'A must-visit destination for shopping enthusiasts'"
+        }
+      ]
+    },
+    {
+      "id": "namdaemun",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'galchi-jorim (mackerel stew)' is incorrect - galchi means cutlassfish/beltfish, not mackerel",
+          "suggestion": "Change to 'galchi-jorim (braised cutlassfish)'"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "'mackerel stew alley' should be 'braised cutlassfish alley' - same fish translation error",
+          "suggestion": "Correct the fish name to cutlassfish"
+        }
+      ]
+    },
+    {
+      "id": "gwangjang",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "\"permanent market\" sounds awkward - should be \"established market\" or \"traditional market\"",
+          "suggestion": "Korea's first established traditional market"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "\"boasting a history\" is overly formal for tourism content",
+          "suggestion": "with over 100 years of history"
+        }
+      ]
+    },
+    {
+      "id": "hongdae",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "\"A vibrant street representing youth and art\" - awkward phrasing",
+          "suggestion": "The vibrant heart of Seoul's youth and art scene"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "\"serving as the birthplace\" - too formal",
+          "suggestion": "where indie bands, clubs, and street performances were born"
+        }
+      ]
+    },
+    {
+      "id": "gangnam",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "All tips are awkwardly capitalized like titles instead of natural sentences",
+          "suggestion": "Should be: 'Shop at Gangnam Station's underground shopping center', 'Explore various restaurants in the dining alley', etc."
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "\"A synonym for affluent districts\" is unnatural",
+          "suggestion": "Synonymous with Seoul's affluent lifestyle"
+        }
+      ]
+    },
+    {
+      "id": "garosu",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "\"세로수길\" is mistranslated - it refers to side streets off Garosu-gil, not a separate place",
+          "suggestion": "Explore hidden restaurants in the side streets"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "\"concept stores\" - should be \"select shops\" or \"boutiques\"",
+          "suggestion": "select shops and flagship stores"
+        }
+      ]
+    },
+    {
+      "id": "itaewon",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "\"Must-do world food tour\" - awkward phrasing",
+          "suggestion": "Try international cuisines (Middle Eastern, Indian, etc.)"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "\"If you want to experience a global travel vibe in Seoul, Itaewon is the place to be\" - too colloquial",
+          "suggestion": "Visit Itaewon to experience Seoul's international side"
+        }
+      ]
+    },
+    {
+      "id": "insadong",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Experience authentic Korean culture in traditional teahouses and restaurants' - awkward phrasing, should be 'traditional Korean restaurants' to match '한정식집'",
+          "suggestion": "Experience authentic Korean culture at traditional teahouses and Korean restaurants"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'street transforms into a pedestrian zone featuring street performances' - '버스킹' specifically means busking, not general street performances",
+          "suggestion": "the street becomes car-free and hosts busking performances"
+        }
+      ]
+    },
+    {
+      "id": "coex",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'Asia's largest underground mall' - missing 'shopping' for clarity as in Korean '쇼핑몰'",
+          "suggestion": "Asia's largest underground shopping mall"
+        },
+        {
+          "field": "tips",
+          "type": "over-translation",
+          "problem": "'Maze-like structure - use Naver Maps' - adds 'Naver Maps' which isn't in Korean original '네이버 지도 활용'",
+          "suggestion": "Maze-like structure - use navigation apps"
+        }
+      ]
+    },
+    {
+      "id": "cheongdam",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'A place where you can spot celebrities' fashion firsthand' - unnatural phrasing",
+          "suggestion": "A place where you might spot celebrity fashion styles"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'An epitome of Seoul's top-tier lifestyle' - overly formal tone for tourism content",
+          "suggestion": "A space where you can experience Seoul's most luxurious lifestyle"
+        }
+      ]
+    },
+    {
+      "id": "ifc_mall",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'this venue also houses' - sounds like translation, unnatural flow",
+          "suggestion": "It also features a large CGV cinema and cultural spaces"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'It's a vibrant hotspot in Yeouido that seamlessly blends business and leisure' - overly complex for tourism content",
+          "suggestion": "A popular Yeouido destination combining business and leisure"
+        }
+      ]
+    },
+    {
+      "id": "the_hyundai",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'sanctuary for Sounds Forest and pop-ups' is unnatural - sanctuary doesn't work with 'for' in this context",
+          "suggestion": "'A favorite department store of the MZ generation, known for Sounds Forest and pop-up hotspots'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'offering diverse culinary experiences' sounds too formal/brochure-like",
+          "suggestion": "'where you can enjoy diverse dining options'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Popular for its Instagram-worthy spaces, it presents...' - choppy sentence structure",
+          "suggestion": "Split into two sentences or rephrase for better flow"
+        }
+      ]
+    },
+    {
+      "id": "noryangjin",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'The early morning auction tour is a unique experience that's become very popular' - awkward phrasing",
+          "suggestion": "'Watching the early morning auctions has become a popular unique experience'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'It's a landmark destination for foreign tourists' - 'landmark destination' is redundant",
+          "suggestion": "'It's a popular destination for foreign tourists'"
+        }
+      ]
+    },
+    {
+      "id": "gyeongdong",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Visitors can watch herbal teas and health tonics being made on-site' - missing the selling aspect from original",
+          "suggestion": "'Fresh herbal teas and health tonics are prepared and sold on-site'"
+        },
+        {
+          "field": "description",
+          "type": "over-translation",
+          "problem": "Added 'A local market beloved by residents' which isn't in the Korean original",
+          "suggestion": "Remove or rephrase to match original meaning about locals mainly using it"
+        }
+      ]
+    },
+    {
+      "id": "mangwon_market",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "omission",
+          "problem": "Missing '쌀고로케' (rice croquettes) which is specifically mentioned in Korean",
+          "suggestion": "'Hip traditional market famous for rice croquettes and local vibes'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Perfect for a foodie tour' - too casual for the context",
+          "suggestion": "'Ideal for food enthusiasts'"
+        }
+      ]
+    },
+    {
+      "id": "tongin",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'visitors can collect side dishes using traditional brass coins' - 'collect' doesn't convey the purchasing aspect",
+          "suggestion": "'visitors can purchase side dishes using traditional brass coins'"
+        },
+        {
+          "field": "description",
+          "type": "cultural context lost",
+          "problem": "'Blue House' reference is outdated (should be former Blue House or presidential office)",
+          "suggestion": "Update reference or clarify it's the former presidential residence area"
+        }
+      ]
+    },
+    {
+      "id": "seongsu",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'pop-up sanctuary' is awkward phrasing - sanctuary doesn't fit the context",
+          "suggestion": "'pop-up hotspot' or 'pop-up hub'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'holy ground for hipsters' sounds unnatural in English",
+          "suggestion": "'hipster haven' or 'hipster paradise'"
+        }
+      ]
+    },
+    {
+      "id": "yeonnam",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'aesthetic alleys' is awkward - Korean '감성' doesn't translate well as 'aesthetic'",
+          "suggestion": "'charming alleys' or 'atmospheric alleys'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'young creatives' is added interpretation not in original Korean which just says '젊은 감성'",
+          "suggestion": "'young sensibilities' or 'youthful vibe'"
+        }
+      ]
+    },
+    {
+      "id": "yeonhui",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'treasure trove of hidden culinary gems nestled between' is overly elaborate and sounds like marketing copy",
+          "suggestion": "More natural phrasing like 'home to hidden restaurants and cafes tucked between'"
+        }
+      ]
+    },
+    {
+      "id": "hannam",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing translation of '셀럽들의 핫플레이스' (celebrity hotspot) from summary in description",
+          "suggestion": "Add mention of celebrity popularity"
+        }
+      ]
+    },
+    {
+      "id": "sindang",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Famous for its Tteokbokki Town, this is the original street' - awkward phrasing",
+          "suggestion": "This area is famous for Tteokbokki Town, the original street for instant tteokbokki"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'with dozens of long-standing restaurants' - unnatural English",
+          "suggestion": "home to dozens of restaurants with decades of tradition"
+        }
+      ]
+    },
+    {
+      "id": "euljiro3ga",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Known as 'Hipjiro', this retro-themed alleyway is located in the Euljiro area' - redundant phrasing",
+          "suggestion": "This retro-themed district in Euljiro 3-ga is known as 'Hipjiro'"
+        },
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "'Recommended to visit in the evening to night' - unnatural English",
+          "suggestion": "Best visited in the evening or at night"
+        }
+      ]
+    },
+    {
+      "id": "seongbuk",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'Gilsang Temple' should be 'Gilsangsa Temple' - temple names typically include 'sa'",
+          "suggestion": "Use 'Gilsangsa Temple' for consistency with Korean temple naming"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'experiencing Seoul's nostalgic old-world charm' - sounds like translation",
+          "suggestion": "where you can experience Seoul's traditional charm and nostalgic atmosphere"
+        }
+      ]
+    },
+    {
+      "id": "buam",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "name",
+          "type": "mistranslation",
+          "problem": "'Buamdong' should be 'Buam-dong' for consistency with other dong names",
+          "suggestion": "Use 'Buam-dong' to match the naming pattern"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'Hankang Museum' should be 'Whanki Museum' - 환기미술관 refers to Kim Whanki",
+          "suggestion": "Use 'Whanki Museum' as it's named after artist Kim Whanki"
+        }
+      ]
+    },
+    {
+      "id": "cheongpa",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'Sookmyung Womens Univ. Station' - inconsistent abbreviation and missing apostrophe",
+          "suggestion": "Sookmyung Women's University Station"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Undeveloped as a tourist spot' - awkward phrasing",
+          "suggestion": "Since it hasn't become touristy yet"
+        }
+      ]
+    },
+    {
+      "id": "songni",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'artistic atmosphere' is not the right translation for '감성적인 분위기'",
+          "suggestion": "Use 'sentimental atmosphere' or 'emotional atmosphere'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'date course' is direct translation from Korean - sounds unnatural in English",
+          "suggestion": "Use 'dating destination' or 'romantic spot'"
+        }
+      ]
+    },
+    {
+      "id": "seoul_forest",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'flower deer' is awkward - this refers to sika deer",
+          "suggestion": "Use 'sika deer' or 'spotted deer'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'half-day outing' doesn't capture the Korean meaning of '반나절 코스'",
+          "suggestion": "Use 'half-day itinerary' or 'half-day tour'"
+        }
+      ]
+    },
+    {
+      "id": "yeouido_park",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'citizen's rest space' is direct translation - sounds unnatural",
+          "suggestion": "Use 'public recreational space' or 'urban recreational area'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'office workers during lunch break' should be 'office workers' lunch breaks'",
+          "suggestion": "Rephrase for more natural English flow"
+        }
+      ]
+    },
+    {
+      "id": "olympic_park",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'9 famous photo zones' - the Korean '9경' refers to '9 scenic views' not just photo zones",
+          "suggestion": "Use 'nine scenic viewpoints' or 'nine picturesque spots'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'grass plaza' is direct translation - should be 'lawn areas' or 'grassy fields'",
+          "suggestion": "Use more natural English phrasing"
+        }
+      ]
+    },
+    {
+      "id": "worldcup_park",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'a ecological park' should be 'an ecological park'",
+          "suggestion": "Fix article usage"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'perfectly optimized for' is awkward phrasing",
+          "suggestion": "Use 'ideal for' or 'perfect for'"
+        },
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "'Walking Tour of 5 Interconnected Parks' - inconsistent capitalization and awkward phrasing",
+          "suggestion": "Use 'Five-park walking tour' with consistent capitalization"
+        }
+      ]
+    },
+    {
+      "id": "namsan_park",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Korean mentions '야경 명소로 연인들의 데이트 코스입니다' (famous for night views and a dating course for lovers) but English only says 'popular dating spot for couples'",
+          "suggestion": "Add 'famous for its night views' to maintain the complete meaning"
+        }
+      ]
+    },
+    {
+      "id": "bukhansan_national",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "tips",
+          "type": "over-translation",
+          "problem": "Korean tip '하산 후 순두부 골목' (soft tofu alley after descending) is expanded to 'Try sundubujjigae (soft tofu stew) in the alley after descending' - adds information not in original",
+          "suggestion": "Simply translate as 'Soft tofu alley after descending' to match the original brevity"
+        }
+      ]
+    },
+    {
+      "id": "gwanaksan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward phrasing",
+          "problem": "'Mountain behind Seoul National Univ.' uses awkward abbreviation and phrasing",
+          "suggestion": "Change to 'Mountain behind Seoul National University, panoramic Seoul views from Yeonjudae Peak'"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'Yeonju Peak and Yeonju Rock' - Korean has '연주대, 연주암' where 연주대 is Yeonjudae (a platform/stage), not a peak",
+          "suggestion": "Translate as 'Yeonjudae Platform and Yeonjuam Rock'"
+        }
+      ]
+    },
+    {
+      "id": "dobongsan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "name",
+          "type": "awkward phrasing",
+          "problem": "'Dobong Mountain' should be 'Dobongsan Mountain' for consistency with other entries or just 'Dobongsan'",
+          "suggestion": "Use 'Dobongsan Mountain' to match the pattern of other entries"
+        },
+        {
+          "field": "tips",
+          "type": "awkward phrasing",
+          "problem": "'Can be traversed with Bukhansan Mountain' is awkward English",
+          "suggestion": "Change to 'Ridge traverse possible to Bukhansan' or 'Can connect to Bukhansan via ridge trail'"
+        }
+      ]
+    },
+    {
+      "id": "suraksan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "tips",
+          "type": "awkward phrasing",
+          "problem": "'Possible to traverse to Buramsan Mountain' is awkward - same issue as dobongsan",
+          "suggestion": "Change to 'Ridge traverse possible to Buramsan' for consistency and natural English"
+        }
+      ]
+    },
+    {
+      "id": "cheonggyecheon",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'cuts through' is too harsh for tourism content describing a peaceful stream",
+          "suggestion": "Use 'flows through' or 'runs through' instead"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'A 5.8km walking path has been created' sounds mechanical and passive",
+          "suggestion": "Use 'Features a 5.8km walking path' or 'Offers a 5.8km walking path'"
+        }
+      ]
+    },
+    {
+      "id": "seonyudo",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Visitors access the island via a bridge' is too formal/technical for tourism content",
+          "suggestion": "Use 'You can reach the island by crossing a bridge' or 'The island is accessible via a charming bridge'"
+        }
+      ]
+    },
+    {
+      "id": "yangjae",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "Korean text describes '양재시민의숲' (Yangjae Citizen's Forest) but English name is 'Yangjae Stream' - content mismatch",
+          "suggestion": "Either change the name to match the content or adjust the description to focus on the stream"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'people seek shade in the forest to escape the heat' is awkward phrasing",
+          "suggestion": "Use 'the forest provides cool shade during hot summer days'"
+        }
+      ]
+    },
+    {
+      "id": "boramae",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "Tips format inconsistent - some use title case, others use sentence case",
+          "suggestion": "Standardize to either 'Air Force aircraft exhibition at Air Park' or maintain current capitalization consistently"
+        }
+      ]
+    },
+    {
+      "id": "yongsan_family",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'vast lawns' is overly dramatic for tourism content",
+          "suggestion": "Use 'spacious lawns' or 'extensive lawns'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'it has been converted into a public park' sounds too technical",
+          "suggestion": "Use 'now serves as a public park' or 'transformed into a public park'"
+        }
+      ]
+    },
+    {
+      "id": "children_grand",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "Multiple sentences start with 'It' creating repetitive phrasing",
+          "suggestion": "Vary sentence structures for better flow"
+        }
+      ]
+    },
+    {
+      "id": "jungnangcheon",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'it allows for both walking and hiking' sounds unnatural - too formal",
+          "suggestion": "visitors can enjoy both walking and hiking"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Night lighting enables evening walks' is awkwardly phrased",
+          "suggestion": "The trail is lit for evening walks"
+        }
+      ]
+    },
+    {
+      "id": "ansan_jarak",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'Seodaemun barrier-free forest trail' reads like a label, not natural description",
+          "suggestion": "Barrier-free forest trail in Seodaemun-gu"
+        },
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "'Accessible Forest Trail' should be lowercase for consistency with other tips",
+          "suggestion": "Accessible forest trail"
+        },
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "'Departs near' is awkward - trails don't depart",
+          "suggestion": "Starting point near Seodaemun-gu Office"
+        }
+      ]
+    },
+    {
+      "id": "dream_forest_park",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "Inconsistent capitalization - some tips use title case, others don't",
+          "suggestion": "Use consistent lowercase format like other landmarks"
+        }
+      ]
+    },
+    {
+      "id": "national_museum",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'free spot' sounds unnatural - more like a parking space than a cultural venue",
+          "suggestion": "free attraction/destination to see Korean history and culture at a glance"
+        }
+      ]
+    },
+    {
+      "id": "leeum",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'Samsung's national treasure collection and contemporary art in architect-designed museum' is awkwardly phrased and missing articles",
+          "suggestion": "Samsung's collection of national treasures and contemporary art in a museum designed by world-renowned architects"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'international modern art' should be 'international contemporary art' to match the Korean '현대미술'",
+          "suggestion": "international contemporary art"
+        }
+      ]
+    },
+    {
+      "id": "apma",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'Art museum in Amorepacific HQ' sounds too corporate/informal for tourism content",
+          "suggestion": "Art museum within Amorepacific headquarters, showcasing harmony of modern architecture and traditional art"
+        }
+      ]
+    },
+    {
+      "id": "mmca_seoul",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'specialized museum dedicated to modern art' should be 'contemporary art' to match Korean '현대미술'",
+          "suggestion": "contemporary art"
+        }
+      ]
+    },
+    {
+      "id": "mmca_deoksugung",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "cultural context lost",
+          "problem": "'Japanese colonial era' is too generic - should specify it's the Seokjojeon (Stone Hall) built in 1900s",
+          "suggestion": "historic Seokjojeon (Stone Hall) built during the early 1900s"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'romantic walk along Jeongdong-gil' adds romantic connotation not in original Korean",
+          "suggestion": "a stroll along Jeongdong-gil"
+        }
+      ]
+    },
+    {
+      "id": "war_memorial",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Korean text mentions 'modern Korean national defense history' (근현대 호국 역사) but translation says just 'modern Korean national defense history' losing the 'contemporary' aspect",
+          "suggestion": "Change to 'modern and contemporary Korean national defense history'"
+        }
+      ]
+    },
+    {
+      "id": "hangeul_museum",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'Korean alphabet experiences' sounds unnatural - doesn't clearly convey hands-on learning activities",
+          "suggestion": "Change to 'interactive Korean alphabet learning experiences' or 'hands-on Hangeul activities'"
+        }
+      ]
+    },
+    {
+      "id": "daelim",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "cultural context lost",
+          "problem": "'MZ세대' is translated as 'MZ generation' but this Korean term won't be understood by international tourists",
+          "suggestion": "Change to 'millennials and Gen Z visitors' or 'young visitors'"
+        },
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "Missing translation of '청와대' (Blue House/former presidential residence) context that it's no longer the presidential residence",
+          "suggestion": "Add clarification like 'the former Blue House (presidential residence)'"
+        }
+      ]
+    },
+    {
+      "id": "sema",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'it showcases its modern architectural charm' is awkward phrasing",
+          "suggestion": "Change to 'the building displays beautiful modern architecture' or 'boasts impressive modern architectural features'"
+        }
+      ]
+    },
+    {
+      "id": "d_museum",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "Tip 2 says 'Linked with Hannam-dong cafes' but the description clearly states the museum relocated FROM Hannam-dong in 2021. Should be 'Seongsu-dong cafes'",
+          "suggestion": "Change to 'Linked with Seongsu-dong cafes'"
+        }
+      ]
+    },
+    {
+      "id": "savina",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "name",
+          "type": "mistranslation",
+          "problem": "Museum name is romanized as 'Sabina' but should be 'Savina' based on the Korean '사비나'",
+          "suggestion": "Change to 'Savina Museum'"
+        }
+      ]
+    },
+    {
+      "id": "arario",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "mistranslation",
+          "problem": "Summary mentions 'Inspace building' but Korean text doesn't mention this specific building name - it's a mistranslation",
+          "suggestion": "Remove 'in Inspace building' or replace with more general description"
+        }
+      ]
+    },
+    {
+      "id": "kansong",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "The collector's name is written as 'Jeon Hyung-pil' but should follow standard romanization as 'Jeon Hyeong-pil'",
+          "suggestion": "Use 'Jeon Hyeong-pil' for proper Korean name romanization"
+        }
+      ]
+    },
+    {
+      "id": "sejong_story",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'experience space for King Sejong's achievements' sounds unnatural - missing article",
+          "suggestion": "Change to 'an experience space for learning about King Sejong's achievements'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Extremely popular with children for its educational displays' sounds too emphatic for tourism content",
+          "suggestion": "Change to 'Very popular with children due to its many educational displays'"
+        }
+      ]
+    },
+    {
+      "id": "craft_museum",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'Free craft museum in Anguk-dong for appreciating Korean craftsmanship' is awkward phrasing",
+          "suggestion": "Change to 'Free craft museum in Anguk-dong showcasing Korean craftsmanship'"
+        }
+      ]
+    },
+    {
+      "id": "gyeongridan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'Hotspot' sounds too casual and 'back alleys' has negative connotations",
+          "suggestion": "A trendy neighborhood featuring international restaurants and unique cafes in the charming streets behind Itaewon"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Hidden in every alley' is unnatural English phrasing",
+          "suggestion": "International restaurants, fusion eateries, and unique cafes line every alley"
+        },
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "'Food explorers' is awkward - better to use 'food enthusiasts' or 'culinary adventurers'"
+        }
+      ]
+    },
+    {
+      "id": "samgakji",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "'Office worker sanctuary' sounds unnatural and overly dramatic for tourism content",
+          "suggestion": "A local district near the War Memorial featuring longtime restaurants and traditional Korean bars popular with office workers"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'War Memorial Museum' should be 'War Memorial of Korea' - this is the official English name"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'Premium Korean BBQ spots' is over-translation - original just says '삼겹살 맛집' (pork belly restaurants)"
+        }
+      ]
+    },
+    {
+      "id": "samcheong",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'prop shops' is incorrect - should be 'craft shops' or 'artisan shops' for '소품샵'"
+        },
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "'hand-made sujebi (soup)' is redundant - sujebi is already hand-pulled noodle soup by definition",
+          "suggestion": "sujebi (hand-pulled noodle soup)"
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "input_tokens": 83448,
+    "output_tokens": 16019
+  },
+  "cost": 0.490629
+}

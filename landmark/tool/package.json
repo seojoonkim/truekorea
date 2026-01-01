@@ -1,0 +1,23 @@
+{
+  "name": "seoul-landmarks-translator",
+  "version": "1.0.0",
+  "description": "Seoul Landmarks Database Translator using Claude API",
+  "main": "translate-landmarks.js",
+  "scripts": {
+    "translate:ja": "node translate-landmarks.js --lang=ja",
+    "translate:zh": "node translate-landmarks.js --lang=zh",
+    "translate:en": "node translate-landmarks.js --lang=en",
+    "translate:all": "npm run translate:en && npm run translate:ja && npm run translate:zh",
+    "estimate:ja": "node translate-landmarks.js --lang=ja --estimate",
+    "estimate:zh": "node translate-landmarks.js --lang=zh --estimate",
+    "estimate:en": "node translate-landmarks.js --lang=en --estimate",
+    "test:ja": "node translate-landmarks.js --lang=ja --limit=3 --dry-run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
+    "dotenv": "^16.6.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-01-01T20:55:27.782Z",
+  "total_landmarks": 108,
+  "issues_found": 81,
+  "issues": [],
+  "usage": {
+    "input_tokens": 92393,
+    "output_tokens": 17153
+  },
+  "cost": 0.5344740000000001
+}

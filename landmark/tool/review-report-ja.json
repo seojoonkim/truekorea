@@ -1,0 +1,839 @@
+{
+  "timestamp": "2026-01-01T21:12:29.185Z",
+  "total_landmarks": 108,
+  "issues_found": 87,
+  "issues": [
+    {
+      "id": "cheongdam",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "mistranslation",
+          "problem": "「セレブが集まる」は原文「셀럽 핫플」の誤訳。「셀럽 핫플」は「セレブのホットプレイス」という意味",
+          "suggestion": "「高級ブランド旗艰店とセレブのホットプレイス」"
+        },
+        {
+          "field": "summary",
+          "type": "awkward phrasing",
+          "problem": "「最先端ライフスタイルストリート」は「럭셔리 라이프스타일 거리」の過剰翻訳",
+          "suggestion": "「ラグジュアリーライフスタイルストリート」"
+        }
+      ]
+    },
+    {
+      "id": "the_hyundai",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward phrasing",
+          "problem": "「MZ世代に人気の百貨店」sounds unnatural - should be more natural Japanese expression",
+          "suggestion": "「MZ世代に愛される百貨店」or「MZ世代から人気の百貨店」"
+        },
+        {
+          "field": "description",
+          "type": "awkward phrasing",
+          "problem": "「多様な美食を体験できます」sounds like literal translation",
+          "suggestion": "「様々なグルメを楽しむことができます」"
+        },
+        {
+          "field": "description",
+          "type": "awkward phrasing",
+          "problem": "「環境に配慮した建築物で快適な買い物環境を提供」is awkward",
+          "suggestion": "「環境に配慮した設計で、快適なショッピング環境を提供しています」"
+        }
+      ]
+    },
+    {
+      "id": "noryangjin",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward phrasing",
+          "problem": "「購入してすぐに味わえる魚市場」is unnatural",
+          "suggestion": "「購入した魚介をその場で味わえる水産市場」"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "「辛い魚のスープ」is too literal for 매운탕",
+          "suggestion": "「メウンタン（辛い魚のスープ）」or「韓国風辛い魚鍋」"
+        }
+      ]
+    },
+    {
+      "id": "gyeongdong",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "cultural context lost",
+          "problem": "「供物」is too formal/religious for 제수용품",
+          "suggestion": "「祭祀用品」or「お供え用の食材」"
+        },
+        {
+          "field": "tips",
+          "type": "awkward phrasing",
+          "problem": "「お祭りのギフトセット作り」doesn't capture 명절 선물 meaning",
+          "suggestion": "「名節（韓国の伝統祝日）のギフトセット準備」"
+        }
+      ]
+    },
+    {
+      "id": "mangwon_market",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "mistranslation",
+          "problem": "「チーズコロッケ」for 쌀고로케 is incorrect",
+          "suggestion": "「米コロッケ」or「ライスコロッケ」"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "Same issue - 쌀고로케 is not cheese croquette",
+          "suggestion": "「ライスコロッケ、トッポッキは必ず味わってみる」"
+        }
+      ]
+    },
+    {
+      "id": "tongin",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward phrasing",
+          "problem": "「レトロな硬貨で惣菜を購入してお弁当を作ることができます」is awkward",
+          "suggestion": "「昔の硬貨（ヨプチョン）で惣菜を買ってお弁当を作る体験ができます」"
+        },
+        {
+          "field": "tips",
+          "type": "cultural context lost",
+          "problem": "「油っぽいトッポッキ」doesn't properly explain 기름떡볶이",
+          "suggestion": "「キルムトッポッキ（油で炒めたトッポッキ）」"
+        }
+      ]
+    },
+    {
+      "id": "seongsu",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "name",
+          "type": "awkward",
+          "problem": "城水洞（ソンス）の漢字表記が不自然。韓国の地名は通常カタカナ表記",
+          "suggestion": "ソンスドン"
+        }
+      ]
+    },
+    {
+      "id": "yeonnam",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "합정を「合井」と漢字で表記しているが、日本語では「ハプチョン」とカタカナ表記が適切"
+        }
+      ]
+    },
+    {
+      "id": "yeonhui",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "안산を「案山」と漢字表記しているが、「アンサン」とカタカナ表記が適切"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "延南洞も「ヨンナムドン」とカタカナ表記すべき"
+        }
+      ]
+    },
+    {
+      "id": "hannam",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "UN빌리지を「UNビレッジ」としているが、「UNビレッジ」は不自然。「国連ビレッジ」または「UNヴィレッジ」が適切"
+        }
+      ]
+    },
+    {
+      "id": "mullae",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "출사を「撮影」と訳しているが、「出사」は写真撮影の専門用語で「フォトシュート」や「撮影遠征」がより適切"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "영등포を「永登浦」と漢字表記しているが、「ヨンドンポ」とカタカナ表記が適切"
+        }
+      ]
+    },
+    {
+      "id": "sindang",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "순대 translated as '順大' instead of correct 'スンデ' (blood sausage)",
+          "suggestion": "Use 'スンデ' which is the established Japanese term for this Korean food"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'フライドフード' is awkward - should be '天ぷら' or 'フライ類'",
+          "suggestion": "Use '天ぷら' for Korean-style tempura/fried food"
+        },
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "'コラボコース' sounds unnatural - too trendy/English",
+          "suggestion": "Use '連携コース' or '組み合わせコース'"
+        }
+      ]
+    },
+    {
+      "id": "euljiro3ga",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "cultural context lost",
+          "problem": "'힙지로' cultural concept lost in translation",
+          "suggestion": "Add explanation like 'ヒップな乙支路（ヒップジロ）'"
+        },
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "'힙지로로 불리는' concept not properly conveyed",
+          "suggestion": "Should explain this is nicknamed 'Hipjiro' (hip + Euljiro)"
+        }
+      ]
+    },
+    {
+      "id": "seongbuk",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "name",
+          "type": "over-translation",
+          "problem": "Added （ソンブクドン） in name_zh field which should only contain Japanese",
+          "suggestion": "Remove Korean pronunciation, just use '城北洞'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'瞑想しながら歩く' sounds too formal/spiritual for tourism content",
+          "suggestion": "Use 'のんびり散策' or 'ゆっくり歩く'"
+        }
+      ]
+    },
+    {
+      "id": "buam",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'창의문' should be '昌義門' not just transliterated",
+          "suggestion": "Use proper Japanese name '昌義門（チャンイムン）'"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "'瞑想しながら歩く' appears again - too formal",
+          "suggestion": "Use more natural expression like 'のんびり散策'"
+        }
+      ]
+    },
+    {
+      "id": "cheongpa",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "'해방촌' should be 'ヘバンチョン（解放村）' to show it's a place name",
+          "suggestion": "Add proper explanation as it's a well-known area name"
+        },
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "'注目のスポット' is too generic - doesn't capture '핫플' nuance",
+          "suggestion": "Use 'ホットプレイス' or 'トレンドスポット'"
+        }
+      ]
+    },
+    {
+      "id": "songni",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "over-translation",
+          "problem": "Added \"ソウルの人気エリア\" not in original Korean",
+          "suggestion": "Remove unnecessary addition"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "\"송파구\" translated as \"パンポ区\" should be \"ソンパ区\"",
+          "suggestion": "Correct district name to ソンパ区"
+        },
+        {
+          "field": "description",
+          "type": "over-translation",
+          "problem": "Added \"洗練された\" (sophisticated) not present in original \"감성적인\" (emotional/sentimental)",
+          "suggestion": "Use more accurate translation like 感性的な"
+        }
+      ]
+    },
+    {
+      "id": "yeouido_park",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "mistranslation",
+          "problem": "\"여의도 한복판\" translated as \"カンナムの中心\" should be \"ヨイドの中心\"",
+          "suggestion": "Correct location to ヨイドの中心"
+        }
+      ]
+    },
+    {
+      "id": "worldcup_park",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "\"서울 서북부\" translated as \"ソウル北西部\" should be \"ソウル西北部\" for consistency with Korean directional order",
+          "suggestion": "Use ソウル西北部"
+        }
+      ]
+    },
+    {
+      "id": "namsan_park",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "「周回路の散策が楽しめる」is awkward - should be more natural",
+          "suggestion": "「周遊路散策が楽しめる」or「遊歩道散策ができる」"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "「ソウル市内の景色を眺めることができます」is too literal/formal",
+          "suggestion": "「ソウル市内を一望できます」"
+        }
+      ]
+    },
+    {
+      "id": "bukhansan_national",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "「四季を通じて登山スポットとして」is unnatural phrasing",
+          "suggestion": "「四季を通じた登山スポットで」"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "「週末ハイキングコース」- original says 산행지 (mountain climbing spot), not just hiking",
+          "suggestion": "「週末登山スポット」"
+        }
+      ]
+    },
+    {
+      "id": "gwanaksan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "over-translation",
+          "problem": "「首都の絶景」adds '首都の' which is not in Korean original '서울 전경'",
+          "suggestion": "「ソウルの絶景」"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "「思当駅」should be「舎堂駅」- incorrect reading of 사당역",
+          "suggestion": "「舎堂駅」"
+        }
+      ]
+    },
+    {
+      "id": "dobongsan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "「岩壁登はん」uses hiragana instead of proper katakana",
+          "suggestion": "「ロッククライミング」or「岩壁登攀」"
+        }
+      ]
+    },
+    {
+      "id": "suraksan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "「奇岩と滝が調和する美しい景観が自慢です」- '자랑합니다' is better translated more naturally",
+          "suggestion": "「奇岩と滝が織りなす美しい景観で知られています」"
+        },
+        {
+          "field": "description",
+          "type": "over-translation",
+          "problem": "Adding readings in parentheses (スラクサン), (タンゴゲ) not in original",
+          "suggestion": "Remove parenthetical readings"
+        }
+      ]
+    },
+    {
+      "id": "cheonggyecheon",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "「貫流する」is too formal/technical. Tourism content should use simpler language",
+          "suggestion": "「都心を流れる復元された川」"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "「貫流する」repeated - too formal for tourism content",
+          "suggestion": "「都心を流れる」"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "「ドンデムン」should be 「東大門」(Dongdaemun) for consistency with Korean place names",
+          "suggestion": "Use 「東大門」"
+        }
+      ]
+    },
+    {
+      "id": "seonyudo",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "「島に架かる橋を渡って」is unnatural - the island itself doesn't have bridges on it, you cross bridges to reach it",
+          "suggestion": "「橋を渡って島にアクセスします」"
+        },
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "「ソンユド橋と接続」is unnatural phrasing",
+          "suggestion": "「ソンユド橋で繋がっている」"
+        }
+      ]
+    },
+    {
+      "id": "yangjae",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "Content mismatch - Korean talks about 양재천 (Yangjae Stream) but Japanese describes 양재시민의숲 (Yangjae Citizens' Forest). These are different locations",
+          "suggestion": "Translate the actual content about Yangjae Stream, not Citizens' Forest"
+        },
+        {
+          "field": "name",
+          "type": "mistranslation",
+          "problem": "Name should be 「ヤンジェ川」 but content describes a different location entirely"
+        }
+      ]
+    },
+    {
+      "id": "yongsan_family",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "「家族旅行に最適」sounds like overnight travel. For a local park, 「家族のお出かけに最適」 is more appropriate",
+          "suggestion": "「家族のお出かけに最適」(consistent with boramae translation)"
+        }
+      ]
+    },
+    {
+      "id": "children_grand",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "광진구 (Gwangjin-gu) が カンナム区 (Gangnam-gu) に誤訳されている",
+          "suggestion": "カンナム区 → クァンジン区"
+        }
+      ]
+    },
+    {
+      "id": "jungnangcheon",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "omission",
+          "problem": "5월 장미축제 (5月のバラ祭り) の情報が欠落している",
+          "suggestion": "5月にバラ祭りが開催される情報を追加"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "봄 벚꽃, 유채꽃 명소 が桜と菜の花とされているが、説明文では장미 터널 (バラトンネル) が言及されている不一致",
+          "suggestion": "내容の一貫性を確認し修正"
+        }
+      ]
+    },
+    {
+      "id": "ansan_jarak",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "「ソウル西大門区の」が不自然。地域名の重複",
+          "suggestion": "西大門区のバリアフリー森林散歩道"
+        }
+      ]
+    },
+    {
+      "id": "national_museum",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "한강진역 is translated as ハンガンジン駅, but this should be 漢江鎮駅 using proper kanji",
+          "suggestion": "Use 漢江鎮駅 instead of ハンガンジン駅"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "용산가족공園 is translated as ヨンサン家族公園, but should use kanji: 龍山家族公園",
+          "suggestion": "Use 龍山家族公園 instead of ヨンサン家族公園"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "Same issue with ヨンサン家族公園 should be 龍山家族公園"
+        }
+      ]
+    },
+    {
+      "id": "leeum",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "한남동 is written as ハンナムドン in katakana, but should use kanji: 漢南洞",
+          "suggestion": "Use 漢南洞 instead of ハンナムドン"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "Same issue with ハンナムドン should be 漢南洞"
+        }
+      ]
+    },
+    {
+      "id": "mmca_seoul",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "mistranslation",
+          "problem": "삼청동 is written as サムチョンドン in katakana, but should use kanji: 三清洞",
+          "suggestion": "Use 三清洞 instead of サムチョンドン"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "Multiple instances: サムチョンドン should be 三清洞, 국군기무사령부 translated as 国軍保安司令部 but should be 国軍機務司令部",
+          "suggestion": "Use proper kanji for Korean place names and correct military organization name"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "サムチョンドン should be 三清洞"
+        }
+      ]
+    },
+    {
+      "id": "mmca_deoksugung",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "정동길 is written as チョンドン通り in katakana, but should use kanji: 貞洞通り",
+          "suggestion": "Use 貞洞通り instead of チョンドン通り"
+        }
+      ]
+    },
+    {
+      "id": "daelim",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "서촌 골목 산책 (Seochon alley walk) is translated as サムチョン通りの散策 (Samcheong-dong street walk). These are different neighborhoods - Seochon vs Samcheong-dong",
+          "suggestion": "Should be ソチョンの路地散策"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "서촌, 경복궁 연계 is translated as サムチョン、景福宮と連携. Same error - Seochon is mistranslated as Samcheong",
+          "suggestion": "Should be ソチョン、景福宮と連携"
+        }
+      ]
+    },
+    {
+      "id": "sema",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "덕수궁 돌담길 is translated as トックスグン石垣通り, but 덕수궁 should be romanized as 'Deoksugung', not 'Tokksugung'. Also appears multiple times in tips section",
+          "suggestion": "Should be デクスグン石垣道 or トクスグン石垣道"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "덕수궁, 정동길 연계 uses incorrect romanization - 덕수궁 as トックスグン and 정동길 as チョンドンギル",
+          "suggestion": "Should be デクスグン、チョンドンギルと連携"
+        }
+      ]
+    },
+    {
+      "id": "hangaram",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "name",
+          "type": "mistranslation",
+          "problem": "name_zh field contains Japanese text instead of Chinese - should be name_ja",
+          "suggestion": "Correct field naming for Japanese translation"
+        },
+        {
+          "field": "summary",
+          "type": "mistranslation",
+          "problem": "summary_zh field contains Japanese text instead of Chinese - should be summary_ja",
+          "suggestion": "Correct field naming for Japanese translation"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "description_zh field contains Japanese text instead of Chinese - should be description_ja",
+          "suggestion": "Correct field naming for Japanese translation"
+        },
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "tips_zh field contains Japanese text instead of Chinese - should be tips_ja",
+          "suggestion": "Correct field naming for Japanese translation"
+        }
+      ]
+    },
+    {
+      "id": "d_museum",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "tips",
+          "type": "mistranslation",
+          "problem": "Tip about 한남동 카페 연계 translated as ハンナムドンカフェと連携 but description mentions 성수동 카페거리 (Seongsu-dong cafe street)",
+          "suggestion": "Should be ソンス洞カフェ通りと連携 to match the description"
+        }
+      ]
+    },
+    {
+      "id": "savina",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "モダンアートギャラリー sounds awkward - should use more natural Japanese",
+          "suggestion": "現代美術館 or 現代美術ギャラリー would be more natural"
+        }
+      ]
+    },
+    {
+      "id": "arario",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "mistranslation",
+          "problem": "인스페이스 건물 mistranslated as インスペース建物 - this seems to be a mistranslation of a building name",
+          "suggestion": "Need clarification of what 인스페이스 refers to in this context"
+        }
+      ]
+    },
+    {
+      "id": "ilmin",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "awkward",
+          "problem": "カンファムン、東亜日報社屋のミュージアム - the comma placement makes it awkward",
+          "suggestion": "光化門の東亜日報社屋内美術館 would be more natural"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "カンファムンの東亜メディアセンター - カンファムン should be 光化門 (standard Japanese writing)",
+          "suggestion": "Use 光化門 throughout for consistency"
+        }
+      ]
+    },
+    {
+      "id": "kansong",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "mistranslation",
+          "problem": "「ハングル文字」は不正確。훈민정음は「訓民正音」と表記すべき",
+          "suggestion": "「訓民正音原本を所蔵」"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "「ハングル文字解例本」は「訓民正音解例本」が正確",
+          "suggestion": "「訓民正音解例本」"
+        }
+      ]
+    },
+    {
+      "id": "sejong_story",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "「ハングル文字創制過程」は「ハングル創制過程」または「訓民正音創制過程」が適切",
+          "suggestion": "「ハングル創制過程」"
+        }
+      ]
+    },
+    {
+      "id": "palace_museum",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "cultural context lost",
+          "problem": "「어보, 어진」を「王室の印章や肖像画」と一般化しすぎ。朝鮮王室特有の文化的概念が失われている",
+          "suggestion": "「御璽・御宝、御真」など韓国語も併記して説明"
+        }
+      ]
+    },
+    {
+      "id": "craft_museum",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "mistranslation",
+          "problem": "「アンギョクドン」は「アングクドン」が正確な表記",
+          "suggestion": "「アングクドンの工芸専門博物館」"
+        },
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "同様に「アンギョクドン」を「アングクドン」に修正が必要",
+          "suggestion": "「アングクドンに2021年に開館」"
+        }
+      ]
+    },
+    {
+      "id": "gyeongridan",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "summary",
+          "type": "mistranslation",
+          "problem": "다국적 맛집을「国際的な人気店」と訳したが、「人気店」は원문にない情報。「다국적」は多国籍の意味",
+          "suggestion": "多国籍グルメと個性的なカフェが集まるホットスポット"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "「路地に隠れています」は不自然。「路地ごとに点在しています」の方が自然"
+        }
+      ]
+    },
+    {
+      "id": "samgakji",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "mistranslation",
+          "problem": "용산을「用山」と音写したが、正しくは「龍山」",
+          "suggestion": "龍山アメリカ軍基地"
+        },
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "「リーズナブルでボリューミーな肉料理を探すなら おすすめの場所です」の前に不自然な空白があり、文章が硬い",
+          "suggestion": "安くてボリュームたっぷりの肉料理店を探している方におすすめです"
+        }
+      ]
+    },
+    {
+      "id": "samcheong",
+      "status": "ISSUES",
+      "issues": [
+        {
+          "field": "description",
+          "type": "awkward",
+          "problem": "文末に不要な改行「\\n」が含まれている"
+        },
+        {
+          "field": "tips",
+          "type": "awkward",
+          "problem": "「サムチョンドンのスジェビ、サムチョンドンのホットク等の名物グルメも有名」で「等」は硬い表現。観光案内では「など」が適切"
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "input_tokens": 96551,
+    "output_tokens": 18020
+  },
+  "cost": 0.559953
+}
