@@ -3254,8 +3254,8 @@ const landmarkData_ko = [
   {
     "id": "haneul_park",
     "coordinates": {
-      "lat": 37.5672,
-      "lng": 126.885
+      "lat": 37.5710,
+      "lng": 126.8855
     },
     "category": "viewpoint",
     "summary": "가을 억새와 일몰이 환상적인 서울의 하늘 정원, 월드컵공원의 하이라이트",
@@ -4570,8 +4570,8 @@ const landmarkData_ko = [
   {
     "id": "dongdaemun",
     "coordinates": {
-      "lat": 37.571,
-      "lng": 127.0095
+      "lat": 37.5668,
+      "lng": 127.0078
     },
     "category": "shopping",
     "summary": "24시간 잠들지 않는 패션 도매의 메카, 새벽 쇼핑의 스릴",
@@ -8264,8 +8264,8 @@ const landmarkData_ko = [
   {
     "id": "worldcup_park",
     "coordinates": {
-      "lat": 37.5672,
-      "lng": 126.885
+      "lat": 37.5660,
+      "lng": 126.8970
     },
     "category": "nature",
     "summary": "쓰레기 매립지의 생태 기적, 하늘공원과 평화의공원이 있는 복합 공원",
@@ -8377,8 +8377,8 @@ const landmarkData_ko = [
   {
     "id": "namsan_park",
     "coordinates": {
-      "lat": 37.5512,
-      "lng": 126.9882
+      "lat": 37.5485,
+      "lng": 126.9910
     },
     "category": "nature",
     "summary": "서울 중심의 산, N서울타워와 둘레길 산책이 함께하는 자연 휴식처",
@@ -10377,8 +10377,8 @@ const landmarkData_ko = [
   {
     "id": "apma",
     "coordinates": {
-      "lat": 37.524,
-      "lng": 126.9802
+      "lat": 37.5283,
+      "lng": 126.9648
     },
     "category": "museum",
     "summary": "아모레퍼시픽 본사 내 미술관, 현대적 건축과 고미술의 조화",
@@ -10962,8 +10962,8 @@ const landmarkData_ko = [
   {
     "id": "hangeul_museum",
     "coordinates": {
-      "lat": 37.524,
-      "lng": 126.9802
+      "lat": 37.5239,
+      "lng": 126.9838
     },
     "category": "museum",
     "summary": "세종대왕의 한글 창제 역사, 한글 체험과 학습이 가능한 무료 박물관",
@@ -11424,8 +11424,8 @@ const landmarkData_ko = [
   {
     "id": "d_museum",
     "coordinates": {
-      "lat": 37.538,
-      "lng": 127.001
+      "lat": 37.5445,
+      "lng": 127.0440
     },
     "category": "museum",
     "summary": "성수동 서울숲 인근 디자인 미술관, 감각적인 기획전시와 SNS 명소",

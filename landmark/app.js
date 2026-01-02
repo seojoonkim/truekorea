@@ -13,6 +13,7 @@ let activeScoreFilters = [];
 let map = null;
 let markers = [];
 let currentInfoWindow = null;
+let LabelOverlay = null; // 커스텀 라벨 오버레이 클래스
 
 const IMAGE_BASE_URL = './images';
 
@@ -20,15 +21,217 @@ let currentGallery = [];
 let currentGalleryIndex = 0;
 let currentGalleryCaption = '';
 
-// 현재 언어의 데이터 가져오기
+// 커스텀 라벨 오버레이 초기화 (Google Maps 로드 후 호출)
+function initLabelOverlay() {
+    if (!google?.maps?.OverlayView) return;
+    
+    LabelOverlay = class extends google.maps.OverlayView {
+        constructor(position, text, options = {}) {
+            super();
+            this.position = position;
+            this.text = text;
+            this.options = options;
+            this.div = null;
+            this.offsetX = 0;
+            this.offsetY = -20; // 간격 줄임
+            this.anchorDirection = 'bottom';
+        }
+        
+        onAdd() {
+            this.div = document.createElement('div');
+            this.div.className = 'custom-map-label';
+            this.div.innerHTML = `<span class="label-text">${this.text}</span><span class="label-anchor"></span>`;
+            this.div.style.cssText = `
+                position: absolute;
+                white-space: nowrap;
+                font-size: 11px;
+                font-weight: 600;
+                color: #1e1b4b;
+                background: rgba(255,255,255,0.95);
+                padding: 4px 10px;
+                border-radius: 12px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+                cursor: pointer;
+                z-index: ${this.options.zIndex || 1};
+                pointer-events: auto;
+            `;
+            
+            // 말풍선 꼬리 추가
+            const anchor = this.div.querySelector('.label-anchor');
+            if (anchor) {
+                anchor.style.cssText = `
+                    position: absolute;
+                    bottom: -6px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 0;
+                    height: 0;
+                    border-left: 6px solid transparent;
+                    border-right: 6px solid transparent;
+                    border-top: 6px solid rgba(255,255,255,0.95);
+                `;
+            }
+            
+            if (this.options.onClick) {
+                this.div.addEventListener('click', this.options.onClick);
+            }
+            
+            const panes = this.getPanes();
+            panes.overlayMouseTarget.appendChild(this.div);
+        }
+        
+        draw() {
+            if (!this.div) return;
+            const overlayProjection = this.getProjection();
+            if (!overlayProjection) return;
+            
+            const pos = overlayProjection.fromLatLngToDivPixel(this.position);
+            if (!pos) return;
+            
+            this.div.style.left = (pos.x + this.offsetX) + 'px';
+            this.div.style.top = (pos.y + this.offsetY) + 'px';
+            
+            // 방향에 따라 꼬리 위치 조정
+            this.updateAnchorPosition();
+        }
+        
+        updateAnchorPosition() {
+            const anchor = this.div?.querySelector('.label-anchor');
+            if (!anchor || !this.div) return;
+            
+            // 기본값 리셋
+            anchor.style.cssText = `
+                position: absolute;
+                width: 0;
+                height: 0;
+            `;
+            
+            switch(this.anchorDirection) {
+                case 'bottom': // 라벨이 위에, 꼬리가 아래로 (마커를 가리킴)
+                    this.div.style.transform = 'translate(-50%, -100%)';
+                    anchor.style.bottom = '-6px';
+                    anchor.style.left = '50%';
+                    anchor.style.transform = 'translateX(-50%)';
+                    anchor.style.borderLeft = '6px solid transparent';
+                    anchor.style.borderRight = '6px solid transparent';
+                    anchor.style.borderTop = '6px solid rgba(255,255,255,0.95)';
+                    break;
+                case 'top': // 라벨이 아래에, 꼬리가 위로 (마커를 가리킴)
+                    this.div.style.transform = 'translate(-50%, 0%)';
+                    anchor.style.top = '-6px';
+                    anchor.style.left = '50%';
+                    anchor.style.transform = 'translateX(-50%)';
+                    anchor.style.borderLeft = '6px solid transparent';
+                    anchor.style.borderRight = '6px solid transparent';
+                    anchor.style.borderBottom = '6px solid rgba(255,255,255,0.95)';
+                    break;
+                case 'left': // 라벨이 오른쪽에, 꼬리가 왼쪽으로 (마커를 가리킴)
+                    this.div.style.transform = 'translate(0%, -50%)';
+                    anchor.style.left = '-6px';
+                    anchor.style.top = '50%';
+                    anchor.style.transform = 'translateY(-50%)';
+                    anchor.style.borderTop = '6px solid transparent';
+                    anchor.style.borderBottom = '6px solid transparent';
+                    anchor.style.borderRight = '6px solid rgba(255,255,255,0.95)';
+                    break;
+                case 'right': // 라벨이 왼쪽에, 꼬리가 오른쪽으로 (마커를 가리킴)
+                    this.div.style.transform = 'translate(-100%, -50%)';
+                    anchor.style.right = '-6px';
+                    anchor.style.top = '50%';
+                    anchor.style.transform = 'translateY(-50%)';
+                    anchor.style.borderTop = '6px solid transparent';
+                    anchor.style.borderBottom = '6px solid transparent';
+                    anchor.style.borderLeft = '6px solid rgba(255,255,255,0.95)';
+                    break;
+                default: // 기본: 라벨이 위에
+                    this.div.style.transform = 'translate(-50%, -100%)';
+                    anchor.style.bottom = '-6px';
+                    anchor.style.left = '50%';
+                    anchor.style.transform = 'translateX(-50%)';
+                    anchor.style.borderLeft = '6px solid transparent';
+                    anchor.style.borderRight = '6px solid transparent';
+                    anchor.style.borderTop = '6px solid rgba(255,255,255,0.95)';
+            }
+        }
+        
+        onRemove() {
+            if (this.div) {
+                this.div.parentNode?.removeChild(this.div);
+                this.div = null;
+            }
+        }
+        
+        setVisible(visible) {
+            if (this.div) {
+                this.div.style.display = visible ? 'block' : 'none';
+            }
+        }
+        
+        setOffset(x, y, direction) {
+            this.offsetX = x;
+            this.offsetY = y;
+            this.anchorDirection = direction;
+            this.draw();
+        }
+        
+        getPixelPosition() {
+            const projection = this.getProjection();
+            if (!projection) return null;
+            return projection.fromLatLngToDivPixel(this.position);
+        }
+        
+        getBounds() {
+            if (!this.div) return null;
+            const pos = this.getPixelPosition();
+            if (!pos) return null;
+            const width = this.div.offsetWidth || 60;
+            const height = this.div.offsetHeight || 26;
+            
+            const x = pos.x + this.offsetX;
+            const y = pos.y + this.offsetY;
+            
+            // 방향에 따른 실제 bounds 계산
+            switch(this.anchorDirection) {
+                case 'bottom': // 라벨이 위에
+                    return { left: x - width/2, right: x + width/2, top: y - height, bottom: y, width, height };
+                case 'top': // 라벨이 아래에
+                    return { left: x - width/2, right: x + width/2, top: y, bottom: y + height, width, height };
+                case 'left': // 라벨이 오른쪽에
+                    return { left: x, right: x + width, top: y - height/2, bottom: y + height/2, width, height };
+                case 'right': // 라벨이 왼쪽에
+                    return { left: x - width, right: x, top: y - height/2, bottom: y + height/2, width, height };
+                default:
+                    return { left: x - width/2, right: x + width/2, top: y - height, bottom: y, width, height };
+            }
+        }
+    };
+}
+
+// 현재 언어의 데이터 가져오기 (좌표는 항상 한국어 DB에서)
 function getLandmarkData() {
     const lang = getLang();
+    const koData = typeof landmarkData_ko !== 'undefined' ? landmarkData_ko : [];
+    
+    // 한국어인 경우 그대로 반환
+    if (lang === 'ko') return koData;
+    
+    // 다른 언어인 경우 해당 언어 데이터에 한국어 좌표 병합
+    let langData;
     switch(lang) {
-        case 'en': return typeof landmarkData_en !== 'undefined' ? landmarkData_en : [];
-        case 'zh': return typeof landmarkData_zh !== 'undefined' ? landmarkData_zh : [];
-        case 'ja': return typeof landmarkData_ja !== 'undefined' ? landmarkData_ja : [];
-        default: return typeof landmarkData_ko !== 'undefined' ? landmarkData_ko : [];
+        case 'en': langData = typeof landmarkData_en !== 'undefined' ? landmarkData_en : []; break;
+        case 'zh': langData = typeof landmarkData_zh !== 'undefined' ? landmarkData_zh : []; break;
+        case 'ja': langData = typeof landmarkData_ja !== 'undefined' ? landmarkData_ja : []; break;
+        default: return koData;
     }
+    
+    // 좌표 병합
+    return langData.map(item => {
+        const koItem = koData.find(k => k.id === item.id);
+        if (koItem?.coordinates) {
+            return { ...item, coordinates: koItem.coordinates };
+        }
+        return item;
+    });
 }
 
 const categoryInfo = {
@@ -532,8 +735,21 @@ function initGoogleMap() {
         mapTypeControl: false, fullscreenControl: true, streetViewControl: false
     });
     
+    // 커스텀 라벨 오버레이 클래스 초기화
+    initLabelOverlay();
+    
     map.addListener('click', () => {
         if (currentInfoWindow) { currentInfoWindow.close(); currentInfoWindow = null; }
+    });
+    
+    // 줌 변경 시 라벨 가시성 업데이트
+    map.addListener('zoom_changed', () => {
+        updateLabelsVisibility();
+    });
+    
+    // 지도 이동 후 라벨 위치 재계산
+    map.addListener('idle', () => {
+        if (LabelOverlay) updateLabelsVisibility();
     });
 }
 
@@ -898,38 +1114,63 @@ function renderMap() {
     if (!map) { setTimeout(renderMap, 100); return; }
     const lang = getLang();
     
-    markers.forEach(m => { if (m.marker) m.marker.setMap(null); if (m.label) m.label.setMap(null); });
+    // 기존 마커 제거
+    markers.forEach(m => { 
+        if (m.marker) m.marker.setMap(null); 
+        if (m.label) {
+            if (m.label.setMap) m.label.setMap(null);
+            else if (m.label.onRemove) m.label.onRemove();
+        }
+    });
     markers = [];
     if (currentInfoWindow) { currentInfoWindow.close(); currentInfoWindow = null; }
     
-    filteredData.forEach(item => {
+    // 인기도순으로 정렬하여 상위 항목 먼저 처리
+    const sortedData = [...filteredData].sort((a, b) => (b.ranking?.popularity || 0) - (a.ranking?.popularity || 0));
+    
+    sortedData.forEach((item, index) => {
         if (item.coordinates?.lat && item.coordinates?.lng) {
             const cat = categoryInfo[item.category] || {};
             const position = { lat: item.coordinates.lat, lng: item.coordinates.lng };
             const displayName = getItemName(item);
             const summary = getItemSummary(item);
+            const popularity = item.ranking?.popularity || 0;
+            
+            // 카테고리 이모지와 색상
+            const catIcon = cat.icon || '📍';
+            const catColor = getCategoryColor(item.category);
+            
+            // 커스텀 마커 아이콘 (원 + 이모지)
+            const markerSize = 32;
+            const markerSvg = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="${markerSize}" height="${markerSize}" viewBox="0 0 ${markerSize} ${markerSize}">
+                    <circle cx="${markerSize/2}" cy="${markerSize/2}" r="${markerSize/2 - 2}" fill="${catColor}" stroke="#ffffff" stroke-width="2"/>
+                    <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-size="16">${catIcon}</text>
+                </svg>
+            `;
             
             const marker = new google.maps.Marker({
                 position, map, title: displayName,
-                icon: { path: google.maps.SymbolPath.CIRCLE, scale: 10, fillColor: getCategoryColor(item.category), fillOpacity: 0.9, strokeColor: '#ffffff', strokeWeight: 2 }
-            });
-            
-            const label = new google.maps.Marker({
-                position, map,
-                icon: { path: 'M 0,0 L 0,0', fillOpacity: 0, strokeOpacity: 0 },
-                label: { text: displayName, color: '#1e1b4b', fontSize: '11px', fontWeight: '600', className: 'map-label' }
+                icon: {
+                    url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(markerSvg),
+                    scaledSize: new google.maps.Size(markerSize, markerSize),
+                    anchor: new google.maps.Point(markerSize/2, markerSize/2)
+                }
             });
             
             const viewMoreText = lang === 'en' ? 'View Details' : '자세히 보기';
+            const firstPhoto = `${IMAGE_BASE_URL}/${item.id}/${item.id}_01.jpg`;
+            const photoSection = `<div style="width:110px;height:150px;flex-shrink:0;overflow:hidden;background:linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);display:flex;align-items:center;justify-content:center;">
+                       <img src="${firstPhoto}" alt="${displayName}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=font-size:40px>${cat.icon || '📍'}</span>';">
+                   </div>`;
+            
             const infoContent = `
                 <div style="display:flex;width:300px;height:150px;background:#fff;overflow:hidden;">
-                    <div style="width:110px;height:150px;flex-shrink:0;background:linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);display:flex;align-items:center;justify-content:center;">
-                        <span style="font-size:40px;">${cat.icon || '📍'}</span>
-                    </div>
+                    ${photoSection}
                     <div style="width:190px;padding:14px;display:flex;flex-direction:column;box-sizing:border-box;height:150px;">
                         <strong style="font-size:14px;color:#1e1b4b;margin-bottom:8px;">${displayName}</strong>
                         <p style="font-size:11px;color:#64748b;margin:0;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;flex:1;">${summary || ''}</p>
-                        <button onclick="openModal('${item.id}')" style="width:100%;padding:8px 0;margin-top:auto;background:linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);color:white;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:11px;">${viewMoreText}</button>
+                        <button onclick="openModal('${item.id}')" style="width:100%;padding:8px 0;margin-top:auto;background:linear-gradient(135deg, #6366f1 0%, #7c3aed 100%);color:white;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:11px;">${viewMoreText}</button>
                     </div>
                 </div>
             `;
@@ -937,17 +1178,240 @@ function renderMap() {
             const infoWindow = new google.maps.InfoWindow({ content: infoContent, pixelOffset: new google.maps.Size(0, -10) });
             
             marker.addListener('click', () => { if (currentInfoWindow) currentInfoWindow.close(); infoWindow.open(map, marker); currentInfoWindow = infoWindow; });
-            label.addListener('click', () => { if (currentInfoWindow) currentInfoWindow.close(); infoWindow.open(map, marker); currentInfoWindow = infoWindow; });
             
-            markers.push({ marker, label, infoWindow });
+            // 커스텀 라벨 오버레이 사용 (있으면) 또는 기본 마커 라벨
+            let label;
+            if (LabelOverlay) {
+                label = new LabelOverlay(
+                    new google.maps.LatLng(position.lat, position.lng),
+                    displayName,
+                    { 
+                        zIndex: 1000 + popularity,
+                        onClick: () => { 
+                            if (currentInfoWindow) currentInfoWindow.close(); 
+                            infoWindow.open(map, marker); 
+                            currentInfoWindow = infoWindow; 
+                        }
+                    }
+                );
+                label.setMap(map);
+                label.popularity = popularity;
+                label.rankIndex = index;
+            } else {
+                // 폴백: 기본 마커 라벨
+                label = new google.maps.Marker({
+                    position, map,
+                    icon: { path: 'M 0,0 L 0,0', fillOpacity: 0, strokeOpacity: 0 },
+                    label: { text: displayName, color: '#1e1b4b', fontSize: '11px', fontWeight: '600', className: 'map-label' },
+                    zIndex: popularity
+                });
+                label.popularity = popularity;
+                label.rankIndex = index;
+                label.addListener('click', () => { if (currentInfoWindow) currentInfoWindow.close(); infoWindow.open(map, marker); currentInfoWindow = infoWindow; });
+            }
+            
+            markers.push({ marker, label, infoWindow, position, displayName });
         }
     });
+    
+    // 줌 레벨에 따른 라벨 표시 업데이트
+    updateLabelsVisibility();
     
     if (filteredData.length > 0) {
         const bounds = new google.maps.LatLngBounds();
         filteredData.forEach(item => { if (item.coordinates?.lat && item.coordinates?.lng) bounds.extend({ lat: item.coordinates.lat, lng: item.coordinates.lng }); });
         map.fitBounds(bounds);
     }
+}
+
+// 줌 레벨에 따른 라벨 가시성 조절
+function updateLabelsVisibility() {
+    if (!map) return;
+    const zoom = map.getZoom();
+    
+    // 줌 레벨별 우선 표시할 라벨 수
+    let priorityLabels;
+    if (zoom >= 14) {
+        priorityLabels = Infinity;
+    } else if (zoom >= 13) {
+        priorityLabels = 50;
+    } else if (zoom >= 12) {
+        priorityLabels = 30;
+    } else if (zoom >= 11) {
+        priorityLabels = 15;
+    } else {
+        priorityLabels = 8;
+    }
+    
+    // 먼저 모든 라벨 숨기기
+    markers.forEach(m => {
+        if (m.label?.setVisible) m.label.setVisible(false);
+    });
+    
+    const placedLabels = []; // 배치된 라벨들의 위치 정보
+    
+    // 1단계: 우선순위 높은 라벨들 먼저 배치
+    const priorityMarkers = markers.filter(m => m.label?.rankIndex < priorityLabels);
+    
+    priorityMarkers.forEach(m => {
+        if (!m.label) return;
+        
+        if (LabelOverlay && m.label instanceof LabelOverlay) {
+            const bestOffset = findBestLabelPosition(m, placedLabels);
+            m.label.setOffset(bestOffset.x, bestOffset.y, bestOffset.direction);
+            m.label.setVisible(true);
+            
+            const bounds = m.label.getBounds();
+            if (bounds) placedLabels.push(bounds);
+        } else {
+            m.label.setVisible(true);
+        }
+    });
+    
+    // 2단계: 나머지 라벨들 중 겹치지 않는 것들 표시 (고립된 스팟)
+    const remainingMarkers = markers.filter(m => m.label?.rankIndex >= priorityLabels);
+    
+    remainingMarkers.forEach(m => {
+        if (!m.label) return;
+        
+        if (LabelOverlay && m.label instanceof LabelOverlay) {
+            // 기본 위치에서 겹침 확인
+            const pos = m.label.getPixelPosition();
+            if (!pos) return;
+            
+            const labelWidth = (m.displayName?.length || 5) * 7 + 20;
+            const labelHeight = 26;
+            
+            const testBounds = {
+                left: pos.x - labelWidth/2,
+                right: pos.x + labelWidth/2,
+                top: pos.y - 20 - labelHeight,
+                bottom: pos.y - 20
+            };
+            
+            // 기존 배치된 라벨과 겹치지 않으면 표시
+            let hasOverlap = false;
+            for (const placed of placedLabels) {
+                if (boundsOverlap(testBounds, placed)) {
+                    hasOverlap = true;
+                    break;
+                }
+            }
+            
+            if (!hasOverlap) {
+                const bestOffset = findBestLabelPosition(m, placedLabels);
+                m.label.setOffset(bestOffset.x, bestOffset.y, bestOffset.direction);
+                m.label.setVisible(true);
+                
+                const bounds = m.label.getBounds();
+                if (bounds) placedLabels.push(bounds);
+            }
+        }
+    });
+}
+
+// 라벨 겹침 방지를 위한 최적 위치 찾기
+function findBestLabelPosition(markerInfo, placedLabels) {
+    if (!map || !markerInfo.label) return { x: 0, y: -20, direction: 'bottom' };
+    
+    const projection = map.getProjection();
+    if (!projection) return { x: 0, y: -20, direction: 'bottom' };
+    
+    // 마커의 픽셀 위치 계산
+    const pos = markerInfo.label.getPixelPosition();
+    if (!pos) return { x: 0, y: -20, direction: 'bottom' };
+    
+    // 라벨 크기 추정 (텍스트 길이 기반)
+    const labelWidth = (markerInfo.displayName?.length || 5) * 7 + 20;
+    const labelHeight = 26; // 말풍선 꼬리 포함
+    const markerRadius = 16; // 마커 반경
+    
+    // 가능한 위치들 - 방향과 실제 bounds 계산을 위한 정보 포함
+    const positions = [
+        { x: 0, y: -(markerRadius + 4), direction: 'bottom', anchor: 'bottom' },      // 위
+        { x: 0, y: (markerRadius + 4), direction: 'top', anchor: 'top' },              // 아래
+        { x: (markerRadius + 4), y: 0, direction: 'left', anchor: 'left' },            // 오른쪽
+        { x: -(markerRadius + 4), y: 0, direction: 'right', anchor: 'right' },         // 왼쪽
+        { x: (markerRadius + 2), y: -(markerRadius + 2), direction: 'bottom', anchor: 'bottom' },  // 우상단
+        { x: -(markerRadius + 2), y: -(markerRadius + 2), direction: 'bottom', anchor: 'bottom' }, // 좌상단
+        { x: (markerRadius + 2), y: (markerRadius + 2), direction: 'top', anchor: 'top' },         // 우하단
+        { x: -(markerRadius + 2), y: (markerRadius + 2), direction: 'top', anchor: 'top' }         // 좌하단
+    ];
+    
+    // 각 위치에서 겹침 확인
+    for (const testPos of positions) {
+        const testBounds = calculateLabelBounds(pos, testPos, labelWidth, labelHeight);
+        
+        let hasOverlap = false;
+        
+        // 다른 라벨과 겹침 확인
+        for (const placed of placedLabels) {
+            if (boundsOverlap(testBounds, placed)) {
+                hasOverlap = true;
+                break;
+            }
+        }
+        
+        if (!hasOverlap) {
+            return testPos;
+        }
+    }
+    
+    // 모든 위치가 겹치면 기본 위치 반환
+    return positions[0];
+}
+
+// 방향에 따른 라벨 bounds 계산
+function calculateLabelBounds(markerPos, labelPos, width, height) {
+    const x = markerPos.x + labelPos.x;
+    const y = markerPos.y + labelPos.y;
+    
+    switch(labelPos.anchor) {
+        case 'bottom': // transform: translate(-50%, -100%) - 라벨이 위에
+            return {
+                left: x - width/2,
+                right: x + width/2,
+                top: y - height,
+                bottom: y
+            };
+        case 'top': // transform: translate(-50%, 0%) - 라벨이 아래에
+            return {
+                left: x - width/2,
+                right: x + width/2,
+                top: y,
+                bottom: y + height
+            };
+        case 'left': // transform: translate(0%, -50%) - 라벨이 오른쪽에
+            return {
+                left: x,
+                right: x + width,
+                top: y - height/2,
+                bottom: y + height/2
+            };
+        case 'right': // transform: translate(-100%, -50%) - 라벨이 왼쪽에
+            return {
+                left: x - width,
+                right: x,
+                top: y - height/2,
+                bottom: y + height/2
+            };
+        default:
+            return {
+                left: x - width/2,
+                right: x + width/2,
+                top: y - height,
+                bottom: y
+            };
+    }
+}
+
+// 두 영역이 겹치는지 확인
+function boundsOverlap(a, b) {
+    const padding = 5; // 여백
+    return !(a.right + padding < b.left || 
+             a.left - padding > b.right || 
+             a.bottom + padding < b.top || 
+             a.top - padding > b.bottom);
 }
 
 // ===== 모달 =====
@@ -1032,15 +1496,15 @@ function openModal(id) {
 function updateModalTitles(lang) {
     // 모든 섹션 h3 태그 직접 업데이트
     const titles = {
-        intro: { ko: '✨ 소개', en: '✨ INTRODUCTION', zh: '✨ 简介', ja: '✨ 紹介' },
-        photos: { ko: '📷 사진', en: '📷 PHOTOS', zh: '📷 照片', ja: '📷 写真' },
-        tips: { ko: '💡 방문 팁', en: '💡 VISITOR TIPS', zh: '💡 游览攻略', ja: '💡 訪問のヒント' },
-        info: { ko: '🕐 운영 정보', en: '🕐 INFORMATION', zh: '🕐 运营信息', ja: '🕐 営業情報' },
-        address: { ko: '📍 주소', en: '📍 ADDRESS', zh: '📍 地址', ja: '📍 住所' },
-        popularity: { ko: '🔥 인기도', en: '🔥 POPULARITY', zh: '🔥 人气指数', ja: '🔥 人気度' },
-        desc: { ko: '📖 상세 설명', en: '📖 DESCRIPTION', zh: '📖 详细介绍', ja: '📖 詳細説明' },
-        scores: { ko: '📊 데이터 기반 점수', en: '📊 SCORES', zh: '📊 数据评分', ja: '📊 データスコア' },
-        detailed: { ko: '📋 데이터 기반 상세 평가', en: '📋 DETAILED EVALUATION', zh: '📋 详细评价', ja: '📋 詳細評価' }
+        intro: { ko: '소개', en: 'INTRODUCTION', zh: '简介', ja: '紹介' },
+        photos: { ko: '사진', en: 'PHOTOS', zh: '照片', ja: '写真' },
+        tips: { ko: '방문 팁', en: 'VISITOR TIPS', zh: '游览攻略', ja: '訪問のヒント' },
+        info: { ko: '운영 정보', en: 'INFORMATION', zh: '运营信息', ja: '営業情報' },
+        address: { ko: '주소', en: 'ADDRESS', zh: '地址', ja: '住所' },
+        popularity: { ko: '인기도', en: 'POPULARITY', zh: '人气指数', ja: '人気度' },
+        desc: { ko: '상세 설명', en: 'DESCRIPTION', zh: '详细介绍', ja: '詳細説明' },
+        scores: { ko: '데이터 기반 점수', en: 'SCORES', zh: '数据评分', ja: 'データスコア' },
+        detailed: { ko: '데이터 기반 상세 평가', en: 'DETAILED EVALUATION', zh: '详细评价', ja: '詳細評価' }
     };
     
     const sectionTitles = document.querySelectorAll('.modal-section h3, .score-summary-section h3');

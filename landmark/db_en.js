@@ -5,11 +5,7 @@
 const landmarkData_en = [
   {
     "id": "gyeongbokgung",
-    "coordinates": {
-      "lat": 37.5796,
-      "lng": 126.977
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Seoul's iconic royal palace featuring the Royal Guard Changing Ceremony and hanbok experiences",
     "description": "Gyeongbokgung Palace, established in 1395 by King Taejo of the Joseon Dynasty, is the largest and most magnificent palace in Seoul. Its beautiful halls like Geunjeongjeon, Gyeonghoeru, and Hyangwonjeong showcase the architectural beauty of the Joseon era, with Gyeonghoeru's nightscape particularly stunning. The daily changing of the royal guard ceremony at 10 AM and 2 PM is a must-see attraction. Visitors wearing hanbok (traditional Korean attire) can enter for free, and many tourists rent hanbok to capture memorable photos. The palace offers breathtaking scenery year-round, with cherry blossoms in spring and autumn foliage creating picturesque landscapes. Located near Seochon and Bukchon Hanok Village, it's perfect for a combined tour. Weekends and holidays are very crowded, so a weekday morning visit is recommended. The Saenggwabang experience offers a special program to enjoy traditional tea and snacks.",
     "tips": [
@@ -126,11 +122,7 @@ const landmarkData_en = [
   },
   {
     "id": "changdeokgung",
-    "coordinates": {
-      "lat": 37.5794,
-      "lng": 126.991
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "UNESCO World Heritage palace with the enchanting Secret Garden and magical Moonlight Tour",
     "description": "Changdeokgung Palace, built in 1405 by King Taejong, is a royal palace of the Joseon Dynasty recognized as a UNESCO World Cultural Heritage site for its architectural beauty that harmonizes with natural terrain. The rear garden (Biwon) is the pinnacle of traditional Korean landscaping, featuring centuries-old trees, ponds, and pavilions. In spring, the palace is adorned with red plum blossoms and cherry blossoms, while autumn brings stunning foliage, making it a renowned photography spot. The popular Moonlight Tour allows visitors to stroll through the rear garden at night and enjoy traditional performances. Visitors can also experience traditional Korean herbal tea and refreshments. Major halls like Injeongjeon, Daejojeon, and Nakseonjae are well-preserved. It connects to Changgyeonggung Palace via an internal passageway, making a combined visit convenient. Advance reservation for the rear garden tour is mandatory.",
     "tips": [
@@ -248,11 +240,7 @@ const landmarkData_en = [
   },
   {
     "id": "changgyeonggung",
-    "coordinates": {
-      "lat": 37.5787,
-      "lng": 126.9948
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Intimate palace famous for its night illumination event 'Water Light Lotus'",
     "description": "Changgyeonggung Palace was built in 1483 by King Seongjong to house three royal dowager queens. Distinguished by its intimate and serene atmosphere compared to other palaces, the night tour program 'Water Light Lotus' creates a magical ambiance with illuminations and media art reflected in the Chundang Pond. Myeongjeongjeon Hall is the oldest surviving main hall of the Joseon Dynasty, holding significant historical value. Famous as a cherry blossom viewing spot in spring, the palace also features Korea's first Western-style greenhouse. Connected to Changdeokgung Palace for convenient combined tours, it offers well-maintained, flat walking paths suitable for elderly visitors and those with strollers. Night tours are available via on-site ticket purchase.",
     "tips": [
@@ -370,11 +358,7 @@ const landmarkData_en = [
   },
   {
     "id": "deoksugung",
-    "coordinates": {
-      "lat": 37.5658,
-      "lng": 126.9751
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Urban night view spot where Western and traditional palace architecture harmonize",
     "description": "Deoksugung Palace is a historic site preserving the late Joseon and Korean Empire periods, uniquely blending Western-style architecture like the Stone Hall with traditional palace buildings. The changing of the royal guard ceremony takes place daily in front of the main gate, Daehanmun. The palace's stone-wall walkway is a famous dating spot in Seoul, especially beautiful with ginkgo tree autumn foliage. The Stone Hall's Korean Empire History Museum offers insights into the imperial era. During night openings, the entire palace is illuminated, creating a romantic atmosphere. Located near City Hall Station with excellent accessibility. Nearby attractions include Jeongdong-gil and the Seoul Museum of Art. The compact size allows for a tour within about an hour.",
     "tips": [
@@ -492,11 +476,7 @@ const landmarkData_en = [
   },
   {
     "id": "gyeonghuigung",
-    "coordinates": {
-      "lat": 37.5711,
-      "lng": 126.9683
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Free admission hidden palace, a peaceful retreat for quiet palace walks",
     "description": "Gyeonghuigung Palace was built during the reign of King Gwanghae as a secondary palace located in the western part of Seoul, also known as the 'West Palace'. Although mostly destroyed during the Japanese colonial period and now only partially restored, it offers a tranquil and quiet experience of a royal palace. Free admission makes it an accessible attraction. The palace is directly connected to the Seoul Museum of History, which makes for a great combined visit. Restored halls like Sungjeongjeon and Jajeongjeon create a serene atmosphere. While smaller in scale compared to Gyeongbokgung or Changdeokgung Palaces, its lack of crowds allows visitors to truly appreciate the palace's traditional ambiance. Highly recommended for those seeking a quiet, contemplative palace walk. A hidden gem worth visiting when exploring the Gwanghwamun and Seodaemun areas.",
     "tips": [
@@ -613,11 +593,7 @@ const landmarkData_en = [
   },
   {
     "id": "jongmyo",
-    "coordinates": {
-      "lat": 37.5742,
-      "lng": 126.994
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "UNESCO World Heritage Confucian shrine embodying the spirit of Joseon royalty",
     "description": "Jongmyo is a Confucian shrine housing the royal tablets of Joseon Dynasty kings and queens, designated as a UNESCO World Cultural Heritage Site in 1995. Its main hall is one of the world's longest single wooden structures, leaving visitors in awe with its solemn grandeur. The annual Jongmyo Jerye ritual and its accompanying music, held on the first Sunday of May, are recognized as UNESCO Intangible Cultural Heritage. Guided tours only (closed Saturdays) allow visitors to deeply understand Jongmyo's history over approximately one hour. Paths winding through dense trees create a serene atmosphere. It connects to Changdeokgung Palace via a passageway, making a combined visit possible. Highly recommended for history enthusiasts who appreciate restrained beauty over opulence.",
     "tips": [
@@ -731,11 +707,7 @@ const landmarkData_en = [
   },
   {
     "id": "bukchon",
-    "coordinates": {
-      "lat": 37.5826,
-      "lng": 126.9831
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "600-year-old traditional hanok village, Seoul's top photo spot and cultural alley",
     "description": "Bukchon Hanok Village is a traditional hanok (Korean traditional house) district with 600 years of history, located between Gyeongbokgung and Changdeok Palaces, boasting Seoul's most beautiful alleyway landscapes. The famous 'Bukchon 8 Scenic Spots' offer a unique view of interconnected hanok rooftops blending with the urban cityscape. Wearing a hanbok (traditional Korean attire) while strolling the alleys is the most popular experience. Conveniently connected to Gahoe-dong and Samcheong-gil, it's perfect for a day trip. As this is an active residential area, visitors must observe quiet, respectful etiquette. Due to many sloped alleys, comfortable walking shoes are essential. Early morning or late afternoon provide the best lighting for photography. Weekends are extremely crowded, so weekday visits are recommended.",
     "tips": [
@@ -852,11 +824,7 @@ const landmarkData_en = [
   },
   {
     "id": "seochon",
-    "coordinates": {
-      "lat": 37.5795,
-      "lng": 126.9691
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Artist village west of Gyeongbokgung, filled with hidden cafes and artisan workshops",
     "description": "Seochon is a traditional village located west of Gyeongbokgung Palace, where scholars and artists gathered during the Joseon Dynasty. Less known compared to Bukchon, it offers a relatively peaceful and soulful atmosphere. Hidden between narrow alleys are unique cafes, independent bookstores, workshops, and galleries, making exploration feel like a treasure hunt. Each neighborhood, including Tongui-dong, Nuha-dong, and Ogin-dong, has its own distinct charm. Popular with food lovers after being featured on TV cooking shows, it's also beloved by the MZ generation for its retro spaces like Dae-o Bookstore and Boann Inn. It's an excellent complementary stop after visiting Gyeongbokgung Palace, and we recommend walking slowly to truly absorb the neighborhood's atmosphere.",
     "tips": [
@@ -973,11 +941,7 @@ const landmarkData_en = [
   },
   {
     "id": "ikseon",
-    "coordinates": {
-      "lat": 37.5743,
-      "lng": 126.988
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Hottest retro district with 1920s hanok converted into trendy cafes and restaurants",
     "description": "Ikseon-dong is a famous Seoul hot spot where traditional 1920s hanok (Korean traditional houses) have been brilliantly modernized, creating a seamless blend of heritage and contemporary culture. Along its narrow alleys, charming cafes, restaurants, and boutique shops are densely packed, offering delightful exploration. During the day, you can appreciate the classic hanok architecture, while evenings transform the area with atmospheric lighting, creating a completely different ambiance. Extremely popular among the MZ generation for its countless Instagram-worthy photo spots, Ikseon-dong features fusion Korean cuisine, dessert cafes, and trendy wine bars. Conveniently located near Jongno 3-ga Station, it's highly accessible. Weekend evenings get extremely crowded with long wait times, so visiting on weekdays or during daytime is recommended. Note that the narrow streets can become challenging to navigate when crowded.",
     "tips": [
@@ -1094,11 +1058,7 @@ const landmarkData_en = [
   },
   {
     "id": "unhyeongung",
-    "coordinates": {
-      "lat": 37.5763,
-      "lng": 126.9873
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Free palace known for hanbok experiences and traditional wedding photoshoots",
     "description": "Unhyeongung Palace is a historic site where the father of King Gojong, the Heungseon Daewongun, resided and which was a political center during the late Joseon period. Unlike other palaces, it offers free admission, making it an accessible destination. With fewer tourists, visitors can explore the site in a peaceful atmosphere. The palace offers a traditional hanbok (Korean attire) experience where guests can dress up and take photos within the palace grounds. Buildings like Noanang, Norakdang, and Irodang are well-preserved, showcasing the residential style of the upper class during that era. Located right next to Ikseon-dong, it's convenient to visit both sites together. As the palace is not large, 30 minutes to an hour is sufficient for exploration. Instead of the grand splendor of other palaces, visitors can experience the refined atmosphere of a noble household. It's an ideal location for photography in a quiet setting.",
     "tips": [
@@ -1214,11 +1174,7 @@ const landmarkData_en = [
   },
   {
     "id": "namsangol",
-    "coordinates": {
-      "lat": 37.559,
-      "lng": 126.9942
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Traditional hanok village at Namsan's foot with time capsule and cultural experiences",
     "description": "Namsangol Hanok Village is an outdoor museum created by relocating five traditional Korean houses (hanok) from various parts of Seoul to the slopes of Namsan Mountain. It offers high educational value by showcasing residential styles of different social classes during the Joseon Dynasty. A time capsule plaza was buried in 1994 to commemorate Seoul's 600th anniversary, scheduled to be opened in 2394. The village offers various programs including traditional wedding ceremonies, hanbok experiences, and traditional craft workshops. Admission is free, and its location near Namsan Tower makes it an ideal visit. With traditional gardens and ponds, it serves as a perfect urban retreat. Traditional seasonal festivals are held during holidays. Accessible on foot from Chungmuro Station.",
     "tips": [
@@ -1335,11 +1291,7 @@ const landmarkData_en = [
   },
   {
     "id": "gwanghwamun",
-    "coordinates": {
-      "lat": 37.5758,
-      "lng": 126.9768
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Seoul's iconic plaza with statues of King Sejong and Admiral Yi, hub for seasonal festivals",
     "description": "A symbolic civic plaza and main gate of Gyeongbokgung Palace. Majestic statues of King Sejong the Great and Admiral Yi Sun-sin stand prominently here. The underground Sejong Story Exhibition Hall offers fascinating insights. With refreshing fountains and waterways, it becomes a popular summer resting spot for citizens. Adjacent to the National Palace Museum and Korean History Museum, it's an ideal route for historical exploration. The square hosts various cultural events and performances regularly. At night, fountain shows and Gyeongbokgung Palace lighting create a romantic cityscape. Weekends feature diverse street performances and exhibitions. This is a space where visitors can experience Seoul's historical center, connecting past and present.",
     "tips": [
@@ -1456,11 +1408,7 @@ const landmarkData_en = [
   },
   {
     "id": "sungnyemun",
-    "coordinates": {
-      "lat": 37.5599,
-      "lng": 126.9753
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "National Treasure No.1 Namdaemun Gate, even more meaningful after fire restoration",
     "description": "Designated as Korea's Treasure No. 1, this southern gate of Hanyang Fortress from the Joseon Dynasty is also known as Namdaemun Gate. First built in 1398 during King Taejo's reign, it boasts over 600 years of history. Though destroyed by fire in 2008, it was meticulously restored and reopened in 2013. As the most outstanding wooden architectural structure of the Joseon period, its two-story pavilion design is truly impressive. Located right next to Namdaemun Market, it's perfect for combining traditional market exploration with historical sightseeing. Night lighting allows visitors to admire its beauty after dark. Easily accessible from Seoul Station, it serves as an ideal starting point for Seoul tourism and is a must-visit symbolic cultural heritage site for international travelers.",
     "tips": [
@@ -1577,11 +1525,7 @@ const landmarkData_en = [
   },
   {
     "id": "heunginjimun",
-    "coordinates": {
-      "lat": 37.571,
-      "lng": 127.0098
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Eastern gate of Joseon Hanyang known as Dongdaemun, historic landmark near DDP",
     "description": "Designated as Treasure No. 1, this gate is also known as Dongdaemun (East Gate) and is the eastern main gate of the Hanyang City Wall. Built in 1398 during King Taejo's reign, it has undergone several renovations and is the only city gate with an ongseong (protective wall structure). Located near Dongdaemun History & Culture Park and the Dongdaemun Design Plaza (DDP), it creates a striking contrast with modern architectural landmarks. At night, the gate is beautifully illuminated, offering a serene nighttime landscape. Its proximity to Dongdaemun Fashion Town allows visitors to combine historical exploration with shopping. The nearby Cheonggyecheon Stream also makes it an excellent walking route. This special location lets you experience a magnificent Joseon Dynasty city gate in the heart of Seoul, serving as a representative cultural asset that showcases traditional Korean architectural beauty to international visitors.",
     "tips": [
@@ -1695,11 +1639,7 @@ const landmarkData_en = [
   },
   {
     "id": "hanyangdoseong",
-    "coordinates": {
-      "lat": 37.588,
-      "lng": 126.9816
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "18km fortress trail surrounding Joseon Hanyang for historic trekking with Seoul views",
     "description": "A historic 18.6 km city wall constructed during the Joseon Dynasty's founding period, connecting four mountains around Seoul's urban center: Naksan, Namsan, Inwangsan, and Bukhansan. The wall preserves 600 years of history and can be explored via the Seongcheong-gil walking trail. Different sections offer varying difficulty levels, with the Naksan section recommended for beginners and Bukhansan section for experienced hikers. Each section provides panoramic views of Seoul's cityscape. The wall is beautifully illuminated at night, creating a romantic atmosphere. Currently on the UNESCO World Cultural Heritage tentative list, it offers visitors a unique way to experience Seoul's history, nature, and urban landscape simultaneously.",
     "tips": [
@@ -1816,11 +1756,7 @@ const landmarkData_en = [
   },
   {
     "id": "changuimun",
-    "coordinates": {
-      "lat": 37.5929,
-      "lng": 126.9664
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Beautiful small gate at Bugak Skyway entrance, starting point for Inwangsan trail",
     "description": "Located in the northwest of Hanyang City Wall, this gate is also known as Jahamu Gate. Situated at the entrance of Inwangsan Mountain hiking trail, it's popular among hikers. During the Joseon Dynasty, the area outside Changui Gate was considered beyond the city walls and maintained a peaceful atmosphere. Near the Yun Dongju Literature Museum and Yun Dongju Poet's Hill, it's a popular literary tour route. Connected to the Buam-dong Cafe Street, visitors can enjoy a leisurely rest after walking. It also links to the Blue House backstreet walking trail, offering various route options. Though the gate itself is modest, the surrounding landscape is beautiful, making it a famous photo spot. A hidden gem near Seoul's city center where you can experience a tranquil atmosphere.",
     "tips": [
@@ -1934,11 +1870,7 @@ const landmarkData_en = [
   },
   {
     "id": "seolleung",
-    "coordinates": {
-      "lat": 37.5085,
-      "lng": 127.0467
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "UNESCO Joseon Royal Tombs in Gangnam, popular lunch walk spot for office workers",
     "description": "A UNESCO World Cultural Heritage site featuring the royal tombs of King Seongjong (9th Joseon monarch), Queen Junghyeon, and King Jungjong (11th monarch). Located in the heart of Gangnam, this expansive green space is a popular lunch break walking destination for office workers. Collectively called Seonjeongneung, the site offers well-maintained walking paths through dense pine forests, providing a peaceful urban retreat and healing experience. Benches and rest areas around the tombs make it a favorite picnic spot. Historical interpretation programs allow visitors to learn about Joseon Dynasty royal tombs. The location is especially stunning during cherry blossom and autumn foliage seasons, offering a unique space to enjoy nature and history simultaneously in Gangnam.",
     "tips": [
@@ -2052,11 +1984,7 @@ const landmarkData_en = [
   },
   {
     "id": "jeongdong",
-    "coordinates": {
-      "lat": 37.566,
-      "lng": 126.973
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Ginkgo tree-lined path along Deoksugung stone wall, classic autumn foliage date course",
     "description": "A historic street where foreign legations were concentrated during the late Joseon period, preserving Seoul's modern history. Beloved by couples for romantic walks along Deoksugung Palace's stone wall path. Preserved modern architectural landmarks include Jeongdong Church, Paejae School History Museum, and Ewha Womans High School Simpson Memorial Hall. Perfect for cultural exploration with art spaces like Seoul Museum of Art and Jeongdong Theater. Famous as a photography spot, especially during autumn when ginkgo trees create a stunning golden landscape. Offers many quiet cafes and restaurants ideal for leisurely dates. Conveniently located near City Hall and Gwanghwamun for easy urban sightseeing. An emotional street where you can feel the essence of Seoul's modern history.",
     "tips": [
@@ -2172,11 +2100,7 @@ const landmarkData_en = [
   },
   {
     "id": "chilgung",
-    "coordinates": {
-      "lat": 37.5877,
-      "lng": 126.9637
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Shrine for seven Joseon royal concubines, hidden historic space open by reservation",
     "description": "A shrine dedicated to the memorial tablets of seven royal concubines who bore sons to Joseon Dynasty kings. Located west of Gyeongbokgung Palace, it features a serene and quiet atmosphere. Historically significant memorial tablets, including those of King Yeongjo's mother Lady Choi Sukbin, are enshrined here. With few tourists, it offers a peaceful opportunity to experience royal Joseon history. Conveniently close to the Blue House and perfect for combined tours. The traditional architectural beauty of the shrine buildings makes it an excellent photography spot. Annual memorial ceremonies provide glimpses into traditional culture. Efficiently visited in conjunction with Gyeongbokgung Palace and Seochon area tours.",
     "tips": [
@@ -2292,11 +2216,7 @@ const landmarkData_en = [
   },
   {
     "id": "seoul_history_museum",
-    "coordinates": {
-      "lat": 37.5704,
-      "lng": 126.9695
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Free museum showcasing Seoul's past and present at a glance",
     "description": "A comprehensive museum that offers a panoramic view of Seoul's history and culture. The museum showcases Seoul's transformation from prehistoric times to the modern era through various artifacts and historical materials. A highlight is the impressive large-scale model recreating the landscape of Hanyang during the Joseon Dynasty. Featuring frequent special and planned exhibitions, the museum offers abundant viewing opportunities. Connected to Gyeonghuigung Palace, it's ideal for a combined visit. Popular among families due to its children's experience room. Rich in nostalgic photographs that capture Seoul's past, it provides a deep understanding of the city's history. Free admission allows visitors to explore Seoul's heritage without financial barriers.",
     "tips": [
@@ -2412,11 +2332,7 @@ const landmarkData_en = [
   },
   {
     "id": "korean_history_museum",
-    "coordinates": {
-      "lat": 37.5756,
-      "lng": 126.9778
-    },
-    "category": "palace",
+        "category": "palace",
     "summary": "Free museum covering 100 years of Korean modern history, essential stop near Gwanghwamun",
     "description": "A national museum specializing in modern and contemporary Korean history. The museum vividly exhibits historical moments of Korea from the opening of ports to the present day. Visitors can experience tumultuous periods of history including the independence movement, Korean War, and democratic movement. Interactive displays and multimedia resources help visitors understand these complex historical narratives. Located right next to Gwanghwamun Square with excellent accessibility. Well-equipped with multilingual services for international visitors. The rooftop observatory offers panoramic views of the Gwanghwamun area. A must-visit for those interested in Korea's modern and contemporary history.",
     "tips": [
@@ -2530,11 +2446,7 @@ const landmarkData_en = [
   },
   {
     "id": "namsan_tower",
-    "coordinates": {
-      "lat": 37.5512,
-      "lng": 126.9882
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Seoul's landmark with love locks and 360-degree panoramic night view sanctuary",
     "description": "A symbolic landmark of Seoul located at the 480m peak of Namsan Mountain. The 360-degree observation deck offers a panoramic view of the city skyline. Famous for lovers' padlock installations, it's a romantic date destination. Accessible by cable car, Namsan shuttle bus, or hiking. Sunset visits are highly recommended for breathtaking night views. Visitors can enjoy dinner at the tower's restaurant while overlooking the city. It's one of the most popular attractions for international tourists and an absolute must-visit highlight of any Seoul trip.",
     "tips": [
@@ -2651,11 +2563,7 @@ const landmarkData_en = [
   },
   {
     "id": "lotte_tower",
-    "coordinates": {
-      "lat": 37.5126,
-      "lng": 127.1025
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Korea's tallest building at 555m with thrilling Seoul Sky observatory and Sky Walk",
     "description": "Standing at 555m tall with 123 floors, this is Korea's tallest building and a new landmark in Jamsil. The Seoul Sky observatory on floors 117-123 offers a panoramic view of Seoul and the Han River. The world's third-highest glass floor observation deck, Sky Deck, provides an exhilarating experience. The complex includes Lotte World Mall, an aquarium, and a concert hall for a one-stop tourist destination. Sunset and nighttime are the most popular visiting times, and advance booking is recommended. On clear days, you can see as far as the sea off Incheon. The high-speed elevator that reaches the observatory in just one minute is an experience in itself. It represents Seoul's modern skyline.",
     "tips": [
@@ -2771,11 +2679,7 @@ const landmarkData_en = [
   },
   {
     "id": "63_building",
-    "coordinates": {
-      "lat": 37.5197,
-      "lng": 126.9402
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Yeouido Han River landmark combining observatory and aquarium in one complex",
     "description": "A landmark of Yeouido that was Asia's tallest building upon completion in 1985. Visitors can enjoy stunning views of the Han River and Yeouido from the 60th-floor 63 Sky Art observatory. The 63 Sea World Aquarium showcases over 400 marine species. The Wax Museum features lifelike wax figures of global celebrities. Conveniently located near the Han River cruise dock for combined tours. The sunset over the Han River is especially breathtaking. During the Yeouido Cherry Blossom Festival, the pink riverside landscape is truly magnificent. A classic scenic spot that captures Seoul's memorable moments.",
     "tips": [
@@ -2891,11 +2795,7 @@ const landmarkData_en = [
   },
   {
     "id": "bugak_skyway",
-    "coordinates": {
-      "lat": 37.5955,
-      "lng": 126.9803
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Seoul's best night view driving course with downtown panorama from Palgakjeong Pavilion",
     "description": "Seoul's signature drive course along Mount Bukak. At the Palgakjeong Pavilion viewpoint, you can take in a panoramic view of the entire city center. Highly popular as a night drive route and considered one of Seoul's best night scenery spots. Connects with Changuimun Gate and Mount Bukak Trail, offering various route options. Vehicle entry times are restricted, so pre-check is necessary. During autumn foliage season, you can enjoy both driving and leaf viewing. Recommended to visit on weekdays due to limited parking. It's the closest nature drive course to Seoul's urban center.",
     "tips": [
@@ -3013,11 +2913,7 @@ const landmarkData_en = [
   },
   {
     "id": "naksan",
-    "coordinates": {
-      "lat": 37.5802,
-      "lng": 127.0067
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Easy walking course connected to Ihwa Mural Village, famous for fortress trail night views",
     "description": "A low mountain at 125m located behind Hyehwa-dong University Street, offering breathtaking Seoul city views. Walk along the Hanyang City Wall trail and see the fortress connecting Dongdaemun to Bukhansan Mountain. Connected to the Ihwa Mural Village for an artistic alleyway exploration. Famous as a sunrise spot and popular for New Year's sunrise viewing. From the summit, you can panoramically view Dongdaemun, Namsan Tower, and Lotte Tower. Even beginners can reach the peak in just 20 minutes with minimal effort. An ideal course to visit before or after watching a play at Daehangno. A hidden gem where you can simultaneously enjoy urban history and city nightscapes.",
     "tips": [
@@ -3134,11 +3030,7 @@ const landmarkData_en = [
   },
   {
     "id": "eungbongsan",
-    "coordinates": {
-      "lat": 37.5479,
-      "lng": 127.033
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Low mountain with views of Seoul Forest and Han River, famous for spring forsythia and night views",
     "description": "A low mountain at 94m located in Seongdong-gu, offering the best night view of the Han River. From the summit, visitors can enjoy a panoramic view of the Han River, Seongsu Bridge, Seoul Forest, and the Jamsil area. Famous for its magnificent forsythia and cherry blossoms in spring, the mountain is easily accessible, just a 15-minute climb from Eungbong Station. The scenery changes dramatically from sunset to nighttime, with its unique triangular terrain providing a 360-degree view. It's a popular spot for photographers and considered the most easily accessible night view mountain in Seoul.",
     "tips": [
@@ -3254,11 +3146,7 @@ const landmarkData_en = [
   },
   {
     "id": "haneul_park",
-    "coordinates": {
-      "lat": 37.5672,
-      "lng": 126.885
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Sky garden with fantastic autumn silver grass and sunset, highlight of World Cup Park",
     "description": "A symbolic space of environmental restoration, created by transforming an old landfill into an ecological park. In autumn, the silver grass fields create a stunning landscape with a festival. From the summit, you can enjoy a 360-degree panorama of the Han River, Bukhan Mountain, and Seoul's cityscape. The 98m climb is via stairs with a gentle slope, making it manageable. Connected to Noeul Park, it's recommended to visit both. Overlooking the Sangam World Cup Stadium and MBC Broadcasting Center. Spring brings canola flowers, while summer offers sunflower fields. It's the best place in Seoul to experience the harmony between nature and urban landscape.",
     "tips": [
@@ -3373,11 +3261,7 @@ const landmarkData_en = [
   },
   {
     "id": "banpo_hangang",
-    "coordinates": {
-      "lat": 37.5103,
-      "lng": 126.9957
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Seoul's romantic Han River spot featuring Moonlight Rainbow Fountain and Sebitseom night views",
     "description": "Banpo Hangang Park is famous for its Moonlight Rainbow Fountain at Banpo Bridge. Connected to Sebitseom and Seorae Island, it's considered a top nighttime scenic spot in Seoul. The fountain show operates in the evening from April to October. Seasonal flowers like canola and cosmos bloom on Seorae Island. The park features well-maintained bicycle paths and walking trails. Visitors can enjoy romantic dining at the Floating Islands. With excellent accessibility from Gangnam, it's a popular dating destination and one of Seoul's most iconic romantic night view locations.",
     "tips": [
@@ -3492,11 +3376,7 @@ const landmarkData_en = [
   },
   {
     "id": "jeongdong_observatory",
-    "coordinates": {
-      "lat": 37.5655,
-      "lng": 126.9718
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Hidden viewpoint overlooking Deoksugung Palace, free downtown viewing spot",
     "description": "A free observatory located on the rooftop of Seoul Museum of Art, offering a unique landscape where Deoksugung Palace's traditional tile roofs blend with Seoul's urban skyscrapers. Its relatively lower elevation provides an intimate view of Deoksugung Palace. A hidden gem less known to tourists, it's best enjoyed in a peaceful atmosphere. Recommended to visit alongside the museum tour. At night, the palace's illumination harmonizes beautifully with city building lights, creating a cafe-like comfortable viewing experience. Perfect final stop for a Jeongdong-gil date route.",
     "tips": [
@@ -3611,11 +3491,7 @@ const landmarkData_en = [
   },
   {
     "id": "maebongsan",
-    "coordinates": {
-      "lat": 37.5017,
-      "lng": 127.06
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Easy night view spot in Gangnam, just 30 minutes to the observation point",
     "description": "A charming urban forest located in Yangjae-dong, standing at 70m above sea level. It offers a scenic viewpoint overlooking the Gangnam area, Umyeon Mountain, and Cheonggye Mountain. Reaching the summit takes just 15 minutes, making it easily accessible. Connected to Yangjae Stream, it's perfect for both walking and hiking. Popular among Gangnam office workers as a lunchtime walking route. Beautiful with azaleas in spring and autumn foliage. There's a small clearing at the top ideal for enjoying a picnic lunch. A modest but attractive natural space in the heart of Gangnam.",
     "tips": [
@@ -3729,11 +3605,7 @@ const landmarkData_en = [
   },
   {
     "id": "achasan",
-    "coordinates": {
-      "lat": 37.5619,
-      "lng": 127.072
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Easy Seoul sunrise and night view spot for beginners with open ridge views",
     "description": "A historic mountain located in Gwangjin-gu, standing at 287 meters with significant Goguryeo historical remains. From the summit, hikers can enjoy a breathtaking panoramic view of the Han River, eastern Seoul, and the Namyangju area. The mountain features the Achasan Fortress ruins, making it perfect for combining historical exploration with hiking. Famous as a sunrise viewing spot, it attracts many citizens on New Year's Day. Multiple hiking trails cater to different fitness levels, with convenient connection routes to Walkerhill Hotel and Seoul Children's Grand Park. The mountain is particularly popular in autumn for its beautiful fall foliage and is considered the best natural retreat in eastern Seoul.",
     "tips": [
@@ -3849,11 +3721,7 @@ const landmarkData_en = [
   },
   {
     "id": "inwangsan",
-    "coordinates": {
-      "lat": 37.5833,
-      "lng": 126.9583
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Rocky ridge course overlooking downtown Seoul, harmony of fortress trail and unique rock formations",
     "description": "Located in Jongno-gu, this 338m mountain offers the closest hiking trail to Seoul's city center. From the summit, hikers can enjoy panoramic views of Gyeongbokgung Palace, Bukhan Mountain, and the city skyline. The mountain features historical sites like the Guksa-dang shrine where rain rituals were performed during the Joseon Dynasty and Seonbawi Rock. The trail follows part of the Hanyang City Wall, allowing visitors to explore history while hiking. Popular among photographers for stunning sunrise and sunset views, the mountain can be climbed in about 40 minutes from Muakjae. It connects well with Seochon and Gyeongbokgung Palace, offering the closest urban nightscape view in Seoul.",
     "tips": [
@@ -3969,11 +3837,7 @@ const landmarkData_en = [
   },
   {
     "id": "namsan_cable_car",
-    "coordinates": {
-      "lat": 37.5568,
-      "lng": 126.9817
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "3-minute aerial journey to Namsan summit with Seoul skyline beneath your feet",
     "description": "A romantic cable car connecting Myeongdong to Namsan Tower's summit, arriving in just 3 minutes. Inside the cable car, passengers enjoy stunning views of Seoul's cityscape and the Han River. It's the most picturesque way to visit N Seoul Tower. At night, the Seoul cityscape unfolds beautifully beneath you. Recommended to visit on weekdays or early hours to avoid long lines. The cable car station itself offers an excellent viewing point. Hiking down on foot for a Namsan walk is also enjoyable. This route creates a romantic memory of Seoul travel.",
     "tips": [
@@ -4089,11 +3953,7 @@ const landmarkData_en = [
   },
   {
     "id": "sebitseom",
-    "coordinates": {
-      "lat": 37.5123,
-      "lng": 126.9963
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Floating island on Han River with special restaurants amid night views",
     "description": "Three artificial islands floating on the Han River at the southern end of Banpo Bridge. Famous as a nighttime scenic spot, these islands are illuminated by dazzling LED lights after dark. Each island features convention halls, restaurants, and cafes. The view is even more beautiful when combined with the Banpo Bridge Moonlight Rainbow Fountain. Visitors can enjoy a unique experience by taking a water taxi to the islands. Highly popular as a proposal destination, it attracts many couples. Connected to Banpo Hangang Park for riverside walks. A landmark representing Seoul's modern urban nightscape.",
     "tips": [
@@ -4209,11 +4069,7 @@ const landmarkData_en = [
   },
   {
     "id": "seoullo_7017",
-    "coordinates": {
-      "lat": 37.556,
-      "lng": 126.9727
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Elevated highway transformed into urban sky garden connecting Seoul Station area",
     "description": "A pedestrian walkway that transformed the closed Seoul Station elevated highway into an aerial garden. Spanning 983 meters with 645 planters and 24,000 plants, it connects Seoul Station, Namdaemun Market, and Namsan. Visitors can walk high above the city, enjoying panoramic views of the Seoul Station area and Namsan. At night, soft lighting creates a romantic atmosphere. Scattered with charming cafes, flower shops, and small stores. Hosts frequent busking performances and cultural events. A successful urban regeneration project loved by both tourists and locals.",
     "tips": [
@@ -4329,11 +4185,7 @@ const landmarkData_en = [
   },
   {
     "id": "ddp",
-    "coordinates": {
-      "lat": 37.5673,
-      "lng": 127.0095
-    },
-    "category": "viewpoint",
+        "category": "viewpoint",
     "summary": "Zaha Hadid's futuristic architecture, iconic for LED rose garden and night views",
     "description": "A future-oriented cultural complex designed by world-renowned architect Zaha Hadid. Its unique, fluid exterior is a work of art and a new landmark of Seoul. Various cultural events like fashion shows, exhibitions, and conferences are held year-round. Connected to the Dongdaemun Fashion Town, visitors can enjoy both shopping and culture. At night, the LED Rose Garden creates a fantastic light spectacle. Regular design and flea markets offer unique items. The rooftop grass plaza allows for an urban picnic experience. A must-visit destination for those interested in architecture, design, and fashion.",
     "tips": [
@@ -4450,11 +4302,7 @@ const landmarkData_en = [
   },
   {
     "id": "myeongdong",
-    "coordinates": {
-      "lat": 37.5636,
-      "lng": 126.985
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "K-Beauty shopping mecca filled with cosmetics shops and street food in Seoul's main downtown",
     "description": "Seoul's largest shopping district and a major tourist attraction where fashion, beauty, and culinary delights converge. The area is lined with famous domestic and international brand stores and K-Beauty cosmetic shops. Visitors can enjoy diverse street foods throughout the neighborhood. As the most popular shopping destination for international tourists, it offers multilingual services. Attractions like Myeongdong Cathedral and Noon Square add to its charm. Numerous currency exchange booths make foreign currency transactions convenient. In the evening, street food stalls and neon signs create a dazzling cityscape. It's a must-visit shopping mecca for first-time Seoul travelers.",
     "tips": [
@@ -4570,11 +4418,7 @@ const landmarkData_en = [
   },
   {
     "id": "dongdaemun",
-    "coordinates": {
-      "lat": 37.571,
-      "lng": 127.0095
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "24-hour fashion wholesale mecca, thrill of late-night shopping",
     "description": "The pulsing heart of Seoul's 24-hour fashion district. Packed with large shopping complexes like Doota Mall, Migliore, and Good Morning City. You can purchase affordable wholesale clothing even in the early morning hours. This is where the latest fashion trends are born fastest. Located near Dongdaemun History & Culture Park and DDP (Dongdaemun Design Plaza), visitors can enjoy culture and shopping together. Beyond clothing, it features fabric and accessory wholesale areas popular with fashion industry professionals. Close to Cheonggyecheon Stream for a pleasant post-shopping stroll. The ultimate pilgrimage site for shopping enthusiasts and the epicenter of K-fashion.",
     "tips": [
@@ -4689,11 +4533,7 @@ const landmarkData_en = [
   },
   {
     "id": "namdaemun",
-    "coordinates": {
-      "lat": 37.5592,
-      "lng": 126.9778
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "600-year-old largest general market, Seoul's kitchen with everything",
     "description": "Namdaemun Market is a traditional market with 600 years of history and the largest in Korea. A comprehensive market selling everything from clothing, accessories, and kitchenware to imported food. Famous for its early morning wholesale market where prices are lower than retail. Discover local eateries in alleys like the kalguksu and galchi-jorim (mackerel stew) streets. Offers a variety of souvenirs and traditional Korean goods for international tourists. Located right next to Sungnyemun Gate, allowing visitors to combine historical exploration with market shopping. Each alley contains hidden gem stores, making exploration exciting. It's the most vibrant place to experience Seoul's commercial culture.",
     "tips": [
@@ -4810,11 +4650,7 @@ const landmarkData_en = [
   },
   {
     "id": "gwangjang",
-    "coordinates": {
-      "lat": 37.57,
-      "lng": 126.999
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Home of bindaetteok and mayak gimbap, Netflix-famous traditional market food paradise",
     "description": "Gwangjang Market is Korea's first permanent market, boasting a history of over 100 years since its establishment in 1905. Famous for its food alley featuring bindaetteok (mung bean pancakes), mayak gimbap (addictive rice rolls), and yukhoe (raw beef), it has become a popular tourist destination. The market features traditional textile sections selling hanbok, silk, and fabric. Vintage clothing and second-hand shops are also attracting attention. After being featured on Netflix, foreign tourist numbers have surged. Visitors can enjoy a special experience dining at street food stalls like a local. Located conveniently between Jongno and Dongdaemun, it represents the most authentic traditional market culture in Korea.",
     "tips": [
@@ -4930,11 +4766,7 @@ const landmarkData_en = [
   },
   {
     "id": "hongdae",
-    "coordinates": {
-      "lat": 37.5563,
-      "lng": 126.9237
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Street of youth and art, center of clubs, busking, and indie culture",
     "description": "A vibrant street representing youth and art, serving as the birthplace of indie bands, clubs, and street performances. It's Seoul's premier hotspot packed with unique cafes, restaurants, and shopping. Weekend free markets offer handmade crafts and distinctive accessories. Art murals and installations decorate Picasso Street and Walking Street. Club culture peaks on Friday and Saturday nights, continuing until dawn. Connected with Yeonnam, Hapjeong, and Sangsu areas to form a broad commercial district. One of the most popular areas among foreign tourists. A must-visit destination for experiencing young and trendy Seoul.",
     "tips": [
@@ -5052,11 +4884,7 @@ const landmarkData_en = [
   },
   {
     "id": "gangnam",
-    "coordinates": {
-      "lat": 37.4979,
-      "lng": 127.0276
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Korea's iconic downtown district, center of Gangnam Style with shopping and restaurants",
     "description": "A synonym for affluent districts in South Korea and a globally famous area known for the K-POP 'Gangnam Style'. The area around Gangnam Station is densely packed with shopping malls, restaurants, and cafes. It's the center of beauty medical tourism, featuring numerous plastic surgery and dermatology clinics. Connected to COEX and the Samsung Business District. Visitors can enjoy diverse shopping in the underground shopping arcade and bustling streets. The large electronic billboards and night scenery at the Gangnam Station intersection are impressive. The restaurant alleys and bar streets become especially vibrant in the evening hours. It represents Seoul's modern and sophisticated urban landscape.",
     "tips": [
@@ -5175,11 +5003,7 @@ const landmarkData_en = [
   },
   {
     "id": "garosu",
-    "coordinates": {
-      "lat": 37.52,
-      "lng": 127.023
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Trendy select shop and cafe street known for stylish brunch and fashion",
     "description": "Garosu-gil is a sophisticated street located in Sinsa-dong, lined with trendy cafes and boutique shops. Particularly famous for its beautiful ginkgo tree-lined avenue, it's especially popular during autumn foliage season. The street features numerous domestic and international designer brand concept stores and flagship stores. It's home to Instagram-worthy cafes and brunch hotspots. The area is characterized by the distinctive elegant and upscale atmosphere typical of Gangnam's affluent neighborhoods. Conveniently close to Apgujeong Rodeo Street, it makes for an excellent combined shopping route. Recommended to visit on weekdays as it gets crowded with tourists on weekends. This is a street that offers a glimpse into Seoul's trendy lifestyle.",
     "tips": [
@@ -5297,11 +5121,7 @@ const landmarkData_en = [
   },
   {
     "id": "itaewon",
-    "coordinates": {
-      "lat": 37.5345,
-      "lng": 126.9945
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Multicultural street where global cultures coexist, mecca for international food and vintage shopping",
     "description": "Seoul's most international multicultural district, where you can experience a truly global atmosphere. Concentrated with restaurants and exotic shops from around the world. The main areas are the Antique Furniture Street and the main street in front of Hamilton Hotel. Each neighborhood like Gyeonglidan-gil, Haebangchon, and Usadan-gil offers unique charms. Famous for its vibrant nightlife with numerous clubs and lounge bars. A comfortable environment for foreigners to shop and dine. Currently undergoing transformation with the relocation of the Yongsan US Military Base. If you want to experience a global travel vibe in Seoul, Itaewon is the place to be.",
     "tips": [
@@ -5417,11 +5237,7 @@ const landmarkData_en = [
   },
   {
     "id": "insadong",
-    "coordinates": {
-      "lat": 37.574,
-      "lng": 126.985
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Traditional crafts and gallery street, shopping destination for experiencing Korean culture",
     "description": "A must-visit street for foreign tourists exploring Korean traditional culture and arts. The area is lined with shops selling antiques, traditional crafts, hanji (traditional Korean paper), and ceramics. Experience authentic Korean culture in traditional teahouses and restaurants. Ssamzigil is a unique spiral-structured cultural complex. On weekends, the street transforms into a pedestrian zone featuring street performances. Can be easily combined with Samcheong-dong and Bukchon Hanok Village. The street has a special regulation allowing only Korean-language signage. Insadong is the perfect place to take home traditional Korean art and crafts.",
     "tips": [
@@ -5537,11 +5353,7 @@ const landmarkData_en = [
   },
   {
     "id": "coex",
-    "coordinates": {
-      "lat": 37.5116,
-      "lng": 127.0592
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Asia's largest underground mall with Starfield Library and aquarium in one complex",
     "description": "Located in Samsung-dong, this is South Korea's largest underground multi-complex shopping center. Enjoy shopping, movies, performances, exhibitions, and an aquarium all in one place. The Starfield Library is an Instagram-famous spot with 13m-high bookshelves. COEX Exhibition Center hosts major exhibitions and concerts. Experience K-POP at SM Town COEX Artium. Adjacent to Bongeunsa Temple, you can feel the contrast between modern and traditional. Situated in the heart of Gangnam's business district with excellent accessibility. A multi-cultural space you can enjoy all day, regardless of weather.",
     "tips": [
@@ -5659,11 +5471,7 @@ const landmarkData_en = [
   },
   {
     "id": "cheongdam",
-    "coordinates": {
-      "lat": 37.5246,
-      "lng": 127.052
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Luxury flagship stores and celebrity hotspots, Seoul's luxury lifestyle street",
     "description": "Seoul's most luxurious designer shopping district. Packed with international high-end brand flagship stores. Home to K-POP entertainment company headquarters, making it a pilgrimage site for fans. Abundant with premium restaurants and wine bars, perfect for special occasions. Forms the Gangnam luxury belt alongside Apgujeong and Garosu-gil. A place where you can spot celebrities' fashion firsthand. Features art galleries and boutique hotels for cultural experiences. An epitome of Seoul's top-tier lifestyle.",
     "tips": [
@@ -5780,11 +5588,7 @@ const landmarkData_en = [
   },
   {
     "id": "ifc_mall",
-    "coordinates": {
-      "lat": 37.5255,
-      "lng": 126.9259
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Premium mall in Yeouido financial district for both office workers and families",
     "description": "A premium shopping complex located inside the IFC Building in Yeouido. Featuring global brands and sophisticated dining options, this venue also houses a large CGV cinema and multi-cultural space. Conveniently close to 63 Building and Yeouido Park, it offers connected tourist experiences. Popular among financial district professionals during lunch hours, the mall is known for its spacious and clean interior. It connects directly to Yeouido Hangang Park, allowing visitors to enjoy shopping and riverside walks simultaneously. It's a vibrant hotspot in Yeouido that seamlessly blends business and leisure.",
     "tips": [
@@ -5901,11 +5705,7 @@ const landmarkData_en = [
   },
   {
     "id": "times_square",
-    "coordinates": {
-      "lat": 37.5172,
-      "lng": 126.904
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Large Yeongdeungpo shopping complex with atrium and diverse restaurants for family outings",
     "description": "A large multi-complex shopping mall located at Yeongdeungpo Station. It features Shinsegae Department Store, a large supermarket, and a cinema. The massive LED screen in the atrium plaza is particularly impressive. Experience IMAX and 4DX at the CGV Stareum cinema. Popular with families for dining, with numerous restaurants and cafes. Conveniently close to Yeongdeungpo Traditional Market, making it an excellent shopping destination. Directly connected to the subway station for easy access. The largest shopping complex in Seoul's southwestern region.",
     "tips": [
@@ -6026,11 +5826,7 @@ const landmarkData_en = [
   },
   {
     "id": "the_hyundai",
-    "coordinates": {
-      "lat": 37.5255,
-      "lng": 126.928
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "MZ generation's favorite department store, sanctuary for Sounds Forest and pop-ups",
     "description": "A new flagship store of Hyundai Department Store located in Yeouido. Its signature space is an indoor garden called Sounds Forest. Featuring trendy brands and pop-up stores targeting the MZ generation. The entire 5th floor is dedicated to dining, offering diverse culinary experiences. Designed as an eco-friendly building, it provides a pleasant shopping environment. Offers connecting routes with Yeouido Park and Han River Park. Popular for its Instagram-worthy spaces, it presents a new paradigm of department stores as a multi-cultural complex.",
     "tips": [
@@ -6148,11 +5944,7 @@ const landmarkData_en = [
   },
   {
     "id": "noryangjin",
-    "coordinates": {
-      "lat": 37.5133,
-      "lng": 126.9428
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Fresh seafood at affordable prices, fish market where you buy and eat immediately",
     "description": "Seoul's largest seafood market features vibrant dawn auctions. You can buy fresh sashimi-grade fish at affordable prices and immediately enjoy it at the 2nd-floor restaurants. The early morning auction tour is a unique experience that's become very popular. Visitors can enjoy various seafood dishes like sashimi, spicy fish stew, and grilled shellfish. It's a landmark destination for foreign tourists to experience Korean seafood market culture. The market is directly connected to Noryangjin Station via underground passage. The market's unique lively atmosphere is truly charming. It's the best place to taste the freshest seafood in Seoul.",
     "tips": [
@@ -6267,11 +6059,7 @@ const landmarkData_en = [
   },
   {
     "id": "gyeongdong",
-    "coordinates": {
-      "lat": 37.58,
-      "lng": 127.0367
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Traditional herbal medicine and produce market, Seoul's medicinal market",
     "description": "A traditional market renowned as a mecca for herbal medicines and health products. Here, you can purchase ginseng, deer antler, and various medicinal herbs at affordable prices. Visitors can watch herbal teas and health tonics being made on-site. The market retains its traditional atmosphere, offering a warm and nostalgic experience. During the autumn Chuseok holiday, it bustles with seasonal foods like jujubes and chestnuts. Fresh vegetables and fruits are also sold at reasonable prices. A local market beloved by residents, it's a must-visit destination for those interested in traditional Korean health and wellness.",
     "tips": [
@@ -6381,11 +6169,7 @@ const landmarkData_en = [
   },
   {
     "id": "mangwon_market",
-    "coordinates": {
-      "lat": 37.556,
-      "lng": 126.91
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Hip traditional market famous for rice croquettes and local vibes",
     "description": "A traditional market that has transformed from a neighborhood marketplace into a trendy hotspot. Perfect for a foodie tour with affordable and delicious street foods and side dish shops. Hidden gem restaurants that became famous on social media are tucked inside. Young, trendy shops have moved in, creating a hip atmosphere. Conveniently located near Mangwon Hangang Park and Yeonnam-dong, making it an excellent combined tour route. Offers an authentic local experience of shopping and eating like a local. Recommended to visit on weekdays as it gets crowded with tourists on weekends. A market where tradition and trends coexist.",
     "tips": [
@@ -6496,11 +6280,7 @@ const landmarkData_en = [
   },
   {
     "id": "tongin",
-    "coordinates": {
-      "lat": 37.5792,
-      "lng": 126.9688
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Traditional market famous for lunchbox cafe, unique food experience with old coins",
     "description": "Tongin Market is a historic market used by Gyeongbokgung Palace administrators during the Joseon Dynasty. Famous for its lunchbox cafe, visitors can collect side dishes using traditional brass coins. It seamlessly connects with the Seochon neighborhood alleyways. The market's charm lies in its nostalgic atmosphere of old shops. It's a must-visit destination for foreign tourists wanting to experience a traditional Korean market. Close to Gyeongbokgung Palace and the Blue House, it offers convenient sightseeing. Visitors can enjoy simple but delicious home-style Korean side dishes. It's a unique tourist spot for experiencing Korean market culture.",
     "tips": [
@@ -6616,11 +6396,7 @@ const landmarkData_en = [
   },
   {
     "id": "seongsu",
-    "coordinates": {
-      "lat": 37.5445,
-      "lng": 127.0557
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Seoul's Brooklyn with factory-converted cafes and pop-up sanctuary",
     "description": "Known as the 'Brooklyn of Seoul', this is a holy ground for hipsters. The neighborhood is lined with cafes, galleries, and restaurants converted from old factories and warehouses. It's famous for its artisan shoe street, featuring handmade shoe and leather craft workshops. You'll find diverse exhibitions and pop-up events at complex cultural spaces like Daelim Warehouse and Seongsu Yeonbang. Hotspots are concentrated around Ttukseom and Seoul Forest stations. Close to Seoul Forest, you can enjoy both nature and hip culture. Weekends can get crowded, so visiting on weekdays is recommended. This is where you can experience the most trendy lifestyle in Seoul.",
     "tips": [
@@ -6732,11 +6508,7 @@ const landmarkData_en = [
   },
   {
     "id": "yeonnam",
-    "coordinates": {
-      "lat": 37.566,
-      "lng": 126.9237
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Yeontral Park and aesthetic alleys, relaxed cafe town next to Hongdae",
     "description": "A neighborhood that began in Hongdae's back alleys and grew into a trendy hotspot for young creatives. Connected to the Gyeongui Line Forest Park, it offers delightful walking and café tours. Hidden in every alley are exotic restaurants and quirky cafes. Key attractions include Yeonnam-dong's Pigeon Alley and Yeon-tral Park. It connects seamlessly with Hongdae and Hapjeong areas, forming a vibrant commercial district. More popular for daytime brunch and cafes than nightlife. Features numerous pet-friendly cafes and restaurants. A neighborhood where you can experience Seoul's relaxed and artistic everyday life.",
     "tips": [
@@ -6852,11 +6624,7 @@ const landmarkData_en = [
   },
   {
     "id": "yeonhui",
-    "coordinates": {
-      "lat": 37.568,
-      "lng": 126.928
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Quiet upscale residential area cafes, brunch and bakery paradise",
     "description": "Yeonhui-dong is a treasure trove of hidden culinary gems nestled between quiet residential streets. Though not flashy, the neighborhood boasts establishments that win you over with exceptional taste and atmosphere. Bakeries, brunch spots, and Italian restaurants are particularly famous. Recommended for those seeking a more relaxed vibe compared to Yeonnam-dong, it's also conveniently connected to Ansan Mountain Trail, allowing for a perfect hiking and dining tour. These are authentic local restaurants beloved by Seoul residents, known more through word-of-mouth than social media popularity. It's a quiet, sophisticated hidden gourmet neighborhood in Seoul.",
     "tips": [
@@ -6973,11 +6741,7 @@ const landmarkData_en = [
   },
   {
     "id": "hannam",
-    "coordinates": {
-      "lat": 37.535,
-      "lng": 127.001
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Upscale restaurants and gallery district, celebrity hotspot",
     "description": "A high-end residential area near Itaewon with numerous sophisticated cultural spaces. Home to cultural landmarks like the Leeum Museum of Art and Blue Square. Concentrated with luxury restaurants, wine bars, and rooftop bars. Cafes with panoramic views of Hannam Bridge and Namsan Mountain are especially popular. Known for its international atmosphere due to a large foreign resident population. Connected to UN Village, creating an elegant ambiance. Famous for its stunning nighttime rooftop bars, offering a refined and sophisticated Seoul nightlife experience.",
     "tips": [
@@ -7092,11 +6856,7 @@ const landmarkData_en = [
   },
   {
     "id": "mullae",
-    "coordinates": {
-      "lat": 37.517,
-      "lng": 126.897
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Where steel workshops meet art, birthplace of industrial aesthetic",
     "description": "Mullae Creative Village, a transformation from an industrial metalworking alley into an artistic enclave. By day, the sounds of metal workshops ring out; by night, artists continue their creative work. A unique landscape emerges where metal sculptures and murals blend together. Small galleries, workshops, and cafes hide between factories. The surrounding Yeongdeungpo area offers many local restaurants. Redevelopment discussions mean the current scene may be temporary. A favorite photo spot for photographers, here you'll experience the most unique coexistence of industry and art in Seoul.",
     "tips": [
@@ -7209,11 +6969,7 @@ const landmarkData_en = [
   },
   {
     "id": "sindang",
-    "coordinates": {
-      "lat": 37.565,
-      "lng": 127.01
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Tteokbokki Town and Jungang Market, retro-style restaurant neighborhood",
     "description": "Famous for its Tteokbokki (spicy rice cake) Town, this is the original street of instant tteokbokki with dozens of long-standing restaurants. Besides tteokbokki, visitors can enjoy other street foods like sundae (Korean blood sausage), fried foods, and odeng (fish cakes). Popular among students for its affordable and generous portions, the area connects to Jungang Market and offers traditional market exploration. Just a 5-minute walk from Sindang Station, it features a warm, nostalgic atmosphere unique to old food alleys. This is a place where you can taste the history of Korean street food culture.",
     "tips": [
@@ -7327,11 +7083,7 @@ const landmarkData_en = [
   },
   {
     "id": "euljiro3ga",
-    "coordinates": {
-      "lat": 37.566,
-      "lng": 126.992
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Nogari alley and hip bars, center of 'Hipjiro'",
     "description": "Known as 'Hipjiro', this retro-themed alleyway is located in the Euljiro area. Old hardware stores and print shops now coexist with trendy cafes and bars. Famous for Sewoon Sangga and the Nogari Alley food street, it transforms from a daytime workspace for technicians to a nighttime playground for young people. The dazzling night view of Euljiro's lighting district is also a must-see. This unique neighborhood beautifully blends old and new, offering numerous photogenic retro-style spots. It has emerged as Seoul's newest hip destination.",
     "tips": [
@@ -7445,11 +7197,7 @@ const landmarkData_en = [
   },
   {
     "id": "seongbuk",
-    "coordinates": {
-      "lat": 37.589,
-      "lng": 127.005
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Upscale residential area below Hanyangdoseong, serene neighborhood with museums and cafes",
     "description": "Seongbuk-dong is a charming neighborhood where traditional Korean hanok houses and elegant residences blend seamlessly. It features historic sites like Simwujang and Gilsang Temple, alongside peaceful cafes. Connected to Bukak Skyway, it's also a great driving route. Beloved by artists, the area boasts literary and art museums. Perfect for walking the Hanyangdoseong City Wall trail and recommended for those wanting to escape Seoul's bustling atmosphere. Quieter than Bukchon, it's ideal for contemplative strolls and experiencing Seoul's nostalgic old-world charm.",
     "tips": [
@@ -7563,11 +7311,7 @@ const landmarkData_en = [
   },
   {
     "id": "buam",
-    "coordinates": {
-      "lat": 37.592,
-      "lng": 126.965
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Tranquil village below Bugaksan, healing neighborhood blending walks and cafes",
     "description": "Buamdong is a quiet artistic neighborhood nestled between Inwangsan and Bukaksan Mountains. It features cultural spaces like the Hankang Museum and Yoon Dongju Literature Museum. Connected to Changuimun Gate and Bukak Skyway, visitors can enjoy both nature and culture. Peaceful cafes and restaurants offer a relaxed atmosphere. Its charm lies in being close to Seoul's city center while maintaining a countryside feel. Often used as a filming location for movies and dramas. Perfect for weekend brunches after a morning walk. A hidden neighborhood in Seoul ideal for quiet contemplation.",
     "tips": [
@@ -7682,11 +7426,7 @@ const landmarkData_en = [
   },
   {
     "id": "cheongpa",
-    "coordinates": {
-      "lat": 37.541,
-      "lng": 126.967
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "New hotspot near Sookmyung Womens Univ. Station with retro vibes and new cafes",
     "description": "Cheongpa-dong is a quiet residential neighborhood near Sookmyung Women's University. Connected to Haebangchon, it offers charming alleyway walks. You'll find affordable restaurants and cafes perfect for students. Close to Seoul Station with great accessibility, it's located on a hill below Namsan Mountain with scenic cafes. Undeveloped as a tourist spot, it offers an authentic local atmosphere. Quieter and more peaceful than Haebangchon, it's ideal for travelers wanting to experience Seoul like a local.",
     "tips": [
@@ -7800,11 +7540,7 @@ const landmarkData_en = [
   },
   {
     "id": "songni",
-    "coordinates": {
-      "lat": 37.507,
-      "lng": 127.045
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Songpa's Gyeongridan-gil, rising cafe street near Jamsil",
     "description": "Songri-dan-gil is the new hotspot in Jamsil's Songpa District. It's a street of cafes and restaurants formed along Seokchon Lake. Close to Lotte World and Lotte Tower, it offers convenient connected tourism. Unlike the bustling Jamsil, it has a quiet and artistic atmosphere. Lakefront cafes and rooftop restaurants are particularly popular. The evening scenery is beautiful, with lake views and Lotte Tower illuminations. Weekends can be crowded, so weekday visits are recommended. It's an emerging date course and trendy street in the Jamsil area.",
     "tips": [
@@ -7921,11 +7657,7 @@ const landmarkData_en = [
   },
   {
     "id": "seoul_forest",
-    "coordinates": {
-      "lat": 37.5443,
-      "lng": 127.0374
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Large urban park in Ttukseom, sanctuary for deer feeding and picnics",
     "description": "Seoul Forest is a large urban forest park located in Ttukseom. It features diverse themed areas including a culture and arts park, ecological forest, and wetland ecosystem garden. Visitors can closely observe flower deer in the deer enclosure. Connected to the Seongsu-dong cafe street, it makes for an excellent half-day outing. The park offers expansive spaces for cycling and inline skating. It's a popular family picnic destination that gets crowded on weekends. The spring cherry blossoms and autumn foliage are particularly beautiful. It's the most beloved urban forest among Seoul citizens.",
     "tips": [
@@ -8041,11 +7773,7 @@ const landmarkData_en = [
   },
   {
     "id": "yeouido_park",
-    "coordinates": {
-      "lat": 37.526,
-      "lng": 126.922
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Downtown park in central Yeouido, relaxation spot for cycling and picnics",
     "description": "Yeouido Park is a citizen's rest space located in the center of Yeouido. Visitors can enjoy picnics and exercise on its expansive lawn plaza. A bicycle path connects to the Han River Park. During cherry blossom season, it's a famous flower viewing spot alongside Yunjung-ro. It's a popular walking route for office workers during lunch break. The park features themed spaces like the Forest of Tradition and Culture Plaza. It forms a key tourism route along with the 63 Building and National Assembly Building, offering a natural retreat in the heart of the city.",
     "tips": [
@@ -8152,11 +7880,7 @@ const landmarkData_en = [
   },
   {
     "id": "olympic_park",
-    "coordinates": {
-      "lat": 37.5212,
-      "lng": 127.1212
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Memories of '88 Olympics, large park with sculpture garden and vast green spaces",
     "description": "Olympic Park is the largest park in Seoul, a legacy of the 1988 Seoul Olympics. It features cultural facilities like the Soma Museum of Art and the Olympic Memorial Hall. There are 9 famous photo zones throughout the park. Mongchon Fortress and Baekje-era historic sites are preserved here. Visitors enjoy picnics, jogging, and cycling on the expansive grass plaza. Large concert venues host major performances and festivals. The park is stunning during spring wildflowers and autumn cosmos seasons. It's a complex space where sports, culture, and history converge.",
     "tips": [
@@ -8264,11 +7988,7 @@ const landmarkData_en = [
   },
   {
     "id": "worldcup_park",
-    "coordinates": {
-      "lat": 37.5672,
-      "lng": 126.885
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Ecological miracle of landfill transformation with Haneul Park and Peace Park",
     "description": "World Cup Park is a ecological park created on a former landfill site. Comprising Peace Park, Sky Park, Sunset Park, Nanjicheon Park, and Nanji Hangang Park, it is renowned for its success in environmental restoration. The Sky Park's silver grass fields are especially stunning in autumn. Located near the World Cup Stadium and MBC Broadcast Center, it is perfectly optimized for cycling, jogging, and picnicking. The park offers different flowers and landscapes each season, making it the premier natural relaxation space in northwest Seoul.",
     "tips": [
@@ -8377,11 +8097,7 @@ const landmarkData_en = [
   },
   {
     "id": "namsan_park",
-    "coordinates": {
-      "lat": 37.5512,
-      "lng": 126.9882
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Mountain in central Seoul, nature retreat with N Seoul Tower and trail walks",
     "description": "Namsan Park is known as the 'lungs of Seoul,' a quintessential urban nature park. It features iconic attractions like N Seoul Tower, beacon mounds, and the Octagonal Pavilion. Visitors can enjoy panoramic views of Seoul while walking along the circular trails. Accessible by cable car, shuttle bus, or on foot, the park offers stunning scenery in every season - from cherry blossoms to autumn foliage and winter snowscapes. The park also houses historical sites like the Ahn Jung-geun Memorial Hall. It's a popular dating spot for couples and serves as the closest natural retreat in downtown Seoul.",
     "tips": [
@@ -8491,11 +8207,7 @@ const landmarkData_en = [
   },
   {
     "id": "bukhansan_national",
-    "coordinates": {
-      "lat": 37.66,
-      "lng": 126.9933
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Seoul's highest peak, national park with granite peaks and valleys",
     "description": "Bukhansan National Park is an urban national park spanning Seoul and Gyeonggi Province. Its three majestic peaks—Baegundae, Insubong, and Mangyeongdae—are impressive. It's the world's most visited national park annually. Offering diverse hiking trails suitable for beginners to professional mountaineers, visitors can also explore cultural sites like Bukhansan Fortress and Seungga Temple. Its valleys and waterfalls are especially popular summer retreats. A four-season hiking destination, the park is renowned for spring azalea blossoms and autumn foliage. It's the quintessential weekend hiking spot for Seoul residents.",
     "tips": [
@@ -8614,11 +8326,7 @@ const landmarkData_en = [
   },
   {
     "id": "gwanaksan",
-    "coordinates": {
-      "lat": 37.4428,
-      "lng": 126.964
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Mountain behind Seoul National Univ., Seoul panorama from Yeonjudae summit",
     "description": "Gwanaksan is a famous mountain located behind Seoul National University, with an elevation of 629 meters. It features notable sites like Yeonju Peak and Yeonju Rock, offering spectacular views. It's the most popular hiking destination for trekkers in southern Seoul. Various hiking trails connect to Gwacheon and Anyang. Routes starting from Nakseongdae and Sadang Station are particularly popular. The rocky sections add excitement to the hiking experience. The autumn foliage is beautiful, and the night views are stunning. It's the best hiking spot in southern Seoul.",
     "tips": [
@@ -8734,11 +8442,7 @@ const landmarkData_en = [
   },
   {
     "id": "dobongsan",
-    "coordinates": {
-      "lat": 37.698,
-      "lng": 127.017
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Rocky mountain next to Bukhansan, beautiful for rock climbing and valley scenery",
     "description": "Dobong Mountain is a famous peak with an elevation of 740m located within Bukhansan National Park. Its rocky peaks like Jaunbong, Manjangbong, and Seonin Peak create a spectacular landscape. Popular among rock climbers, the mountain offers excellent accessibility with trails starting directly from Dobong Mountain Station. The beautiful valleys make it a favorite summer retreat, and visitors can also explore its temples and hermitages. Known for stunning azalea blossoms in spring and vibrant autumn foliage, it's a representative hiking course in northern Seoul.",
     "tips": [
@@ -8852,11 +8556,7 @@ const landmarkData_en = [
   },
   {
     "id": "suraksan",
-    "coordinates": {
-      "lat": 37.683,
-      "lng": 127.056
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Mountain in northeast Seoul, hiking spot with unique rocks and waterfalls",
     "description": "Suraksan Mountain is located on the border between Nowon-gu and Uijeongbu City, with an elevation of 638 meters. It boasts a beautiful landscape featuring unique rock formations and waterfalls. The mountain is easily accessible from Danggogae and Suraksan subway stations, with popular hiking routes connecting to Buramsan Mountain. It's a great summer retreat with Surak Falls and Okryu Falls. The trail is suitable for beginners and is a favorite daily hiking course for residents in Seoul's northeastern area, offering a natural escape close to the city.",
     "tips": [
@@ -8970,11 +8670,7 @@ const landmarkData_en = [
   },
   {
     "id": "cheonggyecheon",
-    "coordinates": {
-      "lat": 37.5696,
-      "lng": 126.9784
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Restored downtown stream, walking path from Gwanghwamun to Dongdaemun",
     "description": "Cheonggyecheon is a restored stream that cuts through downtown Seoul. A 5.8km walking path has been created from Gwanghwamun to Dongdaemun. At night, the stream is illuminated, offering a romantic evening stroll. Cultural installations like the Royal Parade of King Jeongjo and the Wall of Wishes can be found here. Summer features water play activities, while winter hosts a lantern festival. It naturally connects with Jongno and Eulji-ro tourism. It serves as an urban oasis for office workers and is recognized globally as a successful urban restoration project.",
     "tips": [
@@ -9089,11 +8785,7 @@ const landmarkData_en = [
   },
   {
     "id": "seonyudo",
-    "coordinates": {
-      "lat": 37.545,
-      "lng": 126.898
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Regenerated water treatment plant on Han River, island blending ecology and industrial heritage",
     "description": "Seonyudo Park is a former water treatment plant transformed into an eco-park. Visitors access the island via a bridge over the Han River. It features unique landscaping like the Garden of Time and Garden of Green Columns. This beautiful space has won Seoul's architectural award and is beloved as a picnic and photography spot. Located below Yanghwa Bridge, it offers stunning views of the Han River and urban cityscape. The sunset is particularly breathtaking. It's considered a successful example of urban regeneration as an ecological park.",
     "tips": [
@@ -9208,11 +8900,7 @@ const landmarkData_en = [
   },
   {
     "id": "yangjae",
-    "coordinates": {
-      "lat": 37.4695,
-      "lng": 127.034
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Gangnam's urban stream, popular for cycling and walking",
     "description": "Yangjae Citizen's Forest is an urban forest park connected to Yangjae Stream. Visitors enjoy picnics and reading on its expansive lawn. The Yun Bong-gil Memorial Hall is located within the park. The park connects to the Yangjae Stream bicycle path, making it an excellent riding route. It's the largest green space closest to the Gangnam area and is also popular for walking pets. In summer, people seek shade in the forest to escape the heat. It serves as a daily relaxation space for Gangnam residents.",
     "tips": [
@@ -9326,11 +9014,7 @@ const landmarkData_en = [
   },
   {
     "id": "boramae",
-    "coordinates": {
-      "lat": 37.491,
-      "lng": 126.919
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Large park on former Air Force Academy grounds with aviation exhibits and green spaces",
     "description": "Boramae Park is a large park built on the former Air Force Academy grounds. It features a spacious grass plaza, an artificial waterfall, and an Air Park where visitors can see military fighter jets. Popular with pet owners due to its dedicated dog playground, the park is located near Boramae Hospital. With wide paths perfect for cycling and inline skating, it's a representative leisure space for residents in southern Seoul and ideal for family outings and exercise.",
     "tips": [
@@ -9441,11 +9125,7 @@ const landmarkData_en = [
   },
   {
     "id": "yongsan_family",
-    "coordinates": {
-      "lat": 37.524,
-      "lng": 126.972
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Family park next to National Museum of Korea with vast lawns and ponds",
     "description": "Yongsan Family Park is a spacious green park located next to the National Museum of Korea. Formerly a U.S. military golf course, it has been converted into a public park. Visitors can enjoy picnics and relaxation on its expansive lawns. It is conveniently located for combined visits with the National Museum of Korea and the War Memorial. The park is close to the Ichon area of the Han River and is the largest flat grass park in the metropolitan area. It is particularly popular with families and serves as the central green space in the Yongsan Cultural District.",
     "tips": [
@@ -9555,11 +9235,7 @@ const landmarkData_en = [
   },
   {
     "id": "children_grand",
-    "coordinates": {
-      "lat": 37.55,
-      "lng": 127.08
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Large park for children with zoo and rides for family outings",
     "description": "Children's Grand Park is a family-themed park located in Gwangjin-gu, offering a zoo, botanical garden, and amusement park. It provides free admission, making it a popular destination for family outings. Famous for its spring cherry blossom festival and autumn chrysanthemum exhibition, the park offers various experience programs for children. It's conveniently located near Konkuk University Station and Achasan Mountain. Visitors can enjoy picnics on its expansive lawn, making it the best family outing spot in eastern Seoul.",
     "tips": [
@@ -9672,11 +9348,7 @@ const landmarkData_en = [
   },
   {
     "id": "jungnangcheon",
-    "coordinates": {
-      "lat": 37.558,
-      "lng": 127.065
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Northeast Seoul stream with well-maintained cycling and walking paths",
     "description": "Jungnang Stream is a walking trail flowing through northeastern Seoul. Famous for its rose tunnel, a rose festival is held in May. Connected to Eungbong Mountain, it allows for both walking and hiking. A bicycle path connects to the Han River. It's a daily walking route for residents of northeastern Seoul. Night lighting enables evening walks. The ecological river restoration supports diverse bird habitats. It's a river park where you can experience nature within the city.",
     "tips": [
@@ -9790,11 +9462,7 @@ const landmarkData_en = [
   },
   {
     "id": "ansan_jarak",
-    "coordinates": {
-      "lat": 37.581,
-      "lng": 126.946
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Seodaemun barrier-free forest trail, easy urban walk for wheelchairs and strollers",
     "description": "The Ansan Trail is an accessible walking path that circles Ansan Mountain in Yeonhui-dong, Seodaemun-gu. Its gentle slope makes it wheelchair and stroller-friendly. This 7km circular route offers a forest bathing experience in the heart of the city. Visitors can enjoy panoramic views of Seoul from the observatory. It's conveniently located near Yeonhui-dong's famous restaurant street. The trail is particularly beautiful during cherry blossom season in spring and autumn foliage. Suitable for all ages and fitness levels, it's considered one of Seoul's most enjoyable forest trails.",
     "tips": [
@@ -9907,11 +9575,7 @@ const landmarkData_en = [
   },
   {
     "id": "dream_forest_park",
-    "coordinates": {
-      "lat": 37.62,
-      "lng": 127.04
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Largest park in northern Seoul with observatory and deer for nature retreat",
     "description": "North Seoul Dream Forest is the largest park in northern Seoul, located in Gangbuk-gu. From its observation deck, visitors can enjoy panoramic views of Bukhansan and Dobongsan Mountains. The park offers diverse attractions including a deer enclosure and Monthlyeong Pond. It's frequently used as a filming location for dramas. Visitors can enjoy picnics on its spacious lawn, and it features excellent playground facilities for children. The park is particularly beautiful during spring cherry blossoms and autumn foliage, making it the perfect family destination in northern Seoul.",
     "tips": [
@@ -10020,11 +9684,7 @@ const landmarkData_en = [
   },
   {
     "id": "seoul_botanic",
-    "coordinates": {
-      "lat": 37.57,
-      "lng": 126.835
-    },
-    "category": "nature",
+        "category": "nature",
     "summary": "Large botanical garden in Magok with greenhouse and lake garden in the city",
     "description": "The Seoul Botanical Garden is a large urban botanical garden located in Magok. It consists of greenhouses, an open forest, themed gardens, and wetlands. It showcases plants from 12 global cities, organized thematically. The space beautifully blends modern architecture with nature. Directly connected to Magonaru Station, it offers excellent accessibility. Visitors can enjoy plants year-round. Cafes and restaurants are also on-site. It's a new natural cultural landmark in Seoul.",
     "tips": [
@@ -10138,11 +9798,7 @@ const landmarkData_en = [
   },
   {
     "id": "national_museum",
-    "coordinates": {
-      "lat": 37.524,
-      "lng": 126.9802
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "World's 6th largest museum, free spot to see Korean history and culture at a glance",
     "description": "The National Museum of Korea is the country's largest museum, housing over 300,000 artifacts that comprehensively showcase Korean history and culture from prehistoric times to the modern era. Visitors can see national treasures like the Contemplating Bodhisattva Statue and Goryeo celadon ceramics. The museum's mirror pond and spacious garden offer a pleasant outdoor walking course. During night openings, the museum is beautifully illuminated. Admission is free, making it easily accessible. Combine your visit with Yongsan Family Park and Hangang Jin Station for a full day trip. It's a must-visit destination for introducing Korean history to international tourists.",
     "tips": [
@@ -10258,11 +9914,7 @@ const landmarkData_en = [
   },
   {
     "id": "leeum",
-    "coordinates": {
-      "lat": 37.538,
-      "lng": 126.999
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Samsung's national treasure collection and contemporary art in architect-designed museum",
     "description": "Leeum Museum of Art is a world-class museum operated by the Samsung Cultural Foundation. The building itself, designed by Mario Botta, Jean Nouvel, and Rem Koolhaas, is a work of art. The museum boasts an extensive collection ranging from traditional Korean art to contemporary art. National treasures like Goryeo celadon and white porcelain are exhibited here. Visitors can also enjoy special exhibitions of international modern art. Located in the upscale Hannam-dong neighborhood, it offers an elegant viewing experience. It's a must-visit destination for art enthusiasts, providing a unique opportunity to appreciate both architecture and art simultaneously.",
     "tips": [
@@ -10377,11 +10029,7 @@ const landmarkData_en = [
   },
   {
     "id": "apma",
-    "coordinates": {
-      "lat": 37.524,
-      "lng": 126.9802
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Art museum in Amorepacific HQ, harmony of modern architecture and traditional art",
     "description": "The Amore Pacific Museum of Art is a contemporary art museum located in Yongsan. Designed by David Chipperfield, the building is an architectural masterpiece. Visitors can experience contemporary art through the Amore Pacific collection and special exhibitions. The unique exhibition space features natural lighting, and the museum is directly connected to Sinyongsan Station, offering excellent accessibility. Visitors can enjoy a leisurely time in the building's garden and café. Advanced reservation is recommended. It's a premium cultural space where you can appreciate both architecture and art.",
     "tips": [
@@ -10493,11 +10141,7 @@ const landmarkData_en = [
   },
   {
     "id": "mmca_seoul",
-    "coordinates": {
-      "lat": 37.5788,
-      "lng": 126.98
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Contemporary art mecca in Samcheong-dong, national museum next to Gyeongbokgung",
     "description": "Located in Samcheong-dong, the National Museum of Modern and Contemporary Art (MMCA) Seoul is a specialized museum dedicated to modern art. Uniquely housed in the renovated former Military Intelligence Command building, the museum offers both domestic and international contemporary art exhibitions. Situated near Gyeongbokgung Palace and Bukchon, visitors can enjoy the juxtaposition of traditional and modern Seoul. Explore outdoor installation art in the garden, with many free exhibitions making it an accessible cultural destination. The art bookstore and cafe are also popular attractions. It's the most in-depth space to experience contemporary art in Seoul.",
     "tips": [
@@ -10611,11 +10255,7 @@ const landmarkData_en = [
   },
   {
     "id": "mmca_deoksugung",
-    "coordinates": {
-      "lat": 37.5658,
-      "lng": 126.9751
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Art museum in Deoksugung Stone Hall, specialized in modern and contemporary art",
     "description": "The MMCA Deoksugung Branch is a specialized modern art museum that opened in 1998. Located in the stone building from the Japanese colonial era, the museum features exhibitions of Korean modern art and international art collections. It's perfect to visit alongside a tour of Deoksugung Palace. The classic interior atmosphere within the Western-style building is particularly charming. It naturally fits into a romantic walk along Jeongdong-gil. Museum entry is free with the Deoksugung Palace ticket. This is a unique museum where history and art beautifully converge.",
     "tips": [
@@ -10725,11 +10365,7 @@ const landmarkData_en = [
   },
   {
     "id": "folk_museum",
-    "coordinates": {
-      "lat": 37.5816,
-      "lng": 126.979
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Free museum in Gyeongbokgung showing Korean daily life and culture",
     "description": "The National Folk Museum of Korea showcases traditional Korean lifestyle and cultural heritage. Located within Gyeongbokgung Palace, visitors often combine their museum tour with palace exploration. The museum exhibits the life journey of Koreans, seasonal customs, and traditional housing. An outdoor traditional street recreates historical scenes and is a popular photo spot. It's an excellent place for foreign visitors to learn about Korean culture. With a children's museum, it's perfect for family visits. Entry is free, making it an accessible cultural experience. The museum provides an immersive educational space to vividly experience traditional Korean life.",
     "tips": [
@@ -10842,11 +10478,7 @@ const landmarkData_en = [
   },
   {
     "id": "war_memorial",
-    "coordinates": {
-      "lat": 37.5367,
-      "lng": 126.977
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Korean War and defense history with impressive outdoor fighter jets and tanks",
     "description": "The War Memorial of Korea is a large memorial commemorating the Korean War and national defense history. Actual military equipment like tanks, fighter jets, and missiles are displayed outdoors. Indoor exhibition halls provide detailed history of the Korean War. The 6.25 War Experience Room allows visitors to feel the war's devastation. It's a popular historical education site for children. Located near the National Museum of Korea for convenient combined visits. Free admission makes it accessible anytime. An essential space for learning about modern Korean national defense history.",
     "tips": [
@@ -10962,11 +10594,7 @@ const landmarkData_en = [
   },
   {
     "id": "hangeul_museum",
-    "coordinates": {
-      "lat": 37.524,
-      "lng": 126.9802
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "King Sejong's Hangeul creation history, free museum with Korean alphabet experiences",
     "description": "The National Hangul Museum is a specialized museum dedicated to showcasing the history and significance of Hangul (Korean alphabet). The exhibits span from the creation of Hunminjeongeum to modern typography. It offers popular Korean language experience programs for international visitors. Located on the same grounds as the National Museum of Korea, many visitors combine their visits. Special events are held on Hangul Day. The museum features highly interactive exhibits designed for children. Admission is free, making it an accessible cultural experience. It is the world's only museum exclusively focused on Hangul.",
     "tips": [
@@ -11075,11 +10703,7 @@ const landmarkData_en = [
   },
   {
     "id": "daelim",
-    "coordinates": {
-      "lat": 37.5792,
-      "lng": 126.9688
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Tongui-dong design museum specialized in photography and design exhibitions",
     "description": "Daelim Museum is a specialized contemporary art and design museum located in Tongui-dong. It hosts planned exhibitions across various fields including photography, design, and fashion. Popular with the MZ generation for its youthful sensibility, it pairs perfectly with a stroll through Seochon alleyways. The museum is known for its Instagram-worthy, aesthetically pleasing exhibitions. Its café and shop are equally sophisticated. Conveniently close to Gyeongbokgung Palace and the Blue House, it offers an opportunity to experience modern cultural arts.",
     "tips": [
@@ -11188,11 +10812,7 @@ const landmarkData_en = [
   },
   {
     "id": "sema",
-    "coordinates": {
-      "lat": 37.5658,
-      "lng": 126.9751
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Remodeled former Supreme Court building in Jeongdong-gil, free exhibition space for citizens",
     "description": "The Seoul Museum of Art (SeMA) is the city's premier art museum located in Jeong-dong. Housed in the beautifully renovated former Supreme Court building, it showcases its modern architectural charm. The museum features exhibitions of Korean contemporary art and international artists. Situated adjacent to Deoksugung Palace's stone-wall walkway, it's a popular date destination. The museum operates branch locations including the Seosomun Annex and Nam Seoul Museum. Visitors can enjoy a panoramic view of Deoksugung from the rooftop Jeongdong Observatory. With many free exhibitions, it's an accessible space for experiencing contemporary art in downtown Seoul.",
     "tips": [
@@ -11306,11 +10926,7 @@ const landmarkData_en = [
   },
   {
     "id": "hangaram",
-    "coordinates": {
-      "lat": 37.481,
-      "lng": 127.0055
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Art museum in Seoul Arts Center, home to major blockbuster exhibitions",
     "description": "Hangaram Art Museum is a large-scale art museum located within the Seoul Arts Center. It frequently hosts blockbuster international art exhibitions that attract massive crowds, especially shows featuring famous painters like Monet and Van Gogh. Visitors can enjoy art exhibitions alongside concerts and operas at the arts center. The museum complex also includes a calligraphy hall and design museum. You can appreciate art while strolling through the outdoor sculpture park. It is a representative cultural arts space in the Gangnam Seocho area. For large-scale art exhibitions, Hangaram is the place to go.",
     "tips": [
@@ -11424,11 +11040,7 @@ const landmarkData_en = [
   },
   {
     "id": "d_museum",
-    "coordinates": {
-      "lat": 37.538,
-      "lng": 127.001
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Design museum near Seoul Forest in Seongsu, stylish exhibitions and Instagram spot",
     "description": "D Museum is a multi-cultural space located near Seoul Forest in Seongsu-dong. It relocated from Hannam-dong in 2021. Popular with the MZ generation for design, pop art, and interactive exhibitions. Famous for Instagram-worthy photo spots. Experience art in a stylish space. Conveniently located near Seongsu-dong cafe street and close to Seoul Forest. Purchase unique art items at the museum shop. A modern, experiential art museum.",
     "tips": [
@@ -11537,11 +11149,7 @@ const landmarkData_en = [
   },
   {
     "id": "savina",
-    "coordinates": {
-      "lat": 37.583,
-      "lng": 126.989
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Contemporary art space in Anguk-dong with small but quality curated exhibitions",
     "description": "Sabina Museum is a private contemporary art museum located in Anguk-dong. It hosts curated exhibitions featuring both Korean and international contemporary artists. Situated in a traditional hanok neighborhood, the museum beautifully blends tradition and modernity. Perfectly positioned for visitors exploring Bukchon and Insadong, this intimate museum allows for focused art viewing. Here, visitors can discover experimental works by innovative artists. With excellent accessibility near Anguk Station, it's a hidden gem recommended for art enthusiasts.",
     "tips": [
@@ -11647,11 +11255,7 @@ const landmarkData_en = [
   },
   {
     "id": "arario",
-    "coordinates": {
-      "lat": 37.57,
-      "lng": 126.988
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Contemporary art museum in Inspace building where architecture meets art",
     "description": "Arario Museum is a gallery operating spaces in Jongno and the Dongmun Motel in Jeju. Its unique exhibition spaces feature renovated old buildings. The museum houses contemporary art collections from Korea and abroad. The Jongno space is located in a former residential area, creating an extraordinary atmosphere. The building itself feels like an art piece. Recommended for contemporary art enthusiasts. Ideal to visit in conjunction with Bukchon and Samcheong-dong. An experimental space where architecture meets art.",
     "tips": [
@@ -11758,11 +11362,7 @@ const landmarkData_en = [
   },
   {
     "id": "ilmin",
-    "coordinates": {
-      "lat": 37.571,
-      "lng": 126.976
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Art museum in Donga Ilbo building at Gwanghwamun, contemporary and media art exhibitions",
     "description": "Ilmin Museum of Art is located in the Dong-A Media Center near Gwanghwamun Square. The museum hosts contemporary art and media art exhibitions. With excellent accessibility next to Gwanghwamun Square, visitors can explore experimental works by young artists. Beyond exhibitions, the museum offers diverse cultural programs. Situated in the same building as the Newspaper Museum, it's perfect for a quick stop during your Gwanghwamun tour. It's a space to experience contemporary art in the heart of Seoul.",
     "tips": [
@@ -11875,11 +11475,7 @@ const landmarkData_en = [
   },
   {
     "id": "kansong",
-    "coordinates": {
-      "lat": 37.573,
-      "lng": 127.008
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Private museum housing original Hunminjeongeum, open only for biannual special exhibitions",
     "description": "The Gansong Art Museum is Korea's first private art museum, housing national treasure-level cultural artifacts. It contains treasures like the original Hunminjeongeum manuscript and genre paintings by Shin Yun-bok. Currently, the collection is displayed through special exhibitions at venues like the Dongdaemun Design Plaza (DDP). The story of collector Jeon Hyung-pil's cultural artifact preservation is deeply moving. Visitors learn about the history of Korean cultural heritage preservation. Be sure to check exhibition schedules before visiting. It holds the most important collection in Korean art history and is a must-visit for cultural heritage enthusiasts.",
     "tips": [
@@ -11990,11 +11586,7 @@ const landmarkData_en = [
   },
   {
     "id": "sejong_story",
-    "coordinates": {
-      "lat": 37.572,
-      "lng": 126.977
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Free underground exhibition hall at Gwanghwamun, experience space for King Sejong's achievements",
     "description": "A museum dedicated to honoring King Sejong's achievements, located underground at Gwanghwamun Square. Visitors can experience interactive exhibits showcasing the creation of Hangul (Korean alphabet), scientific inventions like the rain gauge and sundial. Extremely popular with children for its educational displays. Connected to the Admiral Yi Sun-sin Exhibition Hall for a comprehensive historical experience. Offers excellent multilingual services, making it accessible to international tourists. Conveniently integrated with the Gwanghwamun Square tour route. Free admission allows visitors to learn about Korean history without financial burden. An indoor attraction that can be enjoyed regardless of weather conditions.",
     "tips": [
@@ -12100,11 +11692,7 @@ const landmarkData_en = [
   },
   {
     "id": "palace_museum",
-    "coordinates": {
-      "lat": 37.579,
-      "lng": 126.977
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Free museum of Joseon royal artifacts next to Gyeongbokgung showcasing royal culture",
     "description": "The National Palace Museum of Korea is a specialized museum exhibiting royal artifacts from the Joseon Dynasty. Located next to Gyeongbokgung Palace, visitors often combine the museum with palace tours. The museum displays royal clothing, ceremonial items, and scientific instruments, offering an in-depth look into the life and culture of the Joseon royal family. Visitors can view precious royal treasures such as royal seals and portraits. During evening hours, the museum offers a special atmosphere. With free admission, it provides an accessible way to experience the grandeur of the Joseon Dynasty.",
     "tips": [
@@ -12215,11 +11803,7 @@ const landmarkData_en = [
   },
   {
     "id": "craft_museum",
-    "coordinates": {
-      "lat": 37.5763,
-      "lng": 126.9873
-    },
-    "category": "museum",
+        "category": "museum",
     "summary": "Free craft museum in Anguk-dong for appreciating Korean craftsmanship",
     "description": "The Seoul Craft Museum opened in 2021 in Anguk-dong as a specialized museum showcasing Korean crafts from traditional to contemporary styles. Located in the beautifully renovated former Pungmoon Girls' High School building, it features a children's museum and popular hands-on programs. Conveniently situated near Bukchon Hanok Village and Changdeok Palace, visitors can relax in the outdoor garden and appreciate craft exhibits. With free admission, it's an accessible space to rediscover the beauty of Korean craftsmanship.",
     "tips": [
@@ -12329,11 +11913,7 @@ const landmarkData_en = [
   },
   {
     "id": "apgujeong_rodeo",
-    "coordinates": {
-      "lat": 37.5273,
-      "lng": 127.04
-    },
-    "category": "shopping",
+        "category": "shopping",
     "summary": "Gangnam's premier fashion street where K-POP entertainment and luxury brands coexist",
     "description": "Apgujeong Rodeo Street is the most trendy and luxurious shopping district in Seoul. It's a pilgrimage site for K-POP fans, with major entertainment company headquarters like SM and JYP clustered in the area. The street is lined with international luxury brand flagship stores and local designer boutiques, alongside sophisticated cafes and restaurants. Known for frequent celebrity sightings, it offers the exciting opportunity to observe street fashion trends. Together with Cheongdam-dong and Garosu-gil, it forms the Gangnam Luxury Belt where visitors can experience Seoul's latest trends. Weekend afternoons feature street busking performances throughout the area.",
     "tips": [
@@ -12411,11 +11991,7 @@ const landmarkData_en = [
   },
   {
     "id": "gyeongridan",
-    "coordinates": {
-      "lat": 37.534,
-      "lng": 126.9875
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Hotspot with multinational restaurants and unique cafes in Itaewon back alleys",
     "description": "Gyeonglidan-gil is a sloping street stretching from Noksapyeong Station behind Itaewon towards Namsan Mountain. Hidden in every alley are diverse international restaurants, fusion eateries, and unique cafes. The name 'Gyeonglidan-gil' originates from the military finance management unit (Gyeongri-dan), and recently it has been gaining attention as one of Seoul's trendiest neighborhoods alongside Haebangchon. Walking up the narrow alleys, you'll find rooftop cafes with stunning views of Namsan, making it a popular spot for nighttime scenery. The area is characterized by its multicultural atmosphere, where locals and foreigners seamlessly blend together.",
     "tips": [
@@ -12496,11 +12072,7 @@ const landmarkData_en = [
   },
   {
     "id": "samgakji",
-    "coordinates": {
-      "lat": 37.5347,
-      "lng": 126.9736
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Office worker sanctuary near War Memorial with classic restaurants and local bars",
     "description": "Samgakji is an old neighborhood near the War Memorial Museum, featuring numerous restaurants with decades of history. Famous for its gopchang (grilled beef intestines) alley and premium Korean BBQ spots, it's a popular after-work drinking district for office workers. Though expected to change with the relocation of the US military base in Yongsan, the area still retains the classic Seoul atmosphere. Predominantly local and less touristy, it's recommended for those seeking affordable and hearty meat restaurants with an authentic neighborhood vibe.",
     "tips": [
@@ -12575,11 +12147,7 @@ const landmarkData_en = [
   },
   {
     "id": "samcheong",
-    "coordinates": {
-      "lat": 37.5802,
-      "lng": 126.982
-    },
-    "category": "hipplace",
+        "category": "hipplace",
     "summary": "Seoul's signature aesthetic street blending serene hanok alleys with stylish cafes and galleries near Gyeongbokgung",
     "description": "Samcheong-dong is one of Seoul's most beautiful streets, running along the eastern wall of Gyeongbokgung Palace. Traditional alleyways from the Joseon Dynasty seamlessly blend with modern cafes, galleries, and boutique shops. Known as the 'Gallery Street' due to the concentration of galleries around the National Museum of Modern and Contemporary Art (Seoul), the area naturally connects to Bukchon Hanok Village and is within walking distance of Gyeongbokgung and Insadong. The neighborhood offers everything from traditional Korean set meals to fusion restaurants and dessert cafes. On weekends, street performances (busking) pop up everywhere, and visitors can discover hidden prop shops and workshops in each alley. It's the neighborhood in Seoul where tradition and modernity, art and daily life coexist most naturally.",
     "tips": [
