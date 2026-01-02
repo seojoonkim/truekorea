@@ -3611,8 +3611,8 @@ const landmarkData_ko = [
   {
     "id": "maebongsan",
     "coordinates": {
-      "lat": 37.4723,
-      "lng": 127.0378
+      "lat": 37.4905,
+      "lng": 127.0465
     },
     "category": "viewpoint",
     "summary": "강남 도심 속 야경 명소, 30분이면 오르는 쉬운 전망 포인트",
@@ -3729,8 +3729,8 @@ const landmarkData_ko = [
   {
     "id": "achasan",
     "coordinates": {
-      "lat": 37.5619,
-      "lng": 127.072
+      "lat": 37.5715,
+      "lng": 127.1035
     },
     "category": "viewpoint",
     "summary": "초보자도 쉬운 서울 대표 일출/야경 명소, 능선 따라 탁 트인 조망",
@@ -8852,8 +8852,8 @@ const landmarkData_ko = [
   {
     "id": "suraksan",
     "coordinates": {
-      "lat": 37.683,
-      "lng": 127.056
+      "lat": 37.6708,
+      "lng": 127.0725
     },
     "category": "nature",
     "summary": "서울 동북부의 산, 기암괴석과 폭포가 있는 등산 명소",
@@ -9208,8 +9208,8 @@ const landmarkData_ko = [
   {
     "id": "yangjae",
     "coordinates": {
-      "lat": 37.4695,
-      "lng": 127.034
+      "lat": 37.4685,
+      "lng": 127.0385
     },
     "category": "nature",
     "summary": "강남의 도심 하천, 자전거와 산책의 명소",
@@ -9672,8 +9672,8 @@ const landmarkData_ko = [
   {
     "id": "jungnangcheon",
     "coordinates": {
-      "lat": 37.558,
-      "lng": 127.065
+      "lat": 37.5455,
+      "lng": 127.0425
     },
     "category": "nature",
     "summary": "서울 동북부 하천, 자전거와 산책 코스가 잘 정비된 시민 휴식처",
